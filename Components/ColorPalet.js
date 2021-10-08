@@ -8,6 +8,9 @@ const Colors={
     danger:"#FA2A05 ",
     brandLightBlue:"#1bdaffb3",
     shadow:"#9c9898",
-    pink:"#eb0890"
+    pink:"#eb0890",
+    primaryTheam:"#FFFFFF",
+    secondaryTheam:"#000000"
+    
 }
 export default Colors;

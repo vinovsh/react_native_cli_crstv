@@ -3,14 +3,15 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import Colors from '../Components/ColorPalet';
 //screens
 import HomeStack from './HomeStack';
+import MenuSlider from '../Screens/MenuSlider';
 
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigater = ({ route, navigation }) => {
     return (
-      <>
+ 
       
-         <Drawer.Navigator >
+         <Drawer.Navigator initialRouteName="Main" drawerContent={(props) => <MenuSlider {...props} />}>
            <Drawer.Screen 
         
               options={{
@@ -31,7 +32,7 @@ const DrawerNavigater = ({ route, navigation }) => {
        {/*  <Drawer.Screen name="Screen"   component={StackNav} /> */}
        
       </Drawer.Navigator>
-      </>
+ 
     );
   };
 

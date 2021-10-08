@@ -13,7 +13,7 @@ const Stack = createNativeStackNavigator();
 const HomeStack = ({ navigation }) => {
     
     return (
-      <>
+     
         
         <Stack.Navigator>
           <Stack.Screen
@@ -56,7 +56,7 @@ const HomeStack = ({ navigation }) => {
          
           
         </Stack.Navigator>
-      </>
+  
     );
   };
 

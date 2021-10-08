@@ -10,7 +10,7 @@ const MenuIcon = () => {
     return (
     
    
-             <TouchableOpacity style={{paddingLeft:15}} > 
+             <TouchableOpacity  > 
                 <Icon  
                 style={{fontSize:35,fontWeight:700}}
                 onPress={() =>  navigation.openDrawer()}
