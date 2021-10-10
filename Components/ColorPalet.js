@@ -9,8 +9,12 @@ const Colors={
     brandLightBlue:"#1bdaffb3",
     shadow:"#9c9898",
     pink:"#eb0890",
+
     primaryTheam:"#FFFFFF",
-    secondaryTheam:"#000000"
+    secondaryTheam:"#000000", 
+
+   /*  primaryTheam:"#000000",
+    secondaryTheam:"#FFFFFF" */
     
 }
 export default Colors;

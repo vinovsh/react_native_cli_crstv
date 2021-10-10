@@ -18,11 +18,11 @@ const CategoryTitle =props=>{
              right:10,
              position:"absolute",
              fontFamily:"Montserrat-Medium",
-             color:Colors.primary,
+             color:Colors.pink,
              display:props.display
              }}
              >
-               See All <Icon name="angle-right" size={15} color={Colors.primary} />
+               See All <Icon name="angle-right" size={15} color={Colors.pink} />
             </Text>
        
         </View>
@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
      fontSize:15,
     
      paddingHorizontal:20,
-     fontFamily:"Montserrat-SemiBold"
+     fontFamily:"Montserrat-SemiBold",
+   
    
  
      

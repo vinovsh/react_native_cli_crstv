@@ -73,7 +73,8 @@ const styles = StyleSheet.create({
       fontSize:15,
      
       paddingHorizontal:15,
-      fontFamily:"Montserrat-SemiBold"
+      fontFamily:"Montserrat-SemiBold",
+    
       
     
         

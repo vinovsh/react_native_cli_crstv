@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import {View,Text,Button,ScrollView,TouchableOpacity,Dimensions,StyleSheet,FlatList} from "react-native";
 import Orientation from 'react-native-orientation';
-
+import Colors from '../Components/ColorPalet';
 
 //components
 
@@ -17,6 +17,7 @@ import SocialShare from '../Components/SocialShare';
 
 //loader
 import HomeLoader from '../Components/skeloton/HomeLoader';
+
 
 
 const width=Dimensions.get('window').width;
@@ -44,7 +45,7 @@ const Home = ({navigation}) => {
          ):(
            
 
-            <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}> 
+            <ScrollView   showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}> 
               <LivePlayer/>
             
             <View style={{flexDirection:"row",justifyContent:"space-evenly"}}>
@@ -144,6 +145,7 @@ const styles = StyleSheet.create({
         borderRadius:15,
         marginTop:10, 
         marginBottom:10,
+    
     }
 
   });

@@ -4,6 +4,7 @@ import Colors from "../ColorPalet";
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import ProgressiveImage from "../ProgressiveImage";
+import { color } from "react-native-reanimated";
  
 const width=Dimensions.get('window').width;
 const SquareCard =props=>{
@@ -88,7 +89,8 @@ const styles = StyleSheet.create({
         fontSize:15,
        
         paddingHorizontal:15,
-        fontFamily:"Montserrat-SemiBold"
+        fontFamily:"Montserrat-SemiBold",
+     
       
     
         

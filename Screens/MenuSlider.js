@@ -18,17 +18,22 @@ import {
 } from '@react-navigation/drawer';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { AuthContext } from '../Components/Context';
 
 /* import{ AuthContext } from '../components/context'; */
 
 const MenuSlider = (props) => {
 
+    
+
+
     const paperTheme = useTheme();
+    const {toggleTheme } = React.useContext(AuthContext);
 
    /*  const { signOut, toggleTheme } = React.useContext(AuthContext); */
 
     return(
-        <View style={{flex:1,backgroundColor:Colors.secondaryTheam}}>
+        <View style={{flex:1}}>
             <DrawerContentScrollView {...props}>
                 <View style={styles.drawerContent}>
                     <View style={styles.userInfoSection}>
@@ -49,65 +54,66 @@ const MenuSlider = (props) => {
 
                     <Drawer.Section style={styles.drawerSection}>
                         <DrawerItem 
-                            icon={({color, size}) => (
+                            icon={({size,color}) => (
                                 <Icon 
                                 name="home-outline" 
                                 color={color}
                                 size={size}
                                 />
                             )}
-                            label="Home"
+                            label={({color}) => <Text style={{color:color}}>Home</Text>}
                             onPress={() => {props.navigation.navigate('Main')}}
                         />
                         <DrawerItem 
-                            icon={({color, size}) => (
+                            icon={({size,color}) => (
                                 <Icon 
                                 name="account-outline" 
                                 color={color}
                                 size={size}
                                 />
                             )}
-                            label="Profile"
+                            label={({color}) => <Text style={{color:color}}>Profile</Text>}
                             onPress={() => {props.navigation.navigate('Main')}}
                         />
                         <DrawerItem 
-                            icon={({color, size}) => (
+                            icon={({size,color}) => (
                                 <Icon 
                                 name="lock" 
                                 color={color}
                                 size={size}
                                 />
                             )}
-                            label="Privacy Policy"
+                            label={({color}) => <Text style={{color:color}}>Privacy Policy</Text>}
                             onPress={() => {props.navigation.navigate('Main')}}
                         />
                         <DrawerItem 
-                            icon={({color, size}) => (
+                            icon={({size,color}) => (
                                 <Icon 
                                 name="star" 
                                 color={color}
                                 size={size}
                                 />
                             )}
-                            label="Rate Us"
+                            label={({color}) => <Text style={{color:color}}>Rate Us</Text>}
                             onPress={() => {props.navigation.navigate('Main')}}
                         />
                         <DrawerItem 
-                            icon={({color, size}) => (
+                            icon={({size,color}) => (
                                 <Icon 
                                 name="share-variant" 
-                                color={color}
+                               
                                 size={size}
+                                color={color}
                                 />
                             )}
-                            label="Share Us"
+                            label={({color}) => <Text style={{color:color}} >Share Us</Text>}
                             onPress={() => {props.navigation.navigate('Main')}}
                         />
                     </Drawer.Section>
                     <Drawer.Section title="Preferences">
-                        <TouchableRipple onPress={() => {toggleTheme()}}>
+                        <TouchableRipple  onPress={() => {toggleTheme()}} >
                             <View style={styles.preference}>
-                                <Text>Dark Theme</Text>
+                                <Text >Dark Theme</Text>
                                 <View pointerEvents="none">
                                     <Switch value={paperTheme.dark}/>
                                 </View>
@@ -118,14 +124,15 @@ const MenuSlider = (props) => {
             </DrawerContentScrollView>
             <Drawer.Section style={styles.bottomDrawerSection}>
                 <DrawerItem 
-                    icon={({color, size}) => (
+                    icon={({size,color}) => (
                         <Icon 
                         name="exit-to-app" 
-                        color={color}
+                     
                         size={size}
+                        color={color}
                         />
                     )}
-                    label="Sign Out"
+                    label={({color}) => <Text style={{color:color}} >Sign Out</Text>}
                     onPress={() => {signOut()}}
                 />
             </Drawer.Section>
@@ -144,12 +151,12 @@ const styles = StyleSheet.create({
       fontSize: 16,
       marginTop: 3,
       fontWeight: 'bold',
-      color:Colors.primaryTheam
+     
     },
     caption: {
       fontSize: 14,
       lineHeight: 14,
-      color:Colors.primaryTheam
+     
     },
     row: {
       marginTop: 20,
@@ -164,7 +171,7 @@ const styles = StyleSheet.create({
     paragraph: {
       fontWeight: 'bold',
       marginRight: 3,
-      color:Colors.primaryTheam
+     
     },
     drawerSection: {
       marginTop: 15,
