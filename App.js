@@ -14,10 +14,12 @@ import {
   DarkTheme as PaperDarkTheme
 } from "react-native-paper";
 import { AuthContext } from './Components/Context';
+import RootStack from './Routs/RootStack';
+import HomeStack from './Routs/HomeStack';
 
 
 const App = () => {
-  const[isDarkTheme,setIsDarkTheme]=React.useState(true);
+  const[isDarkTheme,setIsDarkTheme]=React.useState(false);
    const CustomDefaultTheme={
       ...NavigationDefaultTheme,
       ...PaperDefaultTheme,
@@ -55,8 +57,9 @@ const App = () => {
            <NavigationContainer theme={theme}>
                <StatusBar translucent={true} hidden={false} style="black" backgroundColor="#00000040" />
 
-               <DrawerNavigater/>
-
+               {/* <DrawerNavigater/> */}
+             <RootStack/> 
+              
             </NavigationContainer> 
        </AuthContext.Provider>
     </PaperProvider>
