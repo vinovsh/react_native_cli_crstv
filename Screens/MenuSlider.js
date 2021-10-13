@@ -20,7 +20,6 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { AuthContext } from '../Components/Context';
 
-/* import{ AuthContext } from '../components/context'; */
 
 const MenuSlider = (props) => {
 

@@ -9,7 +9,8 @@ import {
     Platform,
     StyleSheet,
     ScrollView,
-    StatusBar
+    StatusBar,
+    Alert
 } from 'react-native';
 import Colors from '../Components/ColorPalet';
 import * as Animatable from 'react-native-animatable';
@@ -21,9 +22,13 @@ const SignUpScreen = ({navigation}) => {
 
     const [data, setData] = React.useState({
         username: '',
+        email:'',
         password: '',
-        confirm_password: '',
+        check_passwordInputChange: false,
+        warning_passwordInputChange: false,
         check_textInputChange: false,
+        check_emailInputChange:false,
+        warning_emailInputChange:false,
         secureTextEntry: true,
         confirm_secureTextEntry: true,
     });
@@ -44,11 +49,84 @@ const SignUpScreen = ({navigation}) => {
         }
     }
 
+
+    const SignupFormSubmit = () => {
+
+       if(data.check_textInputChange && data.check_emailInputChange && data.check_passwordInputChange){
+
+        Alert.alert("form submited");
+       }else{
+
+        Alert.alert("please fill all data")
+       }
+
+    }
+
+
+    const emailInputChange = (val) => {
+
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+        
+        if( val.length !== 0 ) {
+
+
+            if (reg.test(val) === false) {
+                setData({
+                    ...data,
+                    email: val,
+                    check_emailInputChange: false,
+                    warning_emailInputChange:true
+                });
+              }
+              else {
+                setData({
+                    ...data,
+                    email: val,
+                    check_emailInputChange: true,
+                    warning_emailInputChange:false
+                });
+              }
+           
+        } else {
+            setData({
+                ...data,
+                email: val,
+                check_emailInputChange: false
+            });
+        }
+    }
+
     const handlePasswordChange = (val) => {
+        if( val.length !== 0 ) {
+        if(val.length>4){
+
+            setData({
+                ...data,
+                password: val,
+                check_passwordInputChange:true,
+                warning_passwordInputChange:false
+            });
+        }else{
+
+            setData({
+                ...data,
+                password: val,
+                check_passwordInputChange:false,
+                warning_passwordInputChange:true
+            });
+        }
+
+    }else{
+       
+
         setData({
             ...data,
-            password: val
+            password: val,
+            check_passwordInputChange:false,
+            warning_passwordInputChange:false
         });
+
+    }
     }
 
     const handleConfirmPasswordChange = (val) => {
@@ -83,7 +161,7 @@ const SignUpScreen = ({navigation}) => {
             style={styles.footer}
         >
             <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
-            <Text style={styles.text_footer}>Username</Text>
+            <Text style={styles.text_footer}>Name</Text>
             <View style={styles.action}>
                 <FontAwesome 
                     name="user-o"
@@ -91,7 +169,7 @@ const SignUpScreen = ({navigation}) => {
                     size={20}
                 />
                 <TextInput 
-                    placeholder="Your Username"
+                    placeholder="Enter name"
                     style={styles.textInput}
                     autoCapitalize="none"
                     onChangeText={(val) => textInputChange(val)}
@@ -106,6 +184,44 @@ const SignUpScreen = ({navigation}) => {
                         size={20}
                     />
                 </Animatable.View>
+                : null}
+            </View>
+            
+            <Text style={styles.text_footer}>Email</Text>
+            <View style={styles.action}>
+                <FontAwesome 
+                    name="user-o"
+                    color="#05375a"
+                    size={20}
+                />
+                <TextInput 
+                    placeholder="Enter your email id"
+                    style={styles.textInput}
+                    autoCapitalize="none"
+                    onChangeText={(val) => emailInputChange(val)}
+                />
+                {data.warning_emailInputChange ? 
+                <Animatable.View
+                    animation="bounceIn"
+                >
+                    <Feather 
+                        name="alert-circle"
+                        color="#ff0000"
+                        size={20}
+                    />
+                </Animatable.View>
+                : data.check_emailInputChange ?
+            
+                <Animatable.View
+                   animation="bounceIn">
+                   <Feather 
+                      name="check-circle"
+                      color="green"
+                      size={20}
+                   />
+                </Animatable.View>
+            
+            
                 : null}
             </View>
 
@@ -125,6 +241,33 @@ const SignUpScreen = ({navigation}) => {
                     autoCapitalize="none"
                     onChangeText={(val) => handlePasswordChange(val)}
                 />
+
+              {data.warning_passwordInputChange ? 
+                <Animatable.View
+                    animation="bounceIn"
+                    style={{marginHorizontal:10}}
+                >
+                    <Feather 
+                       name="alert-circle"
+                       color="#ff0000"h
+                        size={20}
+                    />
+                </Animatable.View>
+
+                :data.check_passwordInputChange ?
+
+                <Animatable.View
+                   animation="bounceIn"
+                   style={{marginHorizontal:10}}
+                  >
+                  <Feather 
+                    name="check-circle"
+                    color="green"
+                    size={20}
+                />
+               </Animatable.View>
+
+                :null}
                 <TouchableOpacity
                     onPress={updateSecureTextEntry}
                 >
@@ -144,40 +287,7 @@ const SignUpScreen = ({navigation}) => {
                 </TouchableOpacity>
             </View>
 
-            <Text style={[styles.text_footer, {
-                marginTop: 35
-            }]}>Confirm Password</Text>
-            <View style={styles.action}>
-                <Feather 
-                    name="lock"
-                    color="#05375a"
-                    size={20}
-                />
-                <TextInput 
-                    placeholder="Confirm Your Password"
-                    secureTextEntry={data.confirm_secureTextEntry ? true : false}
-                    style={styles.textInput}
-                    autoCapitalize="none"
-                    onChangeText={(val) => handleConfirmPasswordChange(val)}
-                />
-                <TouchableOpacity
-                    onPress={updateConfirmSecureTextEntry}
-                >
-                    {data.secureTextEntry ? 
-                    <Feather 
-                        name="eye-off"
-                        color="grey"
-                        size={20}
-                    />
-                    :
-                    <Feather 
-                        name="eye"
-                        color="grey"
-                        size={20}
-                    />
-                    }
-                </TouchableOpacity>
-            </View>
+           
             <View style={styles.textPrivate}>
                 <Text style={styles.color_textPrivate}>
                     By signing up you agree to our
@@ -189,7 +299,7 @@ const SignUpScreen = ({navigation}) => {
             <View style={styles.button}>
                 <TouchableOpacity
                     style={styles.signIn}
-                    onPress={() => {}}
+                    onPress={SignupFormSubmit}
                 >
                 <LinearGradient
                     colors={['#5f64e3', Colors.primary]}
