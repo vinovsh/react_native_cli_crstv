@@ -46,7 +46,19 @@ const App = () => {
 
    toggleTheme: () => {
     setIsDarkTheme( isDarkTheme => !isDarkTheme );
-  }
+  },
+
+   SignupFormSubmit: (username,email,password) => {
+
+    if(username && email && password){
+
+    alert(username);
+    }else{
+
+    alert("please fill all data")
+    }
+
+ }
 
  }), []);
   return (

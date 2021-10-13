@@ -22,34 +22,51 @@ import { color } from 'react-native-reanimated';
 
 /* import Users from '../model/users'; */
 
-const SignInScreen = ({navigation}) => {
+const SignUpScreen = ({navigation}) => {
 
     const [data, setData] = React.useState({
-        username: '',
+        email: '',
         password: '',
-        check_textInputChange: false,
-        secureTextEntry: true,
+        check_passwordInputChange: false,
+        warning_passwordInputChange: false,
         isValidUser: true,
         isValidPassword: true,
+        secureTextEntry:true
     });
 
     const { colors } = useTheme();
 
     /* const { signIn } = React.useContext(AuthContext); */
 
-    const textInputChange = (val) => {
-        if( val.trim().length >= 4 ) {
-            setData({
-                ...data,
-                username: val,
-                check_textInputChange: true,
-                isValidUser: true
-            });
+    const emailInputChange = (val) => {
+        
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+        
+        if( val.length !== 0 ) {
+
+
+            if (reg.test(val) === false) {
+                setData({
+                    ...data,
+                    email: val,
+                    check_emailInputChange: false,
+                    isValidUser: false
+                });
+              }
+              else {
+                setData({
+                    ...data,
+                    email: val,
+                    check_emailInputChange: true,
+                    isValidUser: true
+                });
+              }
+           
         } else {
             setData({
                 ...data,
-                username: val,
-                check_textInputChange: false,
+                email: val,
+                check_emailInputChange: false,
                 isValidUser: false
             });
         }
@@ -94,24 +111,19 @@ const SignInScreen = ({navigation}) => {
 
     const loginHandle = (userName, password) => {
 
-        const foundUser = Users.filter( item => {
-            return userName == item.username && password == item.password;
-        } );
+      
 
-        if ( data.username.length == 0 || data.password.length == 0 ) {
+        if ( data.email.length == 0 || data.password.length == 0 ) {
             Alert.alert('Wrong Input!', 'Username or password field cannot be empty.', [
                 {text: 'Okay'}
             ]);
             return;
+        }else{
+
+            alert("Login Success");
         }
 
-        if ( foundUser.length == 0 ) {
-            Alert.alert('Invalid User!', 'Username or password is incorrect.', [
-                {text: 'Okay'}
-            ]);
-            return;
-        }
-        signIn(foundUser);
+       
     }
 
     return (
@@ -128,7 +140,7 @@ const SignInScreen = ({navigation}) => {
         >
             <Text style={[styles.text_footer, {
                 color: colors.text
-            }]}>Username</Text>
+            }]}>Email</Text>
             <View style={styles.action}>
                 <FontAwesome 
                     name="user-o"
@@ -136,16 +148,16 @@ const SignInScreen = ({navigation}) => {
                     size={20}
                 />
                 <TextInput 
-                    placeholder="Your Username"
+                    placeholder="Your Email"
                     placeholderTextColor="#666666"
                     style={[styles.textInput, {
                         color: colors.text
                     }]}
                     autoCapitalize="none"
-                    onChangeText={(val) => textInputChange(val)}
+                    onChangeText={(val) => emailInputChange(val)}
                     onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
                 />
-                {data.check_textInputChange ? 
+                {data.check_emailInputChange ? 
                 <Animatable.View
                     animation="bounceIn"
                 >
@@ -159,7 +171,7 @@ const SignInScreen = ({navigation}) => {
             </View>
             { data.isValidUser ? null : 
             <Animatable.View animation="fadeInLeft" duration={500}>
-            <Text style={styles.errorMsg}>Username must be 4 characters long.</Text>
+            <Text style={styles.errorMsg}>Invalid Email id</Text>
             </Animatable.View>
             }
             
@@ -209,17 +221,15 @@ const SignInScreen = ({navigation}) => {
             }
             
 
-            <TouchableOpacity>
-                <Text style={{color: '#009387', marginTop:15}}>Forgot password?</Text>
-            </TouchableOpacity>
+           
             <View style={styles.button}>
                 <TouchableOpacity
-                    style={styles.signIn}
-                    onPress={() => {loginHandle( data.username, data.password )}}
+                    style={styles.signUp}
+                    onPress={() => {loginHandle( data.email, data.password )}}
                 >
                 <LinearGradient
                     colors={['#5f64e3', Colors.primary]}
-                    style={styles.signIn}
+                    style={styles.signUp}
                 >
                     <Text style={[styles.textSign, {
                         color:'#fff'
@@ -229,7 +239,7 @@ const SignInScreen = ({navigation}) => {
 
                 <TouchableOpacity
                     onPress={() => navigation.navigate('SignUpScreen')}
-                    style={[styles.signIn, {
+                    style={[styles.signUp, {
                         borderColor:  Colors.primary,
                         borderWidth: 1,
                         marginTop: 15
@@ -245,7 +255,7 @@ const SignInScreen = ({navigation}) => {
     );
 };
 
-export default SignInScreen;
+export default SignUpScreen;
 
 const styles = StyleSheet.create({
     container: {
@@ -303,7 +313,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 50
     },
-    signIn: {
+    signUp: {
         width: '100%',
         height: 50,
         justifyContent: 'center',

@@ -2,13 +2,10 @@ import React from 'react';
 import { 
     View, 
     Text, 
-    Button, 
     TouchableOpacity, 
-    Dimensions,
     TextInput,
     Platform,
-    StyleSheet,
-    ScrollView,
+    StyleSheet ,
     StatusBar,
     Alert
 } from 'react-native';
@@ -18,53 +15,62 @@ import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 
+import { useTheme } from 'react-native-paper';
+
+import { AuthContext } from '../components/context';
+import { color } from 'react-native-reanimated';
+
+
+/* import Users from '../model/users'; */
+
 const SignUpScreen = ({navigation}) => {
 
     const [data, setData] = React.useState({
-        username: '',
-        email:'',
+        name:'',
+        email: '',
         password: '',
         check_passwordInputChange: false,
         warning_passwordInputChange: false,
-        check_textInputChange: false,
-        check_emailInputChange:false,
-        warning_emailInputChange:false,
-        secureTextEntry: true,
-        confirm_secureTextEntry: true,
+        isValidName: true,
+        isValidEmail: true,
+        isValidPassword: true,
+        secureTextEntry:true
     });
 
-    const textInputChange = (val) => {
-        if( val.length !== 0 ) {
-            setData({
-                ...data,
-                username: val,
-                check_textInputChange: true
-            });
+    const { colors } = useTheme();
+
+    /* const { signIn } = React.useContext(AuthContext); */
+
+
+    const nameInputChange = (val) => {
+        
+      
+        
+        if( val.length !=0 ) {
+
+
+          
+                setData({
+                    ...data,
+                    email: val,
+                    check_nameInputChange: true,
+                    isValidName: true
+                });
+           
+           
+           
         } else {
             setData({
                 ...data,
-                username: val,
-                check_textInputChange: false
+                email: val,
+                check_nameInputChange: false,
+                isValidName: false
             });
         }
     }
 
-
-    const SignupFormSubmit = () => {
-
-       if(data.check_textInputChange && data.check_emailInputChange && data.check_passwordInputChange){
-
-        Alert.alert("form submited");
-       }else{
-
-        Alert.alert("please fill all data")
-       }
-
-    }
-
-
     const emailInputChange = (val) => {
-
+        
         let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
         
         if( val.length !== 0 ) {
@@ -75,7 +81,7 @@ const SignUpScreen = ({navigation}) => {
                     ...data,
                     email: val,
                     check_emailInputChange: false,
-                    warning_emailInputChange:true
+                    isValidEmail: false
                 });
               }
               else {
@@ -83,7 +89,7 @@ const SignUpScreen = ({navigation}) => {
                     ...data,
                     email: val,
                     check_emailInputChange: true,
-                    warning_emailInputChange:false
+                    isValidEmail: true
                 });
               }
            
@@ -91,49 +97,26 @@ const SignUpScreen = ({navigation}) => {
             setData({
                 ...data,
                 email: val,
-                check_emailInputChange: false
+                check_emailInputChange: false,
+                isValidEmail: false
             });
         }
     }
 
     const handlePasswordChange = (val) => {
-        if( val.length !== 0 ) {
-        if(val.length>4){
-
+        if( val.trim().length >= 8 ) {
             setData({
                 ...data,
                 password: val,
-                check_passwordInputChange:true,
-                warning_passwordInputChange:false
+                isValidPassword: true
             });
-        }else{
-
+        } else {
             setData({
                 ...data,
                 password: val,
-                check_passwordInputChange:false,
-                warning_passwordInputChange:true
+                isValidPassword: false
             });
         }
-
-    }else{
-       
-
-        setData({
-            ...data,
-            password: val,
-            check_passwordInputChange:false,
-            warning_passwordInputChange:false
-        });
-
-    }
-    }
-
-    const handleConfirmPasswordChange = (val) => {
-        setData({
-            ...data,
-            confirm_password: val
-        });
     }
 
     const updateSecureTextEntry = () => {
@@ -143,11 +126,35 @@ const SignUpScreen = ({navigation}) => {
         });
     }
 
-    const updateConfirmSecureTextEntry = () => {
-        setData({
-            ...data,
-            confirm_secureTextEntry: !data.confirm_secureTextEntry
-        });
+    const handleValidUser = (val) => {
+        if( val.trim().length >= 4 ) {
+            setData({
+                ...data,
+                isValidEmail: true
+            });
+        } else {
+            setData({
+                ...data,
+                isValidEmail: false
+            });
+        }
+    }
+
+    const signUpHandle = (name,email,password) => {
+
+      
+
+        if ( data.email.length == 0 || data.password.length == 0 ) {
+            Alert.alert('Wrong Input!', 'Username or password field cannot be empty.', [
+                {text: 'Okay'}
+            ]);
+            return;
+        }else{
+
+            alert("Login Success");
+        }
+
+       
     }
 
     return (
@@ -158,23 +165,31 @@ const SignUpScreen = ({navigation}) => {
         </View>
         <Animatable.View 
             animation="fadeInUpBig"
-            style={styles.footer}
+            style={[styles.footer, {
+                backgroundColor: colors.background
+            }]}
         >
-            <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
-            <Text style={styles.text_footer}>Name</Text>
+
+           <Text style={[styles.text_footer, {
+                color: colors.text
+            }]}>Name</Text>
             <View style={styles.action}>
                 <FontAwesome 
                     name="user-o"
-                    color="#05375a"
+                    color={colors.text}
                     size={20}
                 />
                 <TextInput 
-                    placeholder="Enter name"
-                    style={styles.textInput}
+                    placeholder="Your Name"
+                    placeholderTextColor="#666666"
+                    style={[styles.textInput, {
+                        color: colors.text
+                    }]}
                     autoCapitalize="none"
-                    onChangeText={(val) => textInputChange(val)}
+                    onChangeText={(val) => nameInputChange(val)}
+                    onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
                 />
-                {data.check_textInputChange ? 
+                {data.check_nameInputChange ? 
                 <Animatable.View
                     animation="bounceIn"
                 >
@@ -186,88 +201,71 @@ const SignUpScreen = ({navigation}) => {
                 </Animatable.View>
                 : null}
             </View>
-            
-            <Text style={styles.text_footer}>Email</Text>
+            { data.isValidName ? null : 
+            <Animatable.View animation="fadeInLeft" duration={500}>
+            <Text style={styles.errorMsg}>Enter Name</Text>
+            </Animatable.View>
+            }
+
+
+            <Text style={[styles.text_footer, {
+                color: colors.text
+            }]}>Email</Text>
             <View style={styles.action}>
                 <FontAwesome 
                     name="user-o"
-                    color="#05375a"
+                    color={colors.text}
                     size={20}
                 />
                 <TextInput 
-                    placeholder="Enter your email id"
-                    style={styles.textInput}
+                    placeholder="Your Email"
+                    placeholderTextColor="#666666"
+                    style={[styles.textInput, {
+                        color: colors.text
+                    }]}
                     autoCapitalize="none"
                     onChangeText={(val) => emailInputChange(val)}
+                    onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
                 />
-                {data.warning_emailInputChange ? 
+                {data.check_emailInputChange ? 
                 <Animatable.View
                     animation="bounceIn"
                 >
                     <Feather 
-                        name="alert-circle"
-                        color="#ff0000"
+                        name="check-circle"
+                        color="green"
                         size={20}
                     />
                 </Animatable.View>
-                : data.check_emailInputChange ?
-            
-                <Animatable.View
-                   animation="bounceIn">
-                   <Feather 
-                      name="check-circle"
-                      color="green"
-                      size={20}
-                   />
-                </Animatable.View>
-            
-            
                 : null}
             </View>
+            { data.isValidEmail ? null : 
+            <Animatable.View animation="fadeInLeft" duration={500}>
+            <Text style={styles.errorMsg}>Invalid Email id</Text>
+            </Animatable.View>
+            }
+            
 
             <Text style={[styles.text_footer, {
+                color: colors.text,
                 marginTop: 35
             }]}>Password</Text>
             <View style={styles.action}>
                 <Feather 
                     name="lock"
-                    color="#05375a"
+                    color={colors.text}
                     size={20}
                 />
                 <TextInput 
                     placeholder="Your Password"
+                    placeholderTextColor="#666666"
                     secureTextEntry={data.secureTextEntry ? true : false}
-                    style={styles.textInput}
+                    style={[styles.textInput, {
+                        color: colors.text
+                    }]}
                     autoCapitalize="none"
                     onChangeText={(val) => handlePasswordChange(val)}
                 />
-
-              {data.warning_passwordInputChange ? 
-                <Animatable.View
-                    animation="bounceIn"
-                    style={{marginHorizontal:10}}
-                >
-                    <Feather 
-                       name="alert-circle"
-                       color="#ff0000"h
-                        size={20}
-                    />
-                </Animatable.View>
-
-                :data.check_passwordInputChange ?
-
-                <Animatable.View
-                   animation="bounceIn"
-                   style={{marginHorizontal:10}}
-                  >
-                  <Feather 
-                    name="check-circle"
-                    color="green"
-                    size={20}
-                />
-               </Animatable.View>
-
-                :null}
                 <TouchableOpacity
                     onPress={updateSecureTextEntry}
                 >
@@ -286,8 +284,13 @@ const SignUpScreen = ({navigation}) => {
                     }
                 </TouchableOpacity>
             </View>
+            { data.isValidPassword ? null : 
+            <Animatable.View animation="fadeInLeft" duration={500}>
+            <Text style={styles.errorMsg}>Password must be 8 characters long.</Text>
+            </Animatable.View>
+            }
+            
 
-           
             <View style={styles.textPrivate}>
                 <Text style={styles.color_textPrivate}>
                     By signing up you agree to our
@@ -299,7 +302,7 @@ const SignUpScreen = ({navigation}) => {
             <View style={styles.button}>
                 <TouchableOpacity
                     style={styles.signIn}
-                    onPress={SignupFormSubmit}
+                    onPress={() => {signUpHandle( data.name,data.email, data.password )}}
                 >
                 <LinearGradient
                     colors={['#5f64e3', Colors.primary]}
@@ -314,17 +317,16 @@ const SignUpScreen = ({navigation}) => {
                 <TouchableOpacity
                     onPress={() => navigation.navigate('SignInScreen')}
                     style={[styles.signIn, {
-                        borderColor: Colors.primary,
+                        borderColor:  Colors.primary,
                         borderWidth: 1,
                         marginTop: 15
                     }]}
                 >
                     <Text style={[styles.textSign, {
-                        color: Colors.primary
+                        color:  Colors.primary
                     }]}>Sign In</Text>
                 </TouchableOpacity>
             </View>
-            </ScrollView>
         </Animatable.View>
       </View>
     );
@@ -334,66 +336,70 @@ export default SignUpScreen;
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1, 
-      backgroundColor: Colors.primary
+        flex: 1, 
+        backgroundColor:  Colors.primary
+      },
+      header: {
+          flex: 1,
+          justifyContent: 'flex-end',
+          paddingHorizontal: 20,
+          paddingBottom: 50
+      },
+      footer: {
+          flex: Platform.OS === 'ios' ? 3 : 5,
+          backgroundColor: '#fff',
+          borderTopLeftRadius: 30,
+          borderTopRightRadius: 30,
+          paddingHorizontal: 20,
+          paddingVertical: 30
+      },
+      text_header: {
+          color: '#fff',
+          fontWeight: 'bold',
+          fontSize: 30
+      },
+      text_footer: {
+          color: '#05375a',
+          fontSize: 18
+      },
+      action: {
+          flexDirection: 'row',
+          marginTop: 10,
+          borderBottomWidth: 1,
+          borderBottomColor: '#f2f2f2',
+          paddingBottom: 5
+      },
+      textInput: {
+          flex: 1,
+          marginTop: Platform.OS === 'ios' ? 0 : -12,
+          paddingLeft: 10,
+          color: '#05375a',
+      },
+      button: {
+          alignItems: 'center',
+          marginTop: 50
+      },
+      signIn: {
+          width: '100%',
+          height: 50,
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: 10
+      },
+      textSign: {
+          fontSize: 18,
+          fontWeight: 'bold'
+      },
+      textPrivate: {
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          marginTop: 20
+      },
+      color_textPrivate: {
+          color: 'grey'
+      },
+      errorMsg: {
+        color: '#FF0000',
+        fontSize: 14,
     },
-    header: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        paddingHorizontal: 20,
-        paddingBottom: 50
-    },
-    footer: {
-        flex: Platform.OS === 'ios' ? 3 : 5,
-        backgroundColor: '#fff',
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-        paddingHorizontal: 20,
-        paddingVertical: 30
-    },
-    text_header: {
-        color: '#fff',
-        fontWeight: 'bold',
-        fontSize: 30
-    },
-    text_footer: {
-        color: '#05375a',
-        fontSize: 18
-    },
-    action: {
-        flexDirection: 'row',
-        marginTop: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#f2f2f2',
-        paddingBottom: 5
-    },
-    textInput: {
-        flex: 1,
-        marginTop: Platform.OS === 'ios' ? 0 : -12,
-        paddingLeft: 10,
-        color: '#05375a',
-    },
-    button: {
-        alignItems: 'center',
-        marginTop: 50
-    },
-    signIn: {
-        width: '100%',
-        height: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 10
-    },
-    textSign: {
-        fontSize: 18,
-        fontWeight: 'bold'
-    },
-    textPrivate: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        marginTop: 20
-    },
-    color_textPrivate: {
-        color: 'grey'
-    }
   });
