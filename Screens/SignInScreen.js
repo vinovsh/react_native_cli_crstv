@@ -17,7 +17,7 @@ import Feather from 'react-native-vector-icons/Feather';
 
 import { useTheme } from 'react-native-paper';
 
-import { AuthContext } from '../components/context';
+import { AuthContext } from '../Components/Context';
 import { color } from 'react-native-reanimated';
 
 /* import Users from '../model/users'; */
@@ -36,7 +36,7 @@ const SignUpScreen = ({navigation}) => {
 
     const { colors } = useTheme();
 
-    /* const { signIn } = React.useContext(AuthContext); */
+    const { SignInFormSubmit } = React.useContext(AuthContext);
 
     const emailInputChange = (val) => {
         
@@ -109,18 +109,23 @@ const SignUpScreen = ({navigation}) => {
         }
     }
 
-    const loginHandle = (userName, password) => {
+    const loginHandle = (email, password) => {
 
       
 
-        if ( data.email.length == 0 || data.password.length == 0 ) {
-            Alert.alert('Wrong Input!', 'Username or password field cannot be empty.', [
+        if ( email.length == 0 || password.length == 0 ) {
+            Alert.alert('Wrong Input!', 'email or password field cannot be empty.', [
                 {text: 'Okay'}
             ]);
             return;
+        }else if(data.isValidPassword && data.isValidUser){
+
+            SignInFormSubmit(email,password);
         }else{
 
-            alert("Login Success");
+            Alert.alert('Wrong Input!', 'Please fill valid data', [
+                {text: 'Okay'}
+            ]);
         }
 
        

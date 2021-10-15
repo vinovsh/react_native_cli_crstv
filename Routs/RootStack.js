@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SplashScreen from '../Screens/SplashScreen';
 import SignUpScreen from '../Screens/SignUpScreen';
 import SignInScreen from '../Screens/SignInScreen';
+import OtpScreen from '../Screens/OtpScreen';
 
 const Stack = createNativeStackNavigator();
 const RootStack = ({ navigation }) => {
@@ -32,6 +33,14 @@ const RootStack = ({ navigation }) => {
            <Stack.Screen
               name="SignInScreen"
               component={SignInScreen}
+              options={{
+                 headerShown: false,
+           
+             }}
+          />
+           <Stack.Screen
+              name="OtpScreen"
+              component={OtpScreen}
               options={{
                  headerShown: false,
            

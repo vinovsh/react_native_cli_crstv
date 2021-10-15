@@ -9,6 +9,7 @@ import {
     StatusBar,
     Alert
 } from 'react-native';
+
 import Colors from '../Components/ColorPalet';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
@@ -17,8 +18,7 @@ import Feather from 'react-native-vector-icons/Feather';
 
 import { useTheme } from 'react-native-paper';
 
-import { AuthContext } from '../components/context';
-import { color } from 'react-native-reanimated';
+import {AuthContext } from '../Components/Context';
 
 
 /* import Users from '../model/users'; */
@@ -39,7 +39,7 @@ const SignUpScreen = ({navigation}) => {
 
     const { colors } = useTheme();
 
-    /* const { signIn } = React.useContext(AuthContext); */
+    const { SignUpFormSubmit } = React.useContext(AuthContext); 
 
 
     const nameInputChange = (val) => {
@@ -52,7 +52,7 @@ const SignUpScreen = ({navigation}) => {
           
                 setData({
                     ...data,
-                    email: val,
+                    name: val,
                     check_nameInputChange: true,
                     isValidName: true
                 });
@@ -62,7 +62,7 @@ const SignUpScreen = ({navigation}) => {
         } else {
             setData({
                 ...data,
-                email: val,
+                name: val,
                 check_nameInputChange: false,
                 isValidName: false
             });
@@ -143,17 +143,17 @@ const SignUpScreen = ({navigation}) => {
     const signUpHandle = (name,email,password) => {
 
       
+      if(name && email && password) {
 
-        if ( data.email.length == 0 || data.password.length == 0 ) {
-            Alert.alert('Wrong Input!', 'Username or password field cannot be empty.', [
-                {text: 'Okay'}
-            ]);
-            return;
-        }else{
+        SignUpFormSubmit(name,email,password);
+      }else{
 
-            alert("Login Success");
-        }
-
+        Alert.alert('Wrong Input!', 'Fields cannot be empty.', [
+            {text: 'Okay'}
+        ]);
+        return;
+      } 
+        
        
     }
 
@@ -315,7 +315,7 @@ const SignUpScreen = ({navigation}) => {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('SignInScreen')}
+                    onPress={() => navigation.navigate('OtpScreen')}
                     style={[styles.signIn, {
                         borderColor:  Colors.primary,
                         borderWidth: 1,

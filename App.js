@@ -48,11 +48,20 @@ const App = () => {
     setIsDarkTheme( isDarkTheme => !isDarkTheme );
   },
 
-   SignupFormSubmit: (username,email,password) => {
+   SignUpFormSubmit: (name,email,password) => {
 
-    if(username && email && password){
+    
 
-    alert(username);
+         alert(name);
+    
+
+   },
+
+   SignInFormSubmit: (email,password) => {
+
+    if(email && password){
+
+    alert(email);
     }else{
 
     alert("please fill all data")
