@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useRef,useEffect} from 'react';
 import { 
     View, 
     Text, 
@@ -24,26 +24,125 @@ import { color } from 'react-native-reanimated';
 
 const OtpScreen = ({navigation}) => {
 
-    const [data, setData] = React.useState({
-        otp: '',
-        
+    
+    const [pin, setPin] = React.useState({
+       pin1:'',
+       pin2:'',
+       pin3:'',
+       pin4:'',
+      
     });
 
-    const { colors } = useTheme();
+   const ref1=useRef(null);
+   const ref2=useRef(null);
+   const ref3=useRef(null);
+   const ref4=useRef(null);
 
-    //const { SignInFormSubmit } = React.useContext(AuthContext);
+   const { colors } = useTheme();
 
-    
+   useEffect(() => {
+    ref1.current.focus();
 
-    const handleOtpChange = (val) => {
-      
-            setData({
-                ...data,
-                otp: val,
-            
+  }, []);
+  
+    const handlePin1Change = (val) => {
+        
+       if(val.length==1){
+
+        setPin({
+            ...pin,
+           pin1:val,
+          
+        });
+        ref2.current.focus();
+       }else if(val.length==2){
+
+        ref2.current.focus();
+       }else{
+         
+        setPin({
+            ...pin,
+           pin1:val,
+          
+        });
+       
+
+       }
+    }
+
+    const handlePin2Change = (val) => {
+        
+        if(val.length==1){
+ 
+         setPin({
+             ...pin,
+            pin2:val,
+           
+         });
+         ref3.current.focus();
+        }else if(val.length==2){
+
+            ref3.current.focus();
+        }else{
+
+            setPin({
+                ...pin,
+               pin2:val,
+              
             });
-      
+            ref1.current.focus();
         }
+     }
+
+     const handlePin3Change = (val) => {
+        
+        if(val.length==1){
+ 
+         setPin({
+             ...pin,
+            pin3:val,
+           
+         });
+         ref4.current.focus();
+        }else if(val.length==2){
+
+            ref4.current.focus();
+        }else{
+
+            setPin({
+                ...pin,
+               pin3:val,
+              
+            });
+            ref2.current.focus();
+
+        }
+     }
+
+     const handlePin4Change = (val) => {
+        
+        if(val.length==1){
+ 
+         setPin({
+             ...pin,
+            pin4:val,
+           
+         });
+        
+        }
+        else if(val.length==2){
+
+          
+        }else{
+
+            setPin({
+                ...pin,
+               pin4:val,
+              
+            });
+            ref3.current.focus();
+        }
+     }
     
 
    
@@ -54,7 +153,14 @@ const OtpScreen = ({navigation}) => {
 
       
 
-       alert("ok");
+      if(otp.pin1 && otp.pin2 && otp.pin3 && otp.pin4){
+
+        alert("success")
+     }else{
+
+        alert("Fields canot be empty");
+     } 
+  
 
        
     }
@@ -63,7 +169,7 @@ const OtpScreen = ({navigation}) => {
       <View style={styles.container}>
           <StatusBar backgroundColor={color.primary} barStyle="light-content"/>
         <View style={styles.header}>
-            <Text style={styles.text_header}>Register Now!</Text>
+            <Text style={styles.text_header}>Register Now!{pin.pin1}</Text>
         </View>
         <Animatable.View 
             animation="fadeInUpBig"
@@ -80,23 +186,27 @@ const OtpScreen = ({navigation}) => {
                     style={[styles.otpInput, {
                         color: colors.text
                     }]}
-                    maxLength={1}
+                    ref={ref1}
+                    maxLength={2}
+                    value={pin.pin1}
                     keyboardType="numeric"
                     autoCapitalize="none"
-                    onChangeText={(val) => handleOtpChange(val)}
+                    onChangeText={(val) => handlePin1Change(val)}
                    
                 />
-
                   <TextInput 
                     placeholder="0"
                     placeholderTextColor="#666666"
                     style={[styles.otpInput, {
                         color: colors.text
                     }]}
-                    maxLength={1}
+                  
+                    ref={ref2}
+                    maxLength={2}
+                    value={pin.pin2}
                     keyboardType="numeric"
                     autoCapitalize="none"
-                    onChangeText={(val) => handleOtpChange(val)}
+                    onChangeText={(val) => handlePin2Change(val)}
                    
                 />
                 <TextInput 
@@ -105,10 +215,13 @@ const OtpScreen = ({navigation}) => {
                     style={[styles.otpInput, {
                         color: colors.text
                     }]}
-                    maxLength={1}
+                    ref={ref3}
+                    maxLength={2}
+                    value={pin.pin3}
                     keyboardType="numeric"
                     autoCapitalize="none"
-                    onChangeText={(val) => handleOtpChange(val)}
+                    onChangeText={(val) => handlePin3Change(val)}
+                    
                    
                 />
                 <TextInput 
@@ -117,24 +230,40 @@ const OtpScreen = ({navigation}) => {
                     style={[styles.otpInput, {
                         color: colors.text
                     }]}
-                    maxLength={1}
+                    ref={ref4}
+                    maxLength={2}
+                    value={pin.pin4}
                     keyboardType="numeric"
                     autoCapitalize="none"
-                    onChangeText={(val) => handleOtpChange(val)}
+                    onChangeText={(val) => handlePin4Change(val)}
+                  
                    
                 />
                 
             </View>
            
             
-
+ <View style={styles.textPrivate}>
+                <Text style={styles.color_textPrivate}>
+                   We sent 
+                   <Text style={[ {fontWeight: 'bold'}]}>{" "}OTP</Text>
+                   <Text >{" "}to your registered email id please check your </Text>
+                   
+                   <Text style={[{fontWeight: 'bold'}]}>{" "}Inbox</Text>
+                   <Text >{" "}or </Text>
+                   <Text style={[{fontWeight: 'bold'}]}>{" "}Spam</Text>
+                   <Text >{" "} folder </Text>
+                </Text>
+                
+                
+            </View>
            
 
            
             <View style={styles.button}>
                 <TouchableOpacity
                     style={styles.signUp}
-                    onPress={() => {otpHandle( data.otp )}}
+                    onPress={() => {otpHandle(pin)}}
                 >
                 <LinearGradient
                     colors={['#5f64e3', Colors.primary]}
@@ -150,7 +279,7 @@ const OtpScreen = ({navigation}) => {
             </View>
 
             <TouchableOpacity>
-                <Text style={{color: '#009387', marginTop:15}}>Resend Otp</Text>
+                <Text style={{color: Colors.primary, marginTop:15}}>Resend Otp</Text>
             </TouchableOpacity>
         </Animatable.View>
       </View>
@@ -221,7 +350,7 @@ const styles = StyleSheet.create({
     },
     button: {
         alignItems: 'center',
-        marginTop: 60
+        marginTop: 10
     },
     signUp: {
         width: '100%',
@@ -233,5 +362,14 @@ const styles = StyleSheet.create({
     textSign: {
         fontSize: 18,
         fontWeight: 'bold'
-    }
+    },
+    textPrivate: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginTop: 50
+    },
+    color_textPrivate: {
+        color: 'grey',
+        flexWrap:'wrap'
+    },
   });
