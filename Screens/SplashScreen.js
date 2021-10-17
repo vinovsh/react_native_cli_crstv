@@ -40,7 +40,7 @@ const SplashScreen = ({navigation}) => {
             }]}>Stay connected with CrsTv!</Text>
             <Text style={styles.text}>Sign in with account</Text>
             <View style={styles.button}>
-            <TouchableOpacity  onPress={()=>navigation.navigate('SignUpScreen')} >
+            <TouchableOpacity  onPress={()=>navigation.navigate('SignInScreen')} >
                 <LinearGradient
                     colors={['#5f64e3', '#0b11b1']}
                     style={styles.signIn}

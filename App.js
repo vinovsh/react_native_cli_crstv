@@ -13,12 +13,83 @@ import {
   DefaultTheme as PaperDefaultTheme,
   DarkTheme as PaperDarkTheme
 } from "react-native-paper";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from './Components/Context';
 import RootStack from './Routs/RootStack';
 import HomeStack from './Routs/HomeStack';
 
 
 const App = () => {
+
+const initialLoginState={
+   isLoading:true,
+   isAuthenticated:false,
+   userName:'',
+   userEmail:'',
+   userToken:'',
+   
+
+}
+
+const loginReducer=(prevState,action)=>{
+    
+   switch(action.type){
+
+    case 'LOGIN':
+      return{
+        ...prevState,
+        userToken:action.token,
+        userName:action.name,
+        userEmail:action.email,
+        isLoading:false,
+        isAuthenticated:true
+      };
+    case 'SIGNUP':
+      return{
+
+        ...prevState,
+        userToken:action.token,
+        userName:action.name,
+        userEmail:action.email,
+        isLoading:false,
+        isAuthenticated:false
+      };
+    case 'OTP_VERIFY':
+      return{
+        ...prevState,
+        userToken:action.token,
+        userName:action.name,
+        userEmail:action.email,
+        isLoading:false,
+        isAuthenticated:true
+      };
+    case 'AUTH_CHECK':
+      return{
+        ...prevState,
+        userToken:action.token,
+        userName:action.name,
+        userEmail:action.email,
+        isLoading:false,
+        isAuthenticated:true
+      };
+
+    case 'LOGOUT':
+      return{
+        ...prevState,
+        userToken:'',
+        userName:'',
+        userEmail:'',
+        isLoading:false,
+        isAuthenticated:false
+      };
+   }
+
+}
+
+const [loginState,dispatch]=React.useReducer(loginReducer,initialLoginState);
+
+
+
   const[isDarkTheme,setIsDarkTheme]=React.useState(false);
    const CustomDefaultTheme={
       ...NavigationDefaultTheme,
@@ -57,15 +128,16 @@ const App = () => {
 
    },
 
-   SignInFormSubmit: (email,password) => {
+   SignInFormSubmit: async(email,password) => {
 
-    if(email && password){
+     if(email=="user@gmail.com" && password=="admin123"){
 
-    alert(email);
-    }else{
+       setTimeout(()=>{
 
-    alert("please fill all data")
-    }
+         alert("ok")
+      }, 2000);
+       
+     }
 
  }
 

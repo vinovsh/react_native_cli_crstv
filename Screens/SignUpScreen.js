@@ -315,7 +315,7 @@ const SignUpScreen = ({navigation}) => {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('OtpScreen')}
+                    onPress={() => navigation.navigate('SignInScreen')}
                     style={[styles.signIn, {
                         borderColor:  Colors.primary,
                         borderWidth: 1,

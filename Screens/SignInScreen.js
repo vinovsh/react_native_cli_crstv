@@ -7,7 +7,8 @@ import {
     Platform,
     StyleSheet ,
     StatusBar,
-    Alert
+    Alert,
+    Dimensions
 } from 'react-native';
 import Colors from '../Components/ColorPalet';
 import * as Animatable from 'react-native-animatable';
@@ -19,10 +20,15 @@ import { useTheme } from 'react-native-paper';
 
 import { AuthContext } from '../Components/Context';
 import { color } from 'react-native-reanimated';
+import LoadingScreen from './LoadingScreen';
 
 /* import Users from '../model/users'; */
 
+const height=Dimensions.get('window').height;
 const SignUpScreen = ({navigation}) => {
+    
+    const[isLoading,setIsLoading]=React.useState(false);
+    const[message,setMessage]=React.useState('');
 
     const [data, setData] = React.useState({
         email: '',
@@ -109,9 +115,9 @@ const SignUpScreen = ({navigation}) => {
         }
     }
 
-    const loginHandle = (email, password) => {
+    const loginHandle = async(email, password) => {
 
-      
+        setIsLoading(true);
 
         if ( email.length == 0 || password.length == 0 ) {
             Alert.alert('Wrong Input!', 'email or password field cannot be empty.', [
@@ -120,7 +126,30 @@ const SignUpScreen = ({navigation}) => {
             return;
         }else if(data.isValidPassword && data.isValidUser){
 
+          /* console.log(SignInFormSubmit(email,password)); */
+          await fetch('http://api.aradanamatrimony.com/api_matrimony/api/subscription/details/get',{
+            method:'GET',
+            headers:{
+                'Accept':'application/json',
+                'Content-type':'application/json'
+            }/* ,
+            body: JSON.stringify({
+             'email':"vin@gmail.com"
+
+            }) */
+
+          }).then(res =>res.json())
+          .then(resData=>{
+
+            setIsLoading(false);
+            setMessage(resData.message);
             SignInFormSubmit(email,password);
+            setTimeout(()=>{
+
+                setMessage('');
+             }, 2000);
+          })
+         
         }else{
 
             Alert.alert('Wrong Input!', 'Please fill valid data', [
@@ -133,6 +162,17 @@ const SignUpScreen = ({navigation}) => {
 
     return (
       <View style={styles.container}>
+          {isLoading ? 
+          <LoadingScreen/>
+          : null}
+
+         {message ? 
+           <Animatable.View animation="bounceIn" style={styles.Logmessagebox}>
+
+              <Text style={styles.Logmessage}>{message}</Text>
+           </Animatable.View>
+           
+          : null}
           <StatusBar backgroundColor={color.primary} barStyle="light-content"/>
         <View style={styles.header}>
             <Text style={styles.text_header}>Welcome!</Text>
@@ -328,5 +368,28 @@ const styles = StyleSheet.create({
     textSign: {
         fontSize: 18,
         fontWeight: 'bold'
-    }
+    },
+    Logmessagebox:{
+       position:"absolute" ,
+       top:50,
+       
+       borderRadius:10,
+       flexDirection:"row",
+       justifyContent:"center",
+       width:"100%",
+       zIndex:11
+      
+    },
+    Logmessage:{
+     
+        borderRadius:10,
+        backgroundColor:"#E48F2A",
+        padding:6,
+        lineHeight:25,
+        color:"#fff",
+        fontSize:15
+       
+        
+       
+     }
   });
