@@ -144,10 +144,10 @@ const SignUpScreen = ({navigation}) => {
             setIsLoading(false);
             setMessage(resData.message);
             SignInFormSubmit(email,password);
-            setTimeout(()=>{
+           /*  setTimeout(()=>{
 
                 setMessage('');
-             }, 2000);
+             }, 2000); */
           })
          
         }else{
@@ -163,7 +163,7 @@ const SignUpScreen = ({navigation}) => {
     return (
       <View style={styles.container}>
           {isLoading ? 
-          <LoadingScreen/>
+          <LoadingScreen color="#0003"/>
           : null}
 
          {message ? 

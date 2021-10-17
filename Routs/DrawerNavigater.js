@@ -11,7 +11,7 @@ const DrawerNavigater = ({ route, navigation }) => {
     return (
  
       
-         <Drawer.Navigator initialRouteName="Main" drawerContent={(props) => <MenuSlider {...props} />}>
+         <Drawer.Navigator  initialRouteName="Main" drawerContent={(props) => <MenuSlider {...props} />}>
            <Drawer.Screen 
         
               options={{
@@ -19,6 +19,7 @@ const DrawerNavigater = ({ route, navigation }) => {
                 // headerTitle: () => <Logo />,
                  headerStyle: {
                  backgroundColor:Colors.theamColor,
+                
               },
               headerTitleAlign: 'center',
               // headerLeft: (props) => <Menu  />,

@@ -32,6 +32,7 @@ const Home = ({navigation}) => {
     }
     const[loading,setLoading]=useState(true);
 
+    
     setTimeout(()=>{setLoading(false)}, 2000);
 
 

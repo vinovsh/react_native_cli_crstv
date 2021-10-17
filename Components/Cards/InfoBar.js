@@ -1,17 +1,18 @@
 import React  from "react";
-import {View,Text,StyleSheet,Image,Dimensions,TouchableOpacity} from 'react-native';
+import {View,Text,StyleSheet,Image,Dimensions,TouchableOpacity,na} from 'react-native';
 import Colors from "../ColorPalet";
 import Icon from 'react-native-vector-icons/Ionicons';
- 
+import { useNavigation } from '@react-navigation/native';
+
 const width=Dimensions.get('window').width;
 const InfoBar =props=>{
-
+    const navigation = useNavigation();
     
     return (
        
        
        <View style={styles.container}>
-          <TouchableOpacity activeOpacity={0.8} style={styles.card}>
+          <TouchableOpacity  onPress={() => {navigation.navigate('QuizeScreen')}} activeOpacity={0.8} style={styles.card}>
 
               <Icon color={Colors.primary} style={styles.icon} name="receipt-outline"></Icon>
               <Text style={styles.title}>Bible Quize</Text>

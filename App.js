@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import {Text,View} from "react-native";
 import DrawerNavigater from './Routs/DrawerNavigater';
 import {
@@ -16,11 +16,11 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from './Components/Context';
 import RootStack from './Routs/RootStack';
-import HomeStack from './Routs/HomeStack';
+import LoadingScreen from './Screens/LoadingScreen';
 
 
 const App = () => {
-
+  const[isDarkTheme,setIsDarkTheme]=React.useState(false);
 const initialLoginState={
    isLoading:true,
    isAuthenticated:false,
@@ -82,6 +82,7 @@ const loginReducer=(prevState,action)=>{
         isLoading:false,
         isAuthenticated:false
       };
+     
    }
 
 }
@@ -90,7 +91,7 @@ const [loginState,dispatch]=React.useReducer(loginReducer,initialLoginState);
 
 
 
-  const[isDarkTheme,setIsDarkTheme]=React.useState(false);
+  
    const CustomDefaultTheme={
       ...NavigationDefaultTheme,
       ...PaperDefaultTheme,
@@ -115,9 +116,66 @@ const [loginState,dispatch]=React.useReducer(loginReducer,initialLoginState);
 
  const authContext = React.useMemo(() => ({
 
-   toggleTheme: () => {
-    setIsDarkTheme( isDarkTheme => !isDarkTheme );
+   toggleTheme: async() => {
+
+    try {
+      var get_theme=await AsyncStorage.getItem('@isDarkTheme');
+ 
+      if(get_theme !== null) {
+        if(get_theme=="true"){
+          setIsDarkTheme(isDarkTheme => false );
+          try {
+            await AsyncStorage.setItem('@isDarkTheme', JSON.stringify(false) );
+            
+          } catch (e) {
+            console.log(e);
+          }
+        }else{
+         
+          setIsDarkTheme( isDarkTheme => true );
+          try {
+            await AsyncStorage.setItem('@isDarkTheme', JSON.stringify(true) );
+            
+          } catch (e) {
+            console.log(e);
+          }
+  
+        }
+     }else{
+
+      setIsDarkTheme( isDarkTheme => true );
+      try {
+        await AsyncStorage.setItem('@isDarkTheme', JSON.stringify(true) );
+        
+      } catch (e) {
+        console.log(e);
+      }
+     }
+      
+      
+    } catch (e) {
+      console.log(e);
+    }
+ 
+    /* setIsDarkTheme( isDarkTheme => !isDarkTheme );
+
+    try {
+      await AsyncStorage.setItem('@isDarkTheme', JSON.stringify(isDarkTheme) );
+      
+    } catch (e) {
+      console.log(e);
+    } */
   },
+   SignOut:async()=>{
+      try {
+         await AsyncStorage.removeItem('@user_token')
+         dispatch({type:'LOGOUT'});
+      } catch(e) {
+         console.log(e);
+      }
+
+      
+   },
 
    SignUpFormSubmit: (name,email,password) => {
 
@@ -132,26 +190,88 @@ const [loginState,dispatch]=React.useReducer(loginReducer,initialLoginState);
 
      if(email=="user@gmail.com" && password=="admin123"){
 
-       setTimeout(()=>{
-
-         alert("ok")
-      }, 2000);
+      try {
+        await AsyncStorage.setItem('@user_token', '123456789');
+        dispatch({type:'LOGIN',token:'123456789',name:"vino",email:email});
+      } catch (e) {
+        console.log(e);
+      }
        
      }
 
  }
 
  }), []);
+
+ const getData = async () => {
+
+  //initial theme section
+
+   try {
+    var def_theme=await AsyncStorage.getItem('@isDarkTheme');
+
+    if(def_theme !== null) {
+      if(def_theme=="true"){
+        setIsDarkTheme( isDarkTheme => true );
+      }else{
+        setIsDarkTheme( isDarkTheme => false );
+
+      }
+   }
+    
+    
+  } catch (e) {
+    console.log(e);
+  }
+
+  //initial Auth section
+try {
+   const token = await AsyncStorage.getItem('@user_token')
+  
+   if(token !== null) {
+
+    setTimeout(() => {
+
+      dispatch({type:'AUTH_CHECK',token:'123456789',name:"vino",email:'user@gmail.com'});
+     }, 2000)
+   
+   }else{
+    dispatch({type:'LOGOUT'});
+   }
+} catch(e) {
+   console.log(e);
+}
+}
+
+ useEffect(() => {
+
+ console.log('use')
+    getData();
+  
+  
+}, []);
+
+
   return (
  
     <PaperProvider theme={theme}>
 
        <AuthContext.Provider value={authContext}>
            <NavigationContainer theme={theme}>
+           
+            {loginState.isLoading ? (
+               <LoadingScreen color="#fff"/>
+               ):loginState.isAuthenticated ?(
+                <>
                <StatusBar translucent={true} hidden={false} style="black" backgroundColor="#00000040" />
 
-               {/* <DrawerNavigater/> */}
+              <DrawerNavigater/>
+              </>
+
+               ):!loginState.isLoading ?(
              <RootStack/> 
+
+               ):null}
               
             </NavigationContainer> 
        </AuthContext.Provider>

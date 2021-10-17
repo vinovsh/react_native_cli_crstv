@@ -27,9 +27,9 @@ const MenuSlider = (props) => {
 
 
     const paperTheme = useTheme();
-    const {toggleTheme } = React.useContext(AuthContext);
+    const {toggleTheme,SignOut } = React.useContext(AuthContext);
 
-   /*  const { signOut, toggleTheme } = React.useContext(AuthContext); */
+
 
     return(
         <View style={{flex:1}}>
@@ -132,7 +132,7 @@ const MenuSlider = (props) => {
                         />
                     )}
                     label={({color}) => <Text style={{color:color}} >Sign Out</Text>}
-                    onPress={() => {signOut()}}
+                    onPress={() => {SignOut()}}
                 />
             </Drawer.Section>
         </View>
