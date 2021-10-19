@@ -98,7 +98,10 @@ const [loginState,dispatch]=React.useReducer(loginReducer,initialLoginState);
       colors:{
 
         ...NavigationDefaultTheme.colors,
-        ...PaperDefaultTheme.colors
+        ...PaperDefaultTheme.colors,
+        custom_text:"black",
+        quiz_text:"#3D3E3E",
+        quiz_small_text:"#6E6F6F"
       }
    }
 
@@ -108,7 +111,11 @@ const [loginState,dispatch]=React.useReducer(loginReducer,initialLoginState);
     colors:{
 
       ...NavigationDarkTheme.colors,
-      ...PaperDarkTheme.colors
+      ...PaperDarkTheme.colors,
+      custom_text:"#fff",
+      quiz_text:"#fff",
+      quiz_small_text:"#eceaea"
+
     }
  }
  

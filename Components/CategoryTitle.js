@@ -2,14 +2,16 @@ import React  from "react";
 import {View,Text,StyleSheet,Image} from 'react-native';
 import Colors from "./ColorPalet";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {useTheme} from 'react-native-paper';
+
 
 
 const CategoryTitle =props=>{
-
+  const{colors}=useTheme();
     
     return (
         <View  >
-          <Text style={styles.CategoryTitle}>{props.title}</Text>
+          <Text style={[styles.CategoryTitle,{color:colors.custom_text}]}>{props.title}</Text>
 
           <Text 
            style={{
@@ -41,7 +43,7 @@ const styles = StyleSheet.create({
     
      paddingHorizontal:20,
      fontFamily:"Montserrat-SemiBold",
-   
+     
    
  
      

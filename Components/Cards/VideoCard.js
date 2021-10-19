@@ -3,14 +3,15 @@ import {View,Text,StyleSheet,Image,Dimensions,TouchableOpacity} from 'react-nati
 import Colors from "../ColorPalet";
 import Icon from 'react-native-vector-icons/Ionicons';
 import VideoPlayer from 'react-native-video-controls';
- 
+import {useTheme} from 'react-native-paper';
+
 const width=Dimensions.get('window').width;
 const VideoCard =props=>{
 
-    
+  const{colors}=useTheme();
     return (
         <View>
-           <Text style={styles.CategoryTitle}>{props.title}</Text>
+           <Text style={[styles.CategoryTitle,{color:colors.custom_text}]}>{props.title}</Text>
            <TouchableOpacity  style={styles.playerContainer}>
               <VideoPlayer
                  style={styles.player}

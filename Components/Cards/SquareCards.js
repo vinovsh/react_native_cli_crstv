@@ -5,15 +5,15 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import ProgressiveImage from "../ProgressiveImage";
 import { color } from "react-native-reanimated";
- 
+import {useTheme} from 'react-native-paper';
 const width=Dimensions.get('window').width;
 const SquareCard =props=>{
-
+  const{colors}=useTheme();
     
     return (
         <View>
     
-          <Text style={styles.CategoryTitle}>Daily Verse</Text>
+          <Text style={[styles.CategoryTitle,{color:colors.custom_text}]}>Daily Verse</Text>
        
         
         <TouchableOpacity activeOpacity={0.8} style={styles.container}>
