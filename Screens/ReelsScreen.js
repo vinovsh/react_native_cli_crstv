@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,Text,Button,SafeAreaView,StyleSheet,FlatList,StatusBar} from "react-native";
+import {FlatList,View,Text,Button,SafeAreaView,StyleSheet,StatusBar} from "react-native";
 import ReelsContainer from '../Components/Reals/ReelsContainer';
 const ReelsScreen = ({route,navigation}) => {
 
@@ -32,21 +32,37 @@ const ReelsScreen = ({route,navigation}) => {
           likesCount:5
         },
       ];
-      
+
+      const[viewableId,setViewableId]=React.useState(0);
+      const onViewableItem=(val)=>{
+
+        
+         
+      }
+    
+      const onViewRef = React.useRef((viewableItems)=> {
+       // console.log(viewableItems)
+        setViewableId(viewableItems.viewableItems[0].key)
+        // Use viewable items in state or as intended
+    })
+    const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 })
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
              <StatusBar backgroundColor="#ff000000" barStyle="light-content"/>
         <FlatList
+        
           onEndReached={(val)=>{console.log("end")}}
-          onViewableItemsChanged={(val)=>{console.log("changed")}}
+          onViewableItemsChanged={onViewRef.current}
+       //  onViewableItemsChanged={(val)=>{onViewableItem(val)}}
           data={DATA}
-          renderItem={({item})=><ReelsContainer item={item}/>}
+          renderItem={({item,index})=><ReelsContainer index={index} active_id={viewableId}  item={item}/>}
           keyExtractor={(item) => item.id}
-          showsVerticalScrollIndicator
+          showsVerticalScrollIndicator={false}
+         
           pagingEnabled
 
         />
-      </SafeAreaView>
+      </View>
     );
 }
 

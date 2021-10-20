@@ -27,7 +27,7 @@ const LivePlayer = () => {
               style={styles.player}
               source={{
                 uri: 'https://stream.e2is.in/hls/crstv.m3u8',
-                type: 'm3u8'
+               // type: 'm3u8'
               // overrideFileExtensionAndroid: 'm3u8' 
               }}
               repeat={false}

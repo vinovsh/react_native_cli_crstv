@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useEffect,Component } from 'react';
 import {View,Text,Button,SafeAreaView,StyleSheet,FlatList,Image,Dimensions,TouchableOpacity} from "react-native"
 import { Title } from 'react-native-paper';
 import VideoPlayer from 'react-native-video-controls';
@@ -8,22 +8,34 @@ import Feather from 'react-native-vector-icons/Feather';
 
 const width=Dimensions.get('window').width;
 const height=Dimensions.get('window').height;
-const ReelsContainer = ({route,item}) => {
+class ReelsContainer extends Component {
+  constructor (props) {
+    super(props);
+   
+    this.state = {
+      isLike: this.props.item.isLike,
+   
+    };
 
+   
+  }
 
-  const [isLike,setIsLike]=React.useState(item.isLike);
-  const [isPlay,setIsPlay]=React.useState(false);
   
-   const playVideo=()=>{
+  render () {
+
+ 
+
+   const playVideo=()=>{ 
      alert("j")
    }
   const likeButton=()=>{
-    if(isLike==true){
-        setIsLike(false);
+    if(this.state.isLike==true){
+      this.setState({ isLike:false })
       
     }else{
 
-        setIsLike(true);
+      this.setState({ isLike:true })
+
       
     } 
   
@@ -31,14 +43,14 @@ const ReelsContainer = ({route,item}) => {
   }
     return (
        <View onChangeVisibleRows={()=>{alert('l')}} style={[styles.container,{width,height}]}>
-            {/* <InViewPort onChange={()=>{playVideo()}}> */}
-          <VideoPlayer
+    
+         <VideoPlayer
                  style={styles.player}
                 
                 
             
                  source={{
-                    uri: item.video,
+                    uri: this.props.item.video,
                       
                  }}
                  muted={false}
@@ -54,33 +66,34 @@ const ReelsContainer = ({route,item}) => {
                  repeat={true}
                  showOnStart={false}
                  controlTimeout={1}
-                 paused={isPlay}
+                 paused={this.props.active_id==this.props.item.id || this.props.index==0 ? false : true}
                  
         
         
-              />
-             {/*  </InViewPort> */}
+              />  
+            
 
               <View  style={styles.optionsCard}>
                   <TouchableOpacity onPress={()=>{likeButton()}}  style={{flexDirection:"column",alignItems:'center'}}>
                      <Feather 
                        name="thumbs-up"
-                       color={isLike?"#0BD175" :'white'}
+                       color={this.state.isLike?"#0BD175" :'white'}
                        size={30}
                      />
-                     <Text style={{color:"white"}}>{item.likesCount}</Text>
+                     <Text style={{color:"white"}}>{this.props.item.likesCount}</Text>
                   </TouchableOpacity>
               </View>
 
               <View style={styles.profileCard}>
-                 <Title style={styles.description}>{item.description}</Title>
+                 <Title style={styles.description}>{this.props.item.description}</Title>
                  <View style={styles.usercard}>
                        <Image style={styles.pro_img} source={{uri:'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80'}}/>
-                       <Text numberOfLines={1}  style={styles.pname}>{item.name}</Text> 
+                       <Text numberOfLines={1}  style={styles.pname}>{this.props.item.name}</Text> 
                  </View>
               </View>
        </View>
     );
+                }
 }
 
 export default ReelsContainer;
@@ -89,7 +102,8 @@ const styles = StyleSheet.create({
     container:{
       flex:1,
       justifyContent:"center",
-      alignItems:"center"
+      alignItems:"center",
+      backgroundColor:"black"
     },
     profileCard:{
         width:width/1.2,
