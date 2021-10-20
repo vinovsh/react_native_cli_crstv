@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import ProgressiveImage from "../ProgressiveImage";
 import { color } from "react-native-reanimated";
 import {useTheme} from 'react-native-paper';
-const width=Dimensions.get('window').width;
+const width=Dimensions.get('screen').width;
 const SquareCard =props=>{
   const{colors}=useTheme();
     

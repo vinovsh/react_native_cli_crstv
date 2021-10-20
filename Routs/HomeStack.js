@@ -9,6 +9,7 @@ import MenuIcon from '../Components/Header/MenuIcon';
 import Logo from '../Components/Header/Logo';
 import LivePlayerFull from '../Screens/LivePlayerFull';
 import QuizeScreen from '../Screens/QuizeScreen';
+import ReelsScreen from '../Screens/ReelsScreen';
 
 const Stack = createNativeStackNavigator();
 const HomeStack = ({ navigation }) => {
@@ -63,6 +64,15 @@ const HomeStack = ({ navigation }) => {
               name="QuizeScreen" 
               component={QuizeScreen}
            />
+
+            <Stack.Screen
+
+              options={{
+                headerShown: false,
+              }}
+              name="Reels" 
+              component={ReelsScreen}
+            />
          
           
         </Stack.Navigator>

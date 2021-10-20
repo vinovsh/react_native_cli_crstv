@@ -3,23 +3,31 @@ import {View,Text,StyleSheet,Image,Dimensions,TouchableOpacity} from 'react-nati
 import Colors from "../ColorPalet";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ProgressiveImage from "../ProgressiveImage";
+import { useNavigation } from '@react-navigation/native';
+import ReelsScreen from "../../Screens/ReelsScreen";
 
 const width=Dimensions.get("window").width;
 const RealsCard =props=>{
+    const navigation = useNavigation();
 
+
+    const reelsscreen=()=>{
+
+         navigation.navigate('Reels');
+    }
     
     return (
         <View style={styles.container}>
          
             <View style={styles.card}>
          
-                <View style={styles.realCard}>
+                <TouchableOpacity onPress={()=>{reelsscreen()}} activeOpacity={0.6} style={styles.realCard}>
                     <ProgressiveImage style={styles.image} resizeMode="cover" source={{uri:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIHWqDcE3IA-XEvkKPfeKeSmblyIGwTa8QBQ&usqp=CAU"}} />
                     <View style={styles.overlay}>
 
-                       <Text  style={styles.realsText}>Watch Reals </Text>
+                       <Text  style={styles.realsText}>Watch Reels </Text>
                     </View> 
-                </View>
+                </TouchableOpacity>
                {/*   */}
                <TouchableOpacity activeOpacity={0.6} style={styles.uploadButton}>
                    
