@@ -2,6 +2,7 @@ import React  from "react";
 import {View,Text,StyleSheet,Image,Dimensions,TouchableOpacity} from 'react-native';
 import Colors from "../ColorPalet";
 import Icon from 'react-native-vector-icons/Ionicons';
+import Share from 'react-native-share';
 
 import ProgressiveImage from "../ProgressiveImage";
 import { color } from "react-native-reanimated";
@@ -9,6 +10,23 @@ import {useTheme} from 'react-native-paper';
 const width=Dimensions.get('screen').width;
 const SquareCard =props=>{
   const{colors}=useTheme();
+
+
+  const shareImage=()=>{
+
+    const shareOptions={
+      message:"hello crstv",
+      url:props.source
+    }
+
+    Share.open(shareOptions)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      err && console.log(err);
+    });
+  }
     
     return (
         <View>
@@ -25,7 +43,7 @@ const SquareCard =props=>{
               
          /> 
            <View style={styles.shareBox}>
-           <TouchableOpacity>
+           <TouchableOpacity onPress={()=>{shareImage()}}>
              <Icon color={Colors.theamColor} style={{fontSize:20,fontWeight:700}} name="share-social-outline"></Icon>
            </TouchableOpacity>
            </View>
