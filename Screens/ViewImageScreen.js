@@ -1,20 +1,96 @@
 import React from 'react';
-import {View,Text,Button, StyleSheet,Dimensions,Animated, Image,TouchableOpacity} from "react-native";
+import {View,Text,Button,NativeModules, StyleSheet,Dimensions,Animated, Image,TouchableOpacity,PermissionsAndroid,Platform} from "react-native";
 import ProgressiveImage from '../Components/ProgressiveImage';
 import { PinchGestureHandler,State } from 'react-native-gesture-handler';
 import Feather from 'react-native-vector-icons/Feather';
+import RNFetchBlob from 'rn-fetch-blob';
+//const RNFetchBlob = NativeModules.RNFetchBlob;
+
 
 const width=Dimensions.get("window").width;
 const height=Dimensions.get('window').height;
 const ViewImageScreen = ({route,navigation}) => {
 
- console.log(route.params)
+
  
  React.useEffect(() => {
   navigation.setOptions({ title:route.params.title });
 
 }, []);
  const scale=new Animated.Value(1)
+
+
+ /* image download section */
+
+    const checkPermission=async()=>{
+       
+      if(Platform.OS=="ios"){
+         downloadImage();
+      }else{
+
+        try {
+
+          const granted=await PermissionsAndroid.request(
+            
+            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+            {
+              title:"Srorage Permission Required",
+              message:"App needs access to your storage to download photos"
+            }
+
+          )
+         
+          if(granted==PermissionsAndroid.RESULTS.GRANTED){
+
+             console.log("storage permission granted");
+             downloadImage();
+          }else{
+            alert("storage permission not granted");
+          }
+          
+        } catch (error) {
+           console.warn(error)
+        }
+
+      }
+
+    }
+
+    const downloadImage=()=>{
+     let date=new Date();
+     let image_url=route.params.img_url.uri;
+     let ext=getExtention(image_url);
+     ext='.'+ext[0];
+     const {config,fs}=RNFetchBlob;
+      //get congic and fs from RNFetchBlob
+     let pictureDir=RNFetchBlob.fs.dirs.PictureDir 
+     let options={
+       fileCatch:true,
+       addAndroidDownloads:{
+            //related to the android only
+            useDownloadManager:true,
+            notification:true,
+            path:pictureDir + '/image_'+Math.floor(date.getTime()+date.getSeconds() /2)+ext,
+            description:"Image"
+       }
+     }
+
+     config(options)
+     .fetch('GET',image_url)
+     .then(res=>{
+         console.log('res->',JSON.stringify(res));
+         alert("image downloaded successfully")
+     })
+    }
+
+    const getExtention=filename=>{
+      return /[.]/.exec(filename) ? /[^.]+$/.exec(filename):undefined
+    }
+
+ /* end image download section */
+
+
+
  const onZoomEventFunction=Animated.event(
    
      [{
@@ -69,7 +145,7 @@ const ViewImageScreen = ({route,navigation}) => {
            <View style={styles.download_box}>
              
               <View style={styles.download_circle}>
-                <TouchableOpacity>    
+                <TouchableOpacity onPress={()=>{checkPermission()}}>    
                   <Feather 
                     name="download"
                     color="white"
