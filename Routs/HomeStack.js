@@ -1,4 +1,5 @@
 import React from 'react';
+import{Text} from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from '../Screens/Home';
 import Category from '../Screens/CategoryDetails';
@@ -10,10 +11,11 @@ import Logo from '../Components/Header/Logo';
 import LivePlayerFull from '../Screens/LivePlayerFull';
 import QuizeScreen from '../Screens/QuizeScreen';
 import ReelsScreen from '../Screens/ReelsScreen';
+import ViewImageScreen from '../Screens/ViewImageScreen';
 
 const Stack = createNativeStackNavigator();
-const HomeStack = ({ navigation }) => {
-    
+const HomeStack = ({ navigation}) => {
+
     return (
      
         
@@ -73,6 +75,19 @@ const HomeStack = ({ navigation }) => {
               name="Reels" 
               component={ReelsScreen}
             />
+
+
+             <Stack.Screen
+
+                options={{
+                   headerShown: true,
+                 
+                  title:"hello"
+                }}
+                
+               name="ViewImage" 
+               component={ViewImageScreen}
+              />
          
           
         </Stack.Navigator>

@@ -20,6 +20,8 @@ target 'crstv' do
 
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-async-storage/async-storage'
 
+  pod 'react-native-image-base64', :path => '../node_modules/react-native-image-base64'
+
   target 'crstvTests' do
     inherit! :complete
     # Pods for testing

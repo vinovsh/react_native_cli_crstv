@@ -3,20 +3,24 @@ import {View,Text,StyleSheet,Image,Dimensions,TouchableOpacity} from 'react-nati
 import Colors from "../ColorPalet";
 import Icon from 'react-native-vector-icons/Ionicons';
 import Share from 'react-native-share';
+import ImgToBase64 from 'react-native-image-base64';
+import { useNavigation } from '@react-navigation/native';
 
 import ProgressiveImage from "../ProgressiveImage";
 import { color } from "react-native-reanimated";
 import {useTheme} from 'react-native-paper';
 const width=Dimensions.get('screen').width;
 const SquareCard =props=>{
+
   const{colors}=useTheme();
+  const navigation = useNavigation();
 
 
-  const shareImage=()=>{
+  const shareImageB64=(base64String)=>{
 
     const shareOptions={
-      message:"hello crstv",
-      url:props.source
+      message:"CrsTv daily verse",
+      url:"data:image/jpeg;base64,"+base64String
     }
 
     Share.open(shareOptions)
@@ -27,6 +31,18 @@ const SquareCard =props=>{
       err && console.log(err);
     });
   }
+
+
+  const shareImage=()=>{
+
+   
+
+
+    ImgToBase64.getBase64String(props.source.uri)
+    .then(base64String => shareImageB64(base64String))
+    .catch(err => doSomethingWith(err));
+
+  }
     
     return (
         <View>
@@ -34,7 +50,7 @@ const SquareCard =props=>{
           <Text style={[styles.CategoryTitle,{color:colors.custom_text}]}>Daily Verse</Text>
        
         
-        <TouchableOpacity activeOpacity={0.8} style={styles.container}>
+        <TouchableOpacity onPress={()=>{navigation.navigate('ViewImage',{ title: 'Daily Verse',img_url:props.source })}} activeOpacity={0.8} style={styles.container}>
        {/* <Image style={styles.image} resizeMode='cover'  source={{uri:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXVmXoBJuxtsP2iKFPfkJ1_v9TB937JnqxJw&usqp=CAU"}} />  */}
             <ProgressiveImage
                 defaultImageSource={require('.././../assets/images/loadImage.png')}
