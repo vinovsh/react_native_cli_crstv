@@ -2,12 +2,12 @@ import React  from "react";
 import {View,Text,StyleSheet,Image,Dimensions,TouchableOpacity} from 'react-native';
 import Colors from "../ColorPalet";
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useNavigation } from '@react-navigation/native';
+
 import ProgressiveImage from "../ProgressiveImage";
  
 const width=Dimensions.get('window').width;
-const EventCard =props=>{
-    const navigation = useNavigation();
+const VideoCard =props=>{
+
     
     return (
         <View>
@@ -15,7 +15,7 @@ const EventCard =props=>{
        
        
         
-        <TouchableOpacity onPress={()=>{navigation.navigate('ViewImage',{ title: 'Events',img_url:props.source })}} activeOpacity={0.8} style={styles.container}>
+        <TouchableOpacity activeOpacity={0.8} style={styles.container}>
        {/* <Image style={styles.image} resizeMode='cover'  source={{uri:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXVmXoBJuxtsP2iKFPfkJ1_v9TB937JnqxJw&usqp=CAU"}} />  */}
             <ProgressiveImage
                 defaultImageSource={require('.././../assets/images/loadImage.png')}
@@ -33,7 +33,7 @@ const EventCard =props=>{
 
 }
 
-export default EventCard;
+export default VideoCard;
 
 
 

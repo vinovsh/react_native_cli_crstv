@@ -1,18 +1,19 @@
 import React  from "react";
 import {View,Text,StyleSheet,Image,Dimensions,TouchableOpacity} from 'react-native';
 import Colors from "../ColorPalet";
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import VideoPlayer from 'react-native-video-controls';
 import {useTheme} from 'react-native-paper';
 
 const width=Dimensions.get('window').width;
-const VideoCard =props=>{
-
+const StatusVideoCard =props=>{
+  const navigation = useNavigation();
   const{colors}=useTheme();
     return (
         <View>
            <Text style={[styles.CategoryTitle,{color:colors.custom_text}]}>{props.title}</Text>
-           <TouchableOpacity  style={styles.playerContainer}>
+           <TouchableOpacity onPress={()=>{navigation.navigate('whatsapp_status',{ title: 'Whatsapp Status',img_url:props.videoSource })}} style={styles.playerContainer}>
               <VideoPlayer
                  style={styles.player}
                 
@@ -35,6 +36,7 @@ const VideoCard =props=>{
         
         
               />
+              <View style={{width:"100%",height:"100%",zIndex:10,position:"absolute"}}></View>
 
            </TouchableOpacity>
 
@@ -45,7 +47,7 @@ const VideoCard =props=>{
 
 }
 
-export default VideoCard;
+export default StatusVideoCard;
 
 
 

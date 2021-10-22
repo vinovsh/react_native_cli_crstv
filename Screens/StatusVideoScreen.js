@@ -1,15 +1,17 @@
 import React from 'react';
-import {View,Text,Button,NativeModules, StyleSheet,Dimensions,Animated, Image,TouchableOpacity,PermissionsAndroid,Platform} from "react-native";
+import {View,Text,Button, StyleSheet,Dimensions,Animated, Image,TouchableOpacity,PermissionsAndroid,Platform} from "react-native";
 import ProgressiveImage from '../Components/ProgressiveImage';
-import { PinchGestureHandler,State } from 'react-native-gesture-handler';
+
 import Feather from 'react-native-vector-icons/Feather';
 import RNFetchBlob from 'rn-fetch-blob';
-//const RNFetchBlob = NativeModules.RNFetchBlob;
+import VideoPlayer from 'react-native-video-controls';
+
 
 
 const width=Dimensions.get("window").width;
 const height=Dimensions.get('window').height;
-const ViewImageScreen = ({route,navigation}) => {
+const StatusVideoScreen = ({route,navigation}) => {
+
 
 
  
@@ -80,7 +82,7 @@ const ViewImageScreen = ({route,navigation}) => {
      .fetch('GET',image_url)
      .then(res=>{
         // console.log('res->',JSON.stringify(res));
-         alert("image downloaded successfully")
+         alert("Status downloaded successfully")
      })
     }
 
@@ -92,56 +94,39 @@ const ViewImageScreen = ({route,navigation}) => {
 
 
 
- const onZoomEventFunction=Animated.event(
-   
-     [{
-
-        nativeEvent:{scale:scale}
-     }],
-     {
-       useNativeDriver:true
-     }
- 
- )
-
- const onZoomStateChangeEvent=(event)=>{
-
-     if(event.nativeEvent.oldState==State.ACTIVE){
-         Animated.spring(
-          scale,
-           {
-
-            toValue:1,
-            useNativeDriver:true,
-
-           }
 
 
-         ).start()
-     }
-
- }
     return (
         <View style={styles.container}>
           
             <View style={styles.image_box}>
-              <PinchGestureHandler
+            <VideoPlayer
+                 style={styles.player}
                 
-                onGestureEvent={()=>{onZoomEventFunction}}
-                onHandlerStateChange={(event)=>{onZoomStateChangeEvent(event)}}
-              
-              >
-                <ProgressiveImage
-                   defaultImageSource={require('../assets/images/loadImage.png')}
-                   source={route.params.img_url}
-                   style={{ width:"100%",flex:1,transform:[{scale:scale}]}}
-              
-                /> 
-               {/*  <Animated.Image
-                    source={{uri:route.params.img_url.uri}}
-                    style={{ width:"100%",flex:1,transform:[{scale:scale}]}}
-                /> */}
-         </PinchGestureHandler>
+                
+            
+                 source={{
+                    uri: route.params.img_url.uri,
+                      
+                 }}
+                 muted={false}
+                 resizeMode="contain"
+                 disablePlayPause
+                 disableSeekbar
+                 disableVolume
+                 disableTimer
+                 disableBack
+                 disableFullscreen
+                 controls={false}
+                 posterResizeMode="contain"
+                 repeat={true}
+                 showOnStart={false}
+                 controlTimeout={1}
+                 paused={false}
+                 
+        
+        
+              />  
             </View>
            <View style={styles.download_box}>
              
@@ -162,7 +147,7 @@ const ViewImageScreen = ({route,navigation}) => {
     );
 }
 
-export default ViewImageScreen;
+export default StatusVideoScreen;
 const styles = StyleSheet.create({
   container:{
 

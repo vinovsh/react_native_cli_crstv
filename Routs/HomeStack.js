@@ -12,6 +12,7 @@ import LivePlayerFull from '../Screens/LivePlayerFull';
 import QuizeScreen from '../Screens/QuizeScreen';
 import ReelsScreen from '../Screens/ReelsScreen';
 import ViewImageScreen from '../Screens/ViewImageScreen';
+import StatusVideoScreen from '../Screens/StatusVideoScreen';
 
 const Stack = createNativeStackNavigator();
 const HomeStack = ({ navigation}) => {
@@ -82,12 +83,24 @@ const HomeStack = ({ navigation}) => {
                 options={{
                    headerShown: true,
                  
-                  title:"hello"
+                  title:"Photo"
                 }}
                 
                name="ViewImage" 
                component={ViewImageScreen}
               />
+
+              <Stack.Screen
+
+                 options={{
+                   headerShown: true,
+ 
+                    title:"Status"
+                 }}
+
+                 name="whatsapp_status"
+                 component={StatusVideoScreen}
+               />
          
           
         </Stack.Navigator>
