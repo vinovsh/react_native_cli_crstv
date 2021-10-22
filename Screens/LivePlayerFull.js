@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import {View,Text,Button,Dimensions,StyleSheet,BackHandler} from "react-native";
+import {View,Text,Button,Dimensions,StyleSheet,BackHandler,StatusBar} from "react-native";
 import VideoPlayer from 'react-native-video-controls';
 import Colors from '../Components/ColorPalet';
 import Orientation from 'react-native-orientation';
@@ -39,7 +39,7 @@ function BackNavigation(){
 }
     return (
         <View style={styles.container}>
-
+           <StatusBar hidden={true} style="black" backgroundColor="#00000040" />
         <VideoPlayer
           style={styles.player}
           source={{

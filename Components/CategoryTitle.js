@@ -1,31 +1,44 @@
 import React  from "react";
-import {View,Text,StyleSheet,Image} from 'react-native';
+import {View,Text,StyleSheet,Image,TouchableOpacity} from 'react-native';
 import Colors from "./ColorPalet";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useTheme} from 'react-native-paper';
-
+import { useNavigation } from '@react-navigation/native';
 
 
 const CategoryTitle =props=>{
   const{colors}=useTheme();
+  const navigation = useNavigation();
     
     return (
         <View  >
           <Text style={[styles.CategoryTitle,{color:colors.custom_text}]}>{props.title}</Text>
 
-          <Text 
-           style={{
+          
+              <TouchableOpacity
+                 onPress={()=>{navigation.navigate(props.navigate_to,{ title: props.title})}}
+              style={{
              
-             marginTop:10,
-             right:10,
-             position:"absolute",
-             fontFamily:"Montserrat-Medium",
-             color:Colors.pink,
-             display:props.display
-             }}
-             >
-               See All <Icon name="angle-right" size={15} color={Colors.pink} />
-            </Text>
+                marginTop:10,
+                right:10,
+                position:"absolute",
+                fontFamily:"Montserrat-Medium",
+                color:Colors.pink,
+                display:props.display
+                }}
+              ><Text 
+
+              style={{
+             
+                fontFamily:"Montserrat-Medium",
+                color:Colors.pink,
+               
+                }}
+          
+             > See All <Icon name="angle-right" size={15} color={Colors.pink} />
+             </Text>
+             </TouchableOpacity>
+            
        
         </View>
       );

@@ -13,6 +13,8 @@ import QuizeScreen from '../Screens/QuizeScreen';
 import ReelsScreen from '../Screens/ReelsScreen';
 import ViewImageScreen from '../Screens/ViewImageScreen';
 import StatusVideoScreen from '../Screens/StatusVideoScreen';
+import ListVideoScreen from '../Screens/ListVideoScreen';
+import ListCategoryScreen from '../Screens/ListCategoryScreen';
 
 const Stack = createNativeStackNavigator();
 const HomeStack = ({ navigation}) => {
@@ -100,6 +102,30 @@ const HomeStack = ({ navigation}) => {
 
                  name="whatsapp_status"
                  component={StatusVideoScreen}
+               />
+
+               <Stack.Screen
+
+                   options={{
+                      headerShown: true,
+
+                      title:"Videos"
+                   }}
+
+                  name="ListVideoScreen"
+                  component={ListVideoScreen}
+               />
+
+                 <Stack.Screen
+
+                  options={{
+                    headerShown: true,
+
+                    title:"Our Shows"
+                  }}
+
+                  name="ListCategoryScreen"
+                  component={ListCategoryScreen}
                />
          
           
