@@ -22,8 +22,9 @@ class ReelsContainer extends Component {
 
   
   render () {
-
  
+
+
 
    const playVideo=()=>{ 
      alert("j")

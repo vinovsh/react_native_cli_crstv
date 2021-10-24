@@ -2,12 +2,12 @@ import React  from "react";
 import {View,Text,StyleSheet,Image,Dimensions,TouchableOpacity} from 'react-native';
 import Colors from "../ColorPalet";
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useNavigation } from '@react-navigation/native';
+
 import ProgressiveImage from "../ProgressiveImage";
  
 const width=Dimensions.get('window').width;
-const EventCard =props=>{
-    const navigation = useNavigation();
+const ListRectangleCard =props=>{
+
     
     return (
         <View>
@@ -15,7 +15,7 @@ const EventCard =props=>{
        
        
         
-        <TouchableOpacity onPress={()=>{navigation.navigate('ViewImage',{ title: 'Events',img_url:props.source })}} activeOpacity={0.8} style={styles.container}>
+        <TouchableOpacity activeOpacity={0.8} style={styles.container}>
        {/* <Image style={styles.image} resizeMode='cover'  source={{uri:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXVmXoBJuxtsP2iKFPfkJ1_v9TB937JnqxJw&usqp=CAU"}} />  */}
             <ProgressiveImage
                 defaultImageSource={require('.././../assets/images/loaderAnimation.gif')}
@@ -33,7 +33,7 @@ const EventCard =props=>{
 
 }
 
-export default EventCard;
+export default ListRectangleCard;
 
 
 
@@ -42,7 +42,9 @@ const styles = StyleSheet.create({
     container:{
        
         width:width/2.3,
-        height:width/2.3,
+       
+        margin:(width-((width/2.3)*2))/4,
+        height:width/1.7,
         borderRadius:15,
         backgroundColor:Colors.theamColor,
        // borderWidth: 1, 
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
         //borderStyle:'solid',
         shadowColor:Colors.shadow,
         elevation:7,
-        margin:10,
+       
         padding:0,
         
         

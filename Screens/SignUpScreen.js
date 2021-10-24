@@ -7,7 +7,8 @@ import {
     Platform,
     StyleSheet ,
     StatusBar,
-    Alert
+    Alert,
+    ScrollView
 } from 'react-native';
 
 import Colors from '../Components/ColorPalet';
@@ -170,6 +171,11 @@ const SignUpScreen = ({navigation}) => {
             }]}
         >
 
+          <ScrollView
+             showsHorizontalScrollIndicator={false}
+             showsVerticalScrollIndicator={false}
+          >
+
            <Text style={[styles.text_footer, {
                 color: colors.text
             }]}>Name</Text>
@@ -327,6 +333,7 @@ const SignUpScreen = ({navigation}) => {
                     }]}>Sign In</Text>
                 </TouchableOpacity>
             </View>
+            </ScrollView>
         </Animatable.View>
       </View>
     );

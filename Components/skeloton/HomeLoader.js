@@ -29,10 +29,17 @@ const HomeLoader = () => {
         </View>
      
 
-
         <View style={styles.quizContainer}>
                 <View style={styles.quiz}></View>
         </View>
+      
+
+        <View style={styles.CompetitionContainer}>
+            
+              <View style={styles.competitionCard}></View> 
+        </View>
+
+       
       
        
     </SkeletonPlaceholder>
@@ -71,10 +78,10 @@ const styles = StyleSheet.create({
     },
     quizContainer:{
       
-        flex:1,
+        
         justifyContent:"center",
         alignItems:"center",
-        position:"relative"
+     
       
 
     },
@@ -86,6 +93,24 @@ const styles = StyleSheet.create({
         marginVertical:30,
         width:width/1.08
 
+    },
+
+    CompetitionContainer:{
+      
+        flex:1,
+        flexDirection:"column",
+        justifyContent:"center",
+        alignItems:"center",
+        marginTop:10
+     
+      
+
+    },
+
+    competitionCard:{
+        width:width/1.09,
+        height:width/3.5,
+      
     }
 
    

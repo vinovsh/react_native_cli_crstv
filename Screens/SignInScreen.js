@@ -120,6 +120,7 @@ const SignUpScreen = ({navigation}) => {
         setIsLoading(true);
 
         if ( email.length == 0 || password.length == 0 ) {
+            setIsLoading(false);
             Alert.alert('Wrong Input!', 'email or password field cannot be empty.', [
                 {text: 'Okay'}
             ]);
@@ -141,9 +142,19 @@ const SignUpScreen = ({navigation}) => {
           }).then(res =>res.json())
           .then(resData=>{
 
+            
+           // setMessage(resData.message);
+
+           if(email=="user@gmail.com" && password=="user1234"){
+               SignInFormSubmit(email,password);
+           }else{
             setIsLoading(false);
-            setMessage(resData.message);
-            SignInFormSubmit(email,password);
+            Alert.alert('Wrong Input!', 'Invalid email id or password', [
+                {text: 'Okay'}
+            ]);
+            return;
+           }
+            
            /*  setTimeout(()=>{
 
                 setMessage('');
@@ -151,7 +162,7 @@ const SignUpScreen = ({navigation}) => {
           })
          
         }else{
-
+            setIsLoading(false);
             Alert.alert('Wrong Input!', 'Please fill valid data', [
                 {text: 'Okay'}
             ]);

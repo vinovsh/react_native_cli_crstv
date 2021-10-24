@@ -11,7 +11,7 @@ const width=Dimensions.get('window').width;
 const CardWithTitle =props=>{
 
     const{colors}=useTheme();
-    const navigation = useNavigation();
+    const navigation = useNavigation(); 
     return (
         <View>
     
@@ -23,7 +23,7 @@ const CardWithTitle =props=>{
             <View style={styles.container}>
        {/* <Image style={styles.image} resizeMode='cover'  source={{uri:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXVmXoBJuxtsP2iKFPfkJ1_v9TB937JnqxJw&usqp=CAU"}} />  */}
             <ProgressiveImage
-                defaultImageSource={require('.././../assets/images/loadImage.png')}
+                defaultImageSource={require('.././../assets/images/loaderAnimation.gif')}
                source={props.source}
                style={styles.image}
               
