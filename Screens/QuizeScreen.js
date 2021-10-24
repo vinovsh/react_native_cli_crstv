@@ -33,7 +33,7 @@ const QuizeScreen = ({route,navigation}) => {
            
            <View style={styles.textBox}>
               
-              <Text style={[styles.largeText,{color:colors.quiz_text}]}>What is the name of this painting</Text>
+              <Text style={[styles.largeText,{color:colors.quiz_text}]}>Where did Adam and Eve live at the beginning of the world?</Text>
            </View>
            <View style={styles.imageContainer}>
            <View style={styles.imageBox}>
@@ -52,21 +52,21 @@ const QuizeScreen = ({route,navigation}) => {
            <View style={styles.optionCard}>
 
                <View style={styles.card}>
-                  <Text style={styles.optionText}>The Astronomer</Text>
+                  <Text style={styles.optionText}>Galilee</Text>
                </View>
 
                <View style={styles.selectedcard}>
-                  <Text style={styles.selectedoptionText}>Les Aments</Text>
+                  <Text style={styles.selectedoptionText}>Garden of Eden</Text>
                </View>
 
                <View style={styles.card}>
-                  <Text style={styles.optionText}>Olymbia</Text>
+                  <Text style={styles.optionText}>Hill of Gash</Text>
                </View>
                <View style={styles.card}>
-                  <Text style={styles.optionText}>Five bathing women at Lake</Text>
+                  <Text style={styles.optionText}>Jerusalem</Text>
                </View>
                <View style={styles.card}>
-                  <Text style={styles.optionText}>Five bathing women at Lake</Text>
+                  <Text style={styles.optionText}>Mount Zemaraim</Text>
                </View>
 
            </View>

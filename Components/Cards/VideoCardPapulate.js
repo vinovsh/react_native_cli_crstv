@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import ProgressiveImage from "../ProgressiveImage";
  
 const width=Dimensions.get('window').width;
-const CardWithTitle =props=>{
+const VideoCardPapulate =props=>{
 
     const{colors}=useTheme();
     const navigation = useNavigation();
@@ -18,7 +18,7 @@ const CardWithTitle =props=>{
        
        
         
-        <TouchableOpacity  onPress={()=>{navigation.navigate(props.navigate_to,{ id:props.item.id, name:props.item.name, image:props.item.image, video:props.item.video})}} activeOpacity={0.8} style={styles.container1}>
+        <View    style={styles.container1}>
 
             <View style={styles.container}>
        {/* <Image style={styles.image} resizeMode='cover'  source={{uri:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXVmXoBJuxtsP2iKFPfkJ1_v9TB937JnqxJw&usqp=CAU"}} />  */}
@@ -33,7 +33,7 @@ const CardWithTitle =props=>{
            <Text ellipsizeMode='tail' numberOfLines={2} style={[styles.CategoryTitle,{color:colors.custom_text}]}>{props.item.name}</Text>
         
          
-        </TouchableOpacity>
+        </View>
        
 
         </View>
@@ -43,7 +43,7 @@ const CardWithTitle =props=>{
 
 }
 
-export default CardWithTitle;
+export default VideoCardPapulate;
 
 
 

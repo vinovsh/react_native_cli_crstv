@@ -15,6 +15,7 @@ import ViewImageScreen from '../Screens/ViewImageScreen';
 import StatusVideoScreen from '../Screens/StatusVideoScreen';
 import ListVideoScreen from '../Screens/ListVideoScreen';
 import ListCategoryScreen from '../Screens/ListCategoryScreen';
+import ListVideoPlayerScreen from '../Screens/ListVideoPlayerScreen';
 
 const Stack = createNativeStackNavigator();
 const HomeStack = ({ navigation}) => {
@@ -127,6 +128,17 @@ const HomeStack = ({ navigation}) => {
                   name="ListCategoryScreen"
                   component={ListCategoryScreen}
                />
+                <Stack.Screen
+
+                  options={{
+                     headerShown: false,
+
+                      title:"player"
+                      }}
+
+                     name="ListVideoPlayerScreen"
+                     component={ListVideoPlayerScreen}
+                  />
          
           
         </Stack.Navigator>
