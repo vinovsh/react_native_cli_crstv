@@ -1,4 +1,6 @@
 import React from 'react';
+import config from '../config/config';
+import axios from 'axios';
 import { 
     View, 
     Text, 
@@ -126,40 +128,51 @@ const SignUpScreen = ({navigation}) => {
             ]);
             return;
         }else if(data.isValidPassword && data.isValidUser){
+           
+            try{
+              
+               await axios.post('http://192.168.137.1/crstv/api/login', {
+                    email: email,
+                    password: password
+                  })
+                 
+                  .then(function (response) {
+                      var data=response.data;
+                   
+                      setIsLoading(false);
+                      if(data.error==false){
+                        if(data.status==1){
+                            var token=data.token;
+                            var name=data.name;
+                            var email=data.email;
+                           SignInFormSubmit(token,name,email);
+                        }else{
 
-          /* console.log(SignInFormSubmit(email,password)); */
-          await fetch('http://api.aradanamatrimony.com/api_matrimony/api/subscription/details/get',{
-            method:'GET',
-            headers:{
-                'Accept':'application/json',
-                'Content-type':'application/json'
-            }/* ,
-            body: JSON.stringify({
-             'email':"vin@gmail.com"
-
-            }) */
-
-          }).then(res =>res.json())
-          .then(resData=>{
-
-            
-           // setMessage(resData.message);
-
-           if(email=="user@gmail.com" && password=="user1234"){
-               SignInFormSubmit(email,password);
-           }else{
-            setIsLoading(false);
-            Alert.alert('Wrong Input!', 'Invalid email id or password', [
-                {text: 'Okay'}
-            ]);
-            return;
-           }
-            
-           /*  setTimeout(()=>{
-
-                setMessage('');
-             }, 2000); */
-          })
+                            navigation.navigate('OtpScreen');
+                        }
+                      }else{
+                         setIsLoading(false);
+                         Alert.alert('Error Message!', data.message, [
+                          {text: 'Okay'}
+                         ]);
+                         return;
+                       }
+                  })
+                  .catch(function (error) {
+                    setIsLoading(false);
+                         Alert.alert('Error Message!', JSON.stringify(error.message), [
+                          {text: 'Okay'}
+                         ]);
+                         return;
+                  });
+               
+            }catch(e){
+                setIsLoading(false);
+                Alert.alert('Error Message!', JSON.stringify(e.message), [
+                  {text: 'Okay'}
+                ]);
+                return;
+            }
          
         }else{
             setIsLoading(false);

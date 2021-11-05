@@ -193,18 +193,18 @@ const [loginState,dispatch]=React.useReducer(loginReducer,initialLoginState);
 
    },
 
-   SignInFormSubmit: async(email,password) => {
+   SignInFormSubmit: async(token,name,email) => {
 
-  /*    if(email=="user@gmail.com" && password=="user123"){ */
+  
 
       try {
-        await AsyncStorage.setItem('@user_token', '123456789');
-        dispatch({type:'LOGIN',token:'123456789',name:"vino",email:email});
+        await AsyncStorage.setItem('@user_token', token);
+        dispatch({type:'LOGIN',token:token,name:name,email:email});
       } catch (e) {
         console.log(e);
       }
        
-   /*   } */
+  
 
  }
 
