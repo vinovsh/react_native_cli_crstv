@@ -193,7 +193,7 @@ class ListVideoPlayerScreen extends Component {
                  onEnterFullscreen={()=>{onFullscreenEnter()}}
                  onExitFullscreen={()=>{onFullscreenExit()}}
         
-              
+                
                  paused={false}
                  onBack={()=>{BackNavigation()}}
              
