@@ -25,11 +25,13 @@ const MenuSlider = (props) => {
 
     
 
-
     const paperTheme = useTheme();
     const {toggleTheme,SignOut } = React.useContext(AuthContext);
 
-
+    var name=props.globalData.userName;
+    var email=props.globalData.userEmail;
+    var code=props.globalData.userCode;
+    var stars=props.globalData.userStars;
 
     return(
         <View style={{flex:1}}>
@@ -44,8 +46,8 @@ const MenuSlider = (props) => {
                                 size={50}
                             />
                             <View style={{marginLeft:15, flexDirection:'column'}}>
-                                <Title style={styles.title}>Ashley</Title>
-                                <Caption style={styles.caption}>Ashley@gmail.com</Caption>
+                                <Title style={styles.title}>{name}</Title>
+                                <Caption style={styles.caption}>{email}</Caption>
                             </View>
                         </View>
 

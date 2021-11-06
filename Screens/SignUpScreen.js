@@ -1,4 +1,6 @@
 import React from 'react';
+import config from '../config/config';
+import axios from 'axios';
 import { 
     View, 
     Text, 
@@ -20,11 +22,14 @@ import Feather from 'react-native-vector-icons/Feather';
 import { useTheme } from 'react-native-paper';
 
 import {AuthContext } from '../Components/Context';
+import LoadingScreen from './LoadingScreen';
 
 
 /* import Users from '../model/users'; */
 
 const SignUpScreen = ({navigation}) => {
+
+    const[isLoading,setIsLoading]=React.useState(false);
 
     const [data, setData] = React.useState({
         name:'',
@@ -141,12 +146,55 @@ const SignUpScreen = ({navigation}) => {
         }
     }
 
-    const signUpHandle = (name,email,password) => {
+    const signUpHandle = async (name,email,password) => {
 
-      
+      setIsLoading(true);
       if(name && email && password) {
 
-        SignUpFormSubmit(name,email,password);
+        try{
+              
+            await axios.post(config.BASE_URL+'signup', {
+                 name:name,
+                 email: email,
+                 password: password
+               })
+              
+               .then(function (response) {
+                   var data=response.data;
+                
+                   setIsLoading(false);
+                   if(data.error==false){
+                    setIsLoading(false);
+                         var token=data.token;
+                      
+
+                         navigation.navigate('OtpScreen',{ token:token });
+                   
+                   }else{
+                      setIsLoading(false);
+                      Alert.alert('Error Message!', data.message, [
+                       {text: 'Okay'}
+                      ]);
+                      return;
+                    }
+               })
+               .catch(function (error) {
+                 setIsLoading(false);
+                      Alert.alert('Error Message!', JSON.stringify(error.message), [
+                       {text: 'Okay'}
+                      ]);
+                      return;
+               });
+            
+         }catch(e){
+             setIsLoading(false);
+             Alert.alert('Error Message!', JSON.stringify(e.message), [
+               {text: 'Okay'}
+             ]);
+             return;
+         }
+
+        //SignUpFormSubmit(name,email,password);
       }else{
 
         Alert.alert('Wrong Input!', 'Fields cannot be empty.', [
@@ -160,6 +208,12 @@ const SignUpScreen = ({navigation}) => {
 
     return (
       <View style={styles.container}>
+
+         {isLoading ? 
+          <LoadingScreen color="#0003"/>
+          : null}
+
+        
           <StatusBar backgroundColor={Colors.primary} barStyle="light-content"/>
         <View style={styles.header}>
             <Text style={styles.text_header}>Register Now!</Text>

@@ -7,11 +7,14 @@ import MenuSlider from '../Screens/MenuSlider';
 
 const Drawer = createDrawerNavigator();
 
-const DrawerNavigater = ({ route, navigation }) => {
+const DrawerNavigater = (props) => {
+
+   var data=props;
+   
     return (
  
       
-         <Drawer.Navigator  initialRouteName="Main" drawerContent={(props) => <MenuSlider {...props} />}>
+         <Drawer.Navigator  initialRouteName="Main" drawerContent={(props) => <MenuSlider globalData={data.globalData} {...props} />}>
            <Drawer.Screen 
         
               options={{

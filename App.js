@@ -1,4 +1,6 @@
 import React,{useEffect} from 'react';
+import config from './config/config';
+import axios from 'axios';
 import {Text,View} from "react-native";
 import DrawerNavigater from './Routs/DrawerNavigater';
 import {
@@ -26,6 +28,8 @@ const initialLoginState={
    isAuthenticated:false,
    userName:'',
    userEmail:'',
+   userCode:'',
+   userStars:'',
    userToken:'',
    
 
@@ -41,25 +45,20 @@ const loginReducer=(prevState,action)=>{
         userToken:action.token,
         userName:action.name,
         userEmail:action.email,
+        userCode:action.code,
+        userStars:action.stars,
         isLoading:false,
         isAuthenticated:true
       };
-    case 'SIGNUP':
-      return{
-
-        ...prevState,
-        userToken:action.token,
-        userName:action.name,
-        userEmail:action.email,
-        isLoading:false,
-        isAuthenticated:false
-      };
+    
     case 'OTP_VERIFY':
       return{
         ...prevState,
         userToken:action.token,
         userName:action.name,
         userEmail:action.email,
+        userCode:action.code,
+        userStars:action.stars,
         isLoading:false,
         isAuthenticated:true
       };
@@ -69,6 +68,8 @@ const loginReducer=(prevState,action)=>{
         userToken:action.token,
         userName:action.name,
         userEmail:action.email,
+        userCode:action.code,
+        userStars:action.stars,
         isLoading:false,
         isAuthenticated:true
       };
@@ -79,6 +80,8 @@ const loginReducer=(prevState,action)=>{
         userToken:'',
         userName:'',
         userEmail:'',
+        userCode:'',
+        userStars:'',
         isLoading:false,
         isAuthenticated:false
       };
@@ -184,22 +187,15 @@ const [loginState,dispatch]=React.useReducer(loginReducer,initialLoginState);
       
    },
 
-   SignUpFormSubmit: (name,email,password) => {
-
-    
-
-         alert(name);
-    
-
-   },
-
-   SignInFormSubmit: async(token,name,email) => {
-
   
+
+   SignInFormSubmit: async(token,name,email,code,stars) => {
+
+     
 
       try {
         await AsyncStorage.setItem('@user_token', token);
-        dispatch({type:'LOGIN',token:token,name:name,email:email});
+        dispatch({type:'LOGIN',token:token,name:name,email:email,code:code,stars:stars});
       } catch (e) {
         console.log(e);
       }
@@ -237,10 +233,52 @@ try {
   
    if(token !== null) {
 
-    setTimeout(() => {
-
-      dispatch({type:'AUTH_CHECK',token:'123456789',name:"vino",email:'user@gmail.com'});
-     }, 2000)
+  
+     try{
+              
+      await axios.post(config.BASE_URL+'check_token', {
+           token: token,
+          
+         })
+        
+         .then(function (response) {
+             var data=response.data;
+          
+             if(data.error==false){
+               
+                   var token=data.token;
+                   var name=data.name;
+                   var email=data.email;
+                   var code=data.code;
+                   var stars=data.stars;
+   
+                  dispatch({type:'AUTH_CHECK',token:token,name:name,email:email,code:code,stars:stars});
+              
+             }else{
+                
+              try {
+               AsyncStorage.removeItem('@user_token')
+                dispatch({type:'LOGOUT'});
+             } catch(e) {
+               
+             }
+              }
+         })
+         .catch(function (error) {
+        
+                Alert.alert('Error Message!', JSON.stringify(error.message), [
+                 {text: 'Okay'}
+                ]);
+                return;
+         });
+      
+   }catch(e){
+   
+       Alert.alert('Error Message!', JSON.stringify(e.message), [
+         {text: 'Okay'}
+       ]);
+       return;
+   }
    
    }else{
     dispatch({type:'LOGOUT'});
@@ -272,7 +310,7 @@ try {
                 <>
                <StatusBar translucent={true} hidden={false} style="black" backgroundColor="#00000040" />
 
-              <DrawerNavigater/>
+              <DrawerNavigater globalData={loginState}/>
               </>
 
                ):!loginState.isLoading ?(

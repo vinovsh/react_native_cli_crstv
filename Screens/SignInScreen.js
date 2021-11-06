@@ -131,7 +131,7 @@ const SignUpScreen = ({navigation}) => {
            
             try{
               
-               await axios.post('http://192.168.137.1/crstv/api/login', {
+               await axios.post(config.BASE_URL+'login', {
                     email: email,
                     password: password
                   })
@@ -145,10 +145,12 @@ const SignUpScreen = ({navigation}) => {
                             var token=data.token;
                             var name=data.name;
                             var email=data.email;
-                           SignInFormSubmit(token,name,email);
+                            var code=data.code;
+                            var stars=data.stars;
+                           SignInFormSubmit(token,name,email,code,stars);
                         }else{
 
-                            navigation.navigate('OtpScreen');
+                            navigation.navigate('OtpScreen',{ token:data.token });
                         }
                       }else{
                          setIsLoading(false);

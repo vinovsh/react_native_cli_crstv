@@ -1,4 +1,6 @@
 import React,{useRef,useEffect} from 'react';
+import config from '../config/config';
+import axios from 'axios';
 import { 
     View, 
     Text, 
@@ -19,12 +21,19 @@ import { useTheme } from 'react-native-paper';
 
 import { AuthContext } from '../Components/Context';
 import { color } from 'react-native-reanimated';
+import LoadingScreen from './LoadingScreen';
+
 
 /* import Users from '../model/users'; */
 
-const OtpScreen = ({navigation}) => {
+const OtpScreen = ({route,navigation}) => {
 
-    
+    const[isLoading,setIsLoading]=React.useState(false);
+    const[message,setMessage]=React.useState('');
+
+    const { SignInFormSubmit } = React.useContext(AuthContext);
+
+   
     const [pin, setPin] = React.useState({
        pin1:'',
        pin2:'',
@@ -149,13 +158,60 @@ const OtpScreen = ({navigation}) => {
 
   
 
-    const otpHandle = (otp) => {
+    const otpHandle = async(otp) => {
 
       
 
       if(otp.pin1 && otp.pin2 && otp.pin3 && otp.pin4){
 
-        alert("success")
+        var otp_e=otp.pin1+otp.pin2+otp.pin3+otp.pin4;
+        setIsLoading(true);
+        
+
+         try{
+              
+            await axios.post(config.BASE_URL+'activation', {
+                 token: route.params.token,
+                 otp: otp_e
+               })
+              
+               .then(function (response) {
+                   var data=response.data;
+                
+                   setIsLoading(false);
+                   if(data.error==false){
+                     
+                         var token=data.token;
+                         var name=data.name;
+                         var email=data.email;
+                         var code=data.code;
+                         var stars=data.stars;
+                        SignInFormSubmit(token,name,email,code,stars);
+                    
+                   }else{
+                      setIsLoading(false);
+                     Alert.alert('Error Message!', data.message, [
+                       {text: 'Okay'}
+                      ]);
+                      return;
+                     // setMessage(data.message);
+                    }
+               })
+               .catch(function (error) {
+                 setIsLoading(false);
+                      Alert.alert('Error Message!', JSON.stringify(error.message), [
+                       {text: 'Okay'}
+                      ]);
+                      return;
+               });
+            
+         }catch(e){
+             setIsLoading(false);
+             Alert.alert('Error Message!', JSON.stringify(e.message), [
+               {text: 'Okay'}
+             ]);
+             return;
+         } 
      }else{
 
         alert("Fields canot be empty");
@@ -167,6 +223,18 @@ const OtpScreen = ({navigation}) => {
 
     return (
       <View style={styles.container}>
+
+         {isLoading ? 
+          <LoadingScreen color="#0003"/>
+          : null}
+
+         {message ? 
+           <Animatable.View animation="bounceIn" style={styles.Logmessagebox}>
+
+              <Text style={styles.Logmessage}>{message}</Text>
+           </Animatable.View>
+           
+          : null}
           <StatusBar backgroundColor={color.primary} barStyle="light-content"/>
         <View style={styles.header}>
             <Text style={styles.text_header}>Register Now!{pin.pin1}</Text>
@@ -359,6 +427,29 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 10
     },
+    Logmessagebox:{
+        position:"absolute" ,
+        top:50,
+        
+        borderRadius:10,
+        flexDirection:"row",
+        justifyContent:"center",
+        width:"100%",
+        zIndex:11
+       
+     },
+     Logmessage:{
+     
+        borderRadius:10,
+        backgroundColor:"#E48F2A",
+        padding:6,
+        lineHeight:25,
+        color:"#fff",
+        fontSize:15
+       
+        
+       
+     },
     textSign: {
         fontSize: 18,
         fontWeight: 'bold'
