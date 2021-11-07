@@ -19,8 +19,8 @@ import ListVideoPlayerScreen from '../Screens/ListVideoPlayerScreen';
 import ListChannelsScreen from '../Screens/ListChannelsScreen';
 
 const Stack = createNativeStackNavigator();
-const HomeStack = ({ navigation}) => {
-
+const HomeStack = (props) => {
+      
     return (
      
         
@@ -28,6 +28,7 @@ const HomeStack = ({ navigation}) => {
           <Stack.Screen
             name="Home"
             component={Home}
+            initialParams={props.route.params}
             options={{
 
               

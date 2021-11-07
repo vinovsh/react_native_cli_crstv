@@ -290,7 +290,7 @@ try {
 
  useEffect(() => {
 
- console.log('use')
+ 
     getData();
   
   

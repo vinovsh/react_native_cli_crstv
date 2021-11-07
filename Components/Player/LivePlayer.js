@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-const LivePlayer = () => {
+const LivePlayer = (props) => {
     const navigation = useNavigation();
     function onFullscreenEnter(){
 
@@ -26,7 +26,7 @@ const LivePlayer = () => {
             <VideoPlayer
               style={styles.player}
               source={{
-                uri: 'http://bmlive.net:8000/crstv/crstv/bms.m3u8',
+                uri: props.video,
                // type: 'm3u8'
               // overrideFileExtensionAndroid: 'm3u8' 
               }}
@@ -37,7 +37,7 @@ const LivePlayer = () => {
               onEnterFullscreen={onFullscreenEnter}
               onExitFullscreen={onFullscreenExit}
               disableBack
-              paused={false}
+              paused={true}
               
             
             />

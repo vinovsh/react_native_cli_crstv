@@ -50,7 +50,7 @@ const SquareCard =props=>{
           <Text style={[styles.CategoryTitle,{color:colors.custom_text}]}>Daily Verse</Text>
        
         
-        <TouchableOpacity onPress={()=>{navigation.navigate('ViewImage',{ title: 'Daily Verse',img_url:props.source })}} activeOpacity={0.8} style={styles.container}>
+        <TouchableOpacity onPress={()=>{navigation.navigate('ViewImage',{ title: props.title,img_url:props.source })}} activeOpacity={0.8} style={styles.container}>
        {/* <Image style={styles.image} resizeMode='cover'  source={{uri:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXVmXoBJuxtsP2iKFPfkJ1_v9TB937JnqxJw&usqp=CAU"}} />  */}
             <ProgressiveImage
                 defaultImageSource={require('.././../assets/images/loaderAnimation.gif')}

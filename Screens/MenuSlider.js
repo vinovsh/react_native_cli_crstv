@@ -50,8 +50,29 @@ const MenuSlider = (props) => {
                                 <Caption style={styles.caption}>{email}</Caption>
                             </View>
                         </View>
+                      
 
                     </View>
+
+                    <View style={{width:'100%',flexDirection:'row',justifyContent:'space-evenly',marginTop:10}}>
+                        <View style={[styles.button,{backgroundColor:Colors.primary}]}>
+                          
+                               <Icon 
+                                name="hexagram" 
+                                color='#ffff'
+                                size={25}
+                                />
+                                <Text style={{fontSize:22,color:'#ffff'}}>{stars}</Text>
+                              
+                        </View>
+
+                        <View style={[styles.button,{backgroundColor:'#15d212'}]}>
+                          
+                               
+                                <Text style={{fontSize:15,color:'#ffff'}}>Rewards</Text>
+                              
+                        </View>
+                        </View>
 
                     <Drawer.Section style={styles.drawerSection}>
                         <DrawerItem 
@@ -188,4 +209,13 @@ const styles = StyleSheet.create({
       paddingVertical: 12,
       paddingHorizontal: 16,
     },
+    button:{
+        width:"40%",
+        height:50,
+       
+        borderRadius:50,
+        flexDirection:'row',
+        justifyContent:'space-evenly',
+        alignItems:"center",
+    }
   });

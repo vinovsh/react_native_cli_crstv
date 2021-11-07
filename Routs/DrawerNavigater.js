@@ -16,7 +16,7 @@ const DrawerNavigater = (props) => {
       
          <Drawer.Navigator  initialRouteName="Main" drawerContent={(props) => <MenuSlider globalData={data.globalData} {...props} />}>
            <Drawer.Screen 
-        
+             
               options={{
                  headerShown: false,
                 // headerTitle: () => <Logo />,
@@ -30,6 +30,7 @@ const DrawerNavigater = (props) => {
               }}
               name="Main"
               component={HomeStack}
+              initialParams={data.globalData}
      
           /> 
           
