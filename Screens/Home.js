@@ -4,6 +4,7 @@ import axios from 'axios';
 import {View,Text,Button,ScrollView,TouchableOpacity,Dimensions,StyleSheet,FlatList} from "react-native";
 import Orientation from 'react-native-orientation';
 import Colors from '../Components/ColorPalet';
+import AutoScrolling from "react-native-auto-scrolling";
 
 //components
 
@@ -17,6 +18,7 @@ import EventCard from '../Components/Cards/EventCard';
 import RectangleCard from '../Components/Cards/RectangleCard';
 import SocialShare from '../Components/SocialShare';
 import VideoCard from '../Components/Cards/ViedoCard';
+
 
 //loader
 import HomeLoader from '../Components/skeloton/HomeLoader';
@@ -103,10 +105,18 @@ const Home = (props,{navigation}) => {
            <HomeLoader />
 
          ):(
-           
-
+           <>
+          
             <ScrollView   showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}> 
-              <LivePlayer video={apidata.live_tv.url}/>
+             <LivePlayer video={apidata.live_tv.url}/>
+            
+             
+
+              <AutoScrolling style={{margin:10}} duration={apidata.live_tv.speed}>
+
+                <Text>{apidata.live_tv.scrolling_text}</Text>
+         
+              </AutoScrolling>
             
             <View style={{flexDirection:"row",justifyContent:"space-evenly"}}>
                <SquareCard
@@ -222,6 +232,7 @@ const Home = (props,{navigation}) => {
 
  
          </ScrollView>
+         </>
 
         )}
         </>
