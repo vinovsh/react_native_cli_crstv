@@ -17,6 +17,7 @@ import ListVideoScreen from '../Screens/ListVideoScreen';
 import ListCategoryScreen from '../Screens/ListCategoryScreen';
 import ListVideoPlayerScreen from '../Screens/ListVideoPlayerScreen';
 import ListChannelsScreen from '../Screens/ListChannelsScreen';
+import ListRecentVideosScreen from '../Screens/ListRecentVideosScreen';
 
 const Stack = createNativeStackNavigator();
 const HomeStack = (props) => {
@@ -48,24 +49,24 @@ const HomeStack = (props) => {
 
 
           <Stack.Screen
-
-          options={{
-            headerShown: false,
-          }}
-           name="Category" 
-           component={Category} 
+             initialParams={props.route.params}
+             options={{
+               headerShown: false,
+             }}
+             name="Category" 
+              component={Category} 
            />
           <Stack.Screen
-
-           options={{
-              headerShown: false,
-           }}
-           name="Live" 
-           component={LivePlayerFull}
+              initialParams={props.route.params}
+              options={{
+                 headerShown: false,
+              }}
+              name="Live" 
+              component={LivePlayerFull}
             />
 
            <Stack.Screen
-
+              initialParams={props.route.params}
               options={{
                   headerShown: false,
               }}
@@ -74,7 +75,7 @@ const HomeStack = (props) => {
            />
 
             <Stack.Screen
-
+              initialParams={props.route.params}
               options={{
                 headerShown: false,
               }}
@@ -84,7 +85,7 @@ const HomeStack = (props) => {
 
 
              <Stack.Screen
-
+                initialParams={props.route.params}
                 options={{
                    headerShown: true,
                  
@@ -96,7 +97,7 @@ const HomeStack = (props) => {
               />
 
               <Stack.Screen
-
+                 initialParams={props.route.params}
                  options={{
                    headerShown: true,
  
@@ -108,7 +109,7 @@ const HomeStack = (props) => {
                />
 
                <Stack.Screen
-
+                  initialParams={props.route.params}
                    options={{
                       headerShown: true,
 
@@ -119,36 +120,49 @@ const HomeStack = (props) => {
                   component={ListVideoScreen}
                />
 
-                 <Stack.Screen
-
+               
+                <Stack.Screen
+                  initialParams={props.route.params}
                   options={{
-                    headerShown: true,
+                     headerShown: true,
 
-                    title:"Our Shows"
-                  }}
+                       title:"Recent Videos"
+                     }}
+
+                  name="ListRecentVideoScreen"
+                  component={ListRecentVideosScreen}
+                />
+
+                 <Stack.Screen
+                    initialParams={props.route.params}
+                    options={{
+                       headerShown: true,
+
+                       title:"Our Shows"
+                    }}
 
                   name="ListCategoryScreen"
                   component={ListCategoryScreen}
                />
                 <Stack.Screen
-
+                  initialParams={props.route.params}
                   options={{
                      headerShown: false,
 
                       title:"player"
-                      }}
+                  }}
 
                      name="ListVideoPlayerScreen"
                      component={ListVideoPlayerScreen}
                 />
 
                 <Stack.Screen
-
+                  initialParams={props.route.params} 
                   options={{
                       headerShown: true,
 
                       title:"Tv Channels"
-                    }}
+                  }}
 
                    name="ListChannelsScreen"
                    component={ListChannelsScreen}

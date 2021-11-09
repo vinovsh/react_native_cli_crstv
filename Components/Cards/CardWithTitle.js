@@ -30,7 +30,7 @@ const CardWithTitle =props=>{
          /> 
            
            </View>
-           <Text ellipsizeMode='tail' numberOfLines={2} style={[styles.CategoryTitle,{color:colors.custom_text}]}>{props.item.name}</Text>
+           <Text ellipsizeMode='tail' numberOfLines={2} style={[styles.CategoryTitle,{color:colors.custom_text}]}>{props.title}</Text>
         
          
         </TouchableOpacity>

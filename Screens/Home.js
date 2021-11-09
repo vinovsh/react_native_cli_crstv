@@ -42,7 +42,7 @@ const Home = (props,{navigation}) => {
     const[loading,setLoading]=useState(true);
 
     
-    setTimeout(()=>{setLoading(false)}, 2000);
+    
     
     const getdata=async ()=>{
 
@@ -161,7 +161,7 @@ const Home = (props,{navigation}) => {
                
          
 
-            <CategoryTitle title="Recent Videos" navigate_to="ListVideoScreen" api_fetch_key="recent_videos" display="flex">
+            <CategoryTitle title="Recent Videos" navigate_to="ListRecentVideoScreen" api_fetch_key="recent_videos" display="flex">
               </CategoryTitle>
             <FlatList 
                horizontal
