@@ -1,5 +1,5 @@
 import React  from "react";
-import {View,Text,StyleSheet,Image,Dimensions,TouchableOpacity} from 'react-native';
+import {View,Text,StyleSheet,Image,Dimensions,TouchableOpacity,Linking } from 'react-native';
 import Colors from "./ColorPalet";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const width=Dimensions.get('window').width;
 const SocialShare =props=>{
 
-    
+   
     return (
         <View style={{width:"100%"}}>
            <Text style={styles.text}>Follow Us On</Text>
@@ -16,13 +16,16 @@ const SocialShare =props=>{
            <View style={styles.container}>
 
                <TouchableOpacity activeOpacity={0.6} style={styles.items}>
-                    <Icon  style={styles.icon} name="facebook-f" size={30} color={Colors.primary} />
+                    <Icon onPress={() => Linking.openURL(props.social.facebook)} style={styles.icon} name="facebook-f" size={30} color={Colors.primary} />
                 </TouchableOpacity>
                <TouchableOpacity activeOpacity={0.6} style={styles.items}>
-                    <Icon  style={styles.icon} name="instagram" size={30} color="#EF7C00" />
+                    <Icon onPress={() => Linking.openURL(props.social.instagram)} style={styles.icon} name="instagram" size={30} color="#EF7C00" />
                 </TouchableOpacity>
                <TouchableOpacity activeOpacity={0.6} style={styles.items}>
-                    <Icon  style={styles.icon} name="youtube" size={30} color="#F70000" />
+                    <Icon onPress={() => Linking.openURL(props.social.youtube)} style={styles.icon} name="youtube" size={30} color="#F70000" />
+                </TouchableOpacity>
+                <TouchableOpacity activeOpacity={0.6} style={styles.items}>
+                    <Icon onPress={() => Linking.openURL(props.social.whatsapp)} style={styles.icon} name="whatsapp" size={30} color="#16e616" />
                 </TouchableOpacity>
                
            </View> 

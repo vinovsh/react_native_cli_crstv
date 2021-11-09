@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import config from '../config/config';
 import axios from 'axios';
-import {View,Text,Button,ScrollView,TouchableOpacity,Dimensions,StyleSheet,FlatList} from "react-native";
+import {View,Text,Button,ScrollView,TouchableOpacity,Dimensions,StyleSheet,FlatList,Alert} from "react-native";
 import Orientation from 'react-native-orientation';
 import Colors from '../Components/ColorPalet';
 import AutoScrolling from "react-native-auto-scrolling";
@@ -228,7 +228,7 @@ const Home = (props,{navigation}) => {
 
                 
 
-            <SocialShare />
+            <SocialShare social={apidata.social_media} />
 
  
          </ScrollView>

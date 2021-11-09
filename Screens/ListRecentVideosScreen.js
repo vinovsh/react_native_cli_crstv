@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import config from '../config/config';
 import axios from 'axios';
-import {View,Text,Button,FlatList, StyleSheet} from "react-native"
+import {View,Text,Button,FlatList, StyleSheet,Alert} from "react-native"
 import CardWithTitle from '../Components/Cards/CardWithTitle';
 
 //loader
@@ -32,15 +32,16 @@ const ListRecentVideosScreen = (props,{route,navigation}) => {
               
                  if(data.error==false){
                    
-                 /*  if(apidata){
-                     var append_data=apidata.concat()
-                    setApidata(append_data) 
-                    console.log(apidata);
-                  }else{  */
+                 if(apidata){
+                     var append_data=apidata.recent_videos.data.concat(data.recent_videos.data);
+                     data.recent_videos.data=append_data;
+                     setApidata(data);
+                   
+                  }else{ 
                    
                     setApidata(data)
 
-               /*   }  */
+                }  
                   
                   setLoading(false)
                   setMoreloading(false);
@@ -103,7 +104,7 @@ const ListRecentVideosScreen = (props,{route,navigation}) => {
              style={styles.container}
             
              data={apidata.recent_videos.data}
-             renderItem={({item})=><CardWithTitle title={item.title} navigate_to="ListVideoPlayerScreen" source={{uri:item.thumpnail}} item={item} />}
+             renderItem={({item})=><CardWithTitle title={item.title} navigate_to="ListRecentVideoPlayerScreen" source={{uri:item.thumpnail}} item={item} />}
              keyExtractor={(item) => item.id}
              
              showsVerticalScrollIndicator={false}

@@ -8,7 +8,7 @@ import {
    DefaultTheme as NavigationDefaultTheme,
    DarkTheme as NavigationDarkTheme
    } from '@react-navigation/native';
-import {StatusBar } from 'react-native';
+import {StatusBar,Alert } from 'react-native';
 import Colors from './Components/ColorPalet';
 import {
   Provider as PaperProvider,
