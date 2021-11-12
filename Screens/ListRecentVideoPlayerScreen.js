@@ -5,7 +5,7 @@ import {View,Text,Button,StatusBar,StyleSheet,Dimensions,FlatList,TouchableOpaci
 import VideoPlayer from 'react-native-video-controls';
 import Orientation from 'react-native-orientation';
 import VideoCardPapulate from '../Components/Cards/VideoCardPapulate';
-
+import YoutubePlayer from "react-native-youtube-iframe";
 //loader
 import LoadingScreen from './LoadingScreen';
 import LoadmoreIndicator from '../Components/LoadmoreIndicator';
@@ -17,23 +17,25 @@ class ListRecentVideoPlayerScreen extends Component {
     constructor(props) {
  
         super(props);
+     
         this.state = {
            portrait:true,
            statusBar:StatusBar.currentHeight,
            isStatusbarHidden:false,
            videoUrl:this.props.route.params.video,
-           title:this.props.route.params.name,
+           title:"",
            token:this.props.route.params.userToken,
            id:this.props.route.params.id,
            apidata:null,
            loading:true,
            currentPage:1,
-           moreloading:false
+           moreloading:false,
+           video_type:this.props.route.params.video_type,
 
 
         }
   
-    
+   
        
       }
      
@@ -136,14 +138,15 @@ class ListRecentVideoPlayerScreen extends Component {
         }
 
         const OnchangeVideoController=(item)=>{
+
           this.setState({
-            title:item.title,
+            title:"",
             videoUrl: item.video_link,
-            
+            video_type:item.type
            
            
           });
-         
+        
         }
 
         
@@ -181,31 +184,48 @@ class ListRecentVideoPlayerScreen extends Component {
         <View style={[styles.container,{marginTop:this.state.statusBar}]}>
             <StatusBar hidden={this.state.isStatusbarHidden} backgroundColor={"#fff"} barStyle="dark-content"/>
              <View style={this.state.portrait==true ?styles.playerBox_portrait:styles.playerBox_landscap}>
-              <VideoPlayer
-                ref={(ref) => {
-                    this.player = ref
-                  }}
-                 style={this.state.portrait==true ?styles.player_portrait:styles.player_landscape}
-                 source={{
-                    uri: this.state.videoUrl,
-                    //type: 'm3u8'
-                    // overrideFileExtensionAndroid: 'm3u8' 
-                 }}
-                 repeat={true}
-                 title={this.state.title}
-                 fullscreen={false}
-                 resizeMode="contain"
-                 onEnterFullscreen={()=>{onFullscreenEnter()}}
-                 onExitFullscreen={()=>{onFullscreenExit()}}
+              
+             {this.state.video_type !="youtube" ?(
+      
+                <VideoPlayer
+                   ref={(ref) => {
+                      this.player = ref
+                   }}
+                   style={this.state.portrait==true ?styles.player_portrait:styles.player_landscape}
+                   source={{
+                     uri: this.state.videoUrl,
+                    
+                   }}
+                   repeat={true}
+                   title={this.state.title}
+                   fullscreen={false}
+                   resizeMode="contain"
+                   onEnterFullscreen={()=>{onFullscreenEnter()}}
+                   onExitFullscreen={()=>{onFullscreenExit()}}
         
                 
-                 paused={false}
-                 onBack={()=>{BackNavigation()}}
+                   paused={false}
+                   onBack={()=>{BackNavigation()}}
              
            
            
-            />
-            {/* <View style={styles.videoController}></View> */}
+               /> 
+
+           ):(
+
+            < >
+              
+
+             <YoutubePlayer
+               height={300}
+               play={true}
+               videoId={this.state.videoUrl}
+               style={this.state.portrait==true ?styles.player_portrait:styles.player_landscape}
+               onFullScreenChange={(e)=>{if(e){onFullscreenEnter()}else{onFullscreenExit()}}}
+             />
+             
+              </>
+            )}
            </View>
            <FlatList
 
@@ -249,7 +269,7 @@ const styles = StyleSheet.create({
    playerBox_portrait:{
      width:"100%",
      height:width/1.8,
-     backgroundColor:"#fff"
+     backgroundColor:"#000"
      
    },
    playerBox_landscap:{
@@ -257,6 +277,7 @@ const styles = StyleSheet.create({
     height:"100%",
     position:"absolute",
     zIndex:5,
+    backgroundColor:"#000"
   
  
     
