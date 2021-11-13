@@ -6,15 +6,21 @@ import VideoPlayer from 'react-native-video-controls';
 import Orientation from 'react-native-orientation';
 import VideoCardPapulate from '../Components/Cards/VideoCardPapulate';
 import YoutubePlayer from "react-native-youtube-iframe";
+import VideoTitle from '../Components/VideoTitle';
+
 //loader
 import LoadingScreen from './LoadingScreen';
 import LoadmoreIndicator from '../Components/LoadmoreIndicator';
+import VideoLoader from '../Components/skeloton/VideoLoader';
 
 const width=Dimensions.get('window').width;
 const height=Dimensions.get('screen').height;
+
 class ListRecentVideoPlayerScreen extends Component {
 
     constructor(props) {
+
+      
  
         super(props);
      
@@ -23,13 +29,14 @@ class ListRecentVideoPlayerScreen extends Component {
            statusBar:StatusBar.currentHeight,
            isStatusbarHidden:false,
            videoUrl:this.props.route.params.video,
-           title:"",
+           title:this.props.route.params.name,
            token:this.props.route.params.userToken,
            id:this.props.route.params.id,
            apidata:null,
-           loading:true,
+           loading:false,
            currentPage:1,
            moreloading:false,
+           videoloading:true,
            video_type:this.props.route.params.video_type,
 
 
@@ -62,6 +69,7 @@ class ListRecentVideoPlayerScreen extends Component {
                     
                    that.setState({
                       apidata: data,
+                      videoloading:false,
                     });
 
                    
@@ -70,6 +78,7 @@ class ListRecentVideoPlayerScreen extends Component {
                    
                     that.setState({
                       loading: false,
+                      videoloading:false,
                       apidata:data
                     });
 
@@ -77,6 +86,7 @@ class ListRecentVideoPlayerScreen extends Component {
                   
                   that.setState({
                     loading: false,
+                    videoloading:false,
                     moreloading:false
                   });
                   
@@ -113,10 +123,10 @@ class ListRecentVideoPlayerScreen extends Component {
      
       
     render () {
-        
+
+      
+      
      
-       
-       
 
         const onFullscreenEnter=()=>{
             this.setState({
@@ -140,17 +150,22 @@ class ListRecentVideoPlayerScreen extends Component {
         const OnchangeVideoController=(item)=>{
 
           this.setState({
-            title:"",
+            title:item.title,
             videoUrl: item.video_link,
-            video_type:item.type
+            video_type:item.type,
+            currentPage:1,
+            apidata:"",
+            videoloading:true,
+            id:item.id
            
            
-          });
+          },this.getdata);
         
         }
 
         
        const BackNavigation=()=>{
+        Orientation.lockToPortrait();
         this.props.navigation.goBack(null)
 
       }
@@ -197,7 +212,7 @@ class ListRecentVideoPlayerScreen extends Component {
                     
                    }}
                    repeat={true}
-                   title={this.state.title}
+                   title=""
                    fullscreen={false}
                    resizeMode="contain"
                    onEnterFullscreen={()=>{onFullscreenEnter()}}
@@ -219,6 +234,7 @@ class ListRecentVideoPlayerScreen extends Component {
              <YoutubePlayer
                height={300}
                play={true}
+               showtitle={false}
                videoId={this.state.videoUrl}
                style={this.state.portrait==true ?styles.player_portrait:styles.player_landscape}
                onFullScreenChange={(e)=>{if(e){onFullscreenEnter()}else{onFullscreenExit()}}}
@@ -227,7 +243,17 @@ class ListRecentVideoPlayerScreen extends Component {
               </>
             )}
            </View>
-           <FlatList
+          <VideoTitle title={this.state.title} />
+
+          
+           {this.state.videoloading ?(
+              <VideoLoader  />
+
+           ):(
+
+              < >
+                  
+            <FlatList
 
              style={styles.container}
              data={this.state.apidata.recent_videos.data}
@@ -246,10 +272,13 @@ class ListRecentVideoPlayerScreen extends Component {
              showsVerticalScrollIndicator={false}
              showsHorizontalScrollIndicator={false}
              onEndReached={()=>{onEnd()}}
-             //onEndReachedThreshold={0}
+             
              numColumns={2}
              ListFooterComponent={ this.state.moreloading ?(<LoadmoreIndicator /> ):(<></>)}
-            />
+            /> 
+
+</>
+            )}
         </View>
 
         </>
@@ -278,10 +307,8 @@ const styles = StyleSheet.create({
     position:"absolute",
     zIndex:5,
     backgroundColor:"#000"
-  
+   
+  }
  
-    
-    
-  },
   
 })

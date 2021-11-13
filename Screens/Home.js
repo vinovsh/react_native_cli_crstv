@@ -171,7 +171,7 @@ const Home = (props,{navigation}) => {
 
                renderItem={({item}) => (
 
-                <VideoCard title={item.title} id={4} navigate_to="ListVideoPlayerScreen" video={item.video_link} source={{uri:item.thumpnail}} />
+                <VideoCard title={item.title} id={4} navigate_to="ListRecentVideoPlayerScreen" item={item} video={item.video_link} source={{uri:item.thumpnail}} />
 
            )}
            keyExtractor={(item) => item.id}
