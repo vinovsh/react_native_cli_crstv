@@ -103,7 +103,7 @@ const ListCategoryScreen = (props,{route,navigation}) => {
 
              style={styles.container}
              data={apidata.categorys.data}
-             renderItem={({item})=><CardWithTitle  source={{uri:item.image}} item={item} />}
+             renderItem={({item})=><CardWithTitle navigate_to="ListVideoScreen" source={{uri:item.image}} item={item} />} 
              keyExtractor={(item) => item.id}
              
              showsVerticalScrollIndicator={false}

@@ -20,7 +20,7 @@ class ListRecentVideoPlayerScreen extends Component {
 
     constructor(props) {
 
-      
+    
  
         super(props);
      
@@ -28,16 +28,16 @@ class ListRecentVideoPlayerScreen extends Component {
            portrait:true,
            statusBar:StatusBar.currentHeight,
            isStatusbarHidden:false,
-           videoUrl:this.props.route.params.video,
-           title:this.props.route.params.name,
+           videoUrl:this.props.route.params.item.video_link,
+           title:this.props.route.params.item.title,
            token:this.props.route.params.userToken,
-           id:this.props.route.params.id,
+           id:this.props.route.params.item.id,
            apidata:null,
            loading:false,
            currentPage:1,
            moreloading:false,
            videoloading:true,
-           video_type:this.props.route.params.video_type,
+           video_type:this.props.route.params.item.type,
 
 
         }

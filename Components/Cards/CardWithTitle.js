@@ -11,14 +11,15 @@ const width=Dimensions.get('window').width;
 const CardWithTitle =props=>{
     
     const{colors}=useTheme();
-    const navigation = useNavigation(); 
+    const navigation = useNavigation();
+
     return (
         <View>
     
        
        
         
-        <TouchableOpacity  onPress={()=>{navigation.navigate(props.navigate_to,{ id:props.item.id, name:props.item.title, image:props.item.thumpnail, video:props.item.video_link,video_type:props.item.type})}} activeOpacity={0.8} style={styles.container1}>
+        <TouchableOpacity  onPress={()=>{navigation.navigate(props.navigate_to,{ item:props.item})}} activeOpacity={0.8} style={styles.container1}>
 
             <View style={styles.container}>
        {/* <Image style={styles.image} resizeMode='cover'  source={{uri:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXVmXoBJuxtsP2iKFPfkJ1_v9TB937JnqxJw&usqp=CAU"}} />  */}
@@ -30,7 +31,7 @@ const CardWithTitle =props=>{
          /> 
            
            </View>
-           <Text ellipsizeMode='tail' numberOfLines={2} style={[styles.CategoryTitle,{color:colors.custom_text}]}>{props.title}</Text>
+           <Text ellipsizeMode='tail' numberOfLines={2} style={[styles.CategoryTitle,{color:colors.custom_text}]}>{props.item.title}</Text>
         
          
         </TouchableOpacity>
