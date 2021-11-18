@@ -18,6 +18,7 @@ import EventCard from '../Components/Cards/EventCard';
 import RectangleCard from '../Components/Cards/RectangleCard';
 import SocialShare from '../Components/SocialShare';
 import VideoCard from '../Components/Cards/ViedoCard';
+import UploadReels from '../Components/UploadReels';
 
 
 //loader
@@ -40,9 +41,20 @@ const Home = (props,{navigation}) => {
     }
     const[apidata,setApidata]=useState();
     const[loading,setLoading]=useState(true);
+    const[uploading,setUploading]=useState(false);
 
-    
-    
+    const upload_reels_box=()=>{
+
+      if(uploading==true){
+
+        setUploading(false);
+
+      }else{
+        
+        setUploading(true);
+
+      }
+    }
     
     const getdata=async ()=>{
 
@@ -106,7 +118,13 @@ const Home = (props,{navigation}) => {
 
          ):(
            <>
-          
+
+           {uploading ?(
+        
+               <UploadReels upload_reels_box ={upload_reels_box} />
+
+              ):(<></>)}
+            
             <ScrollView   showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}> 
              <LivePlayer video={apidata.live_tv.url}/>
             
@@ -134,7 +152,7 @@ const Home = (props,{navigation}) => {
             </View>
             <InfoBar/>
             <CategoryTitle title="Crstv Competition" display="none"/>
-            <RealsCard/>
+            <RealsCard upload_reels_box ={upload_reels_box} />
             <CategoryTitle title="Events" display="none"/>
            
          

@@ -24,6 +24,8 @@ target 'crstv' do
 
   pod 'rn-fetch-blob', :path => '../node_modules/rn-fetch-blob'
 
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
   target 'crstvTests' do
     inherit! :complete
     # Pods for testing

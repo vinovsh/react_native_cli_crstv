@@ -77,7 +77,7 @@ const ReelsScreen = ({route,navigation}) => {
     const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 })
     return (
         <View style={styles.container}>
-             <StatusBar backgroundColor="#ff000000" barStyle="light-content"/>
+             <StatusBar translucent={true} backgroundColor="#ff000000" barStyle="light-content"/>
         <FlatList
         
           onEndReached={(val)=>{console.log("end")}}

@@ -1,12 +1,12 @@
 import React,{useEffect,Component } from 'react';
-import {View,Text,Button,SafeAreaView,StyleSheet,FlatList,Image,Dimensions,TouchableOpacity} from "react-native"
+import {View,Text,Button,SafeAreaView,StyleSheet,FlatList,Image,Dimensions,TouchableOpacity,StatusBar} from "react-native"
 import { Title } from 'react-native-paper';
 import VideoPlayer from 'react-native-video-controls';
 import Colors from '../ColorPalet';
 import Feather from 'react-native-vector-icons/Feather';
 //import InViewPort from 'react-native-inviewport';
 
-const width=Dimensions.get('window').width;
+const width=Dimensions.get('screen').width;
 const height=Dimensions.get('window').height;
 class ReelsContainer extends Component {
   constructor (props) {
@@ -43,19 +43,19 @@ class ReelsContainer extends Component {
 
   }
     return (
-       <View onChangeVisibleRows={()=>{alert('l')}} style={[styles.container,{width,height}]}>
+       <View onChangeVisibleRows={()=>{alert('l')}} style={[styles.container,{width,height:height}]}>
     
          <VideoPlayer
-                 style={styles.player}
                 
                 
+                 height={height}
             
                  source={{
                     uri: this.props.item.video,
                       
                  }}
                  muted={false}
-                 resizeMode="contain"
+                 resizeMode="cover"
                  disablePlayPause
                  disableSeekbar
                  disableVolume
@@ -71,7 +71,7 @@ class ReelsContainer extends Component {
                  
         
         
-              />  
+              /> 
             
 
               <View  style={styles.optionsCard}>
@@ -104,7 +104,8 @@ const styles = StyleSheet.create({
       flex:1,
       justifyContent:"center",
       alignItems:"center",
-      backgroundColor:"black"
+      backgroundColor:"#000",
+    
     },
     profileCard:{
         width:width/1.2,

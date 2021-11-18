@@ -10,13 +10,18 @@ const width=Dimensions.get("window").width;
 const RealsCard =props=>{
     const navigation = useNavigation();
 
-
     const reelsscreen=()=>{
 
          navigation.navigate('Reels');
     }
+
+    const upload_reels_box=()=>{
+       props.upload_reels_box();
+    }
     
     return (
+
+        
         <View style={styles.container}>
          
             <View style={styles.card}>
@@ -29,7 +34,7 @@ const RealsCard =props=>{
                     </View> 
                 </TouchableOpacity>
                {/*   */}
-               <TouchableOpacity activeOpacity={0.6} style={styles.uploadButton}>
+               <TouchableOpacity onPress={()=>{upload_reels_box()}} activeOpacity={0.6} style={styles.uploadButton}>
                    
                <Icon name="upload" size={30} color={Colors.primary} />
 
