@@ -1,9 +1,9 @@
 import React from 'react';
-import {View,Text,Button,StyleSheet, TouchableOpacity,Dimensions} from "react-native";
+import {View,Text,Button,StyleSheet, TouchableOpacity,Dimensions,Modal} from "react-native";
 import * as Animatable from 'react-native-animatable';
 import { useTheme } from 'react-native-paper';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {launchImageLibrary} from 'react-native-image-picker';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -44,7 +44,7 @@ const UploadReels = (props) => {
     }
    
     return (
-        <View style={styles.container}>
+        <Modal transparent style={styles.container}>
           <View style={styles.header}>
           
           </View>
@@ -68,7 +68,7 @@ const UploadReels = (props) => {
             </TouchableOpacity>
             <Text style={{textAlign:'center',marginTop:10}}>Max video length 10 minutes</Text>
         </Animatable.View>
-        </View>
+        </Modal>
     );
 }
 

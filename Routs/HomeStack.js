@@ -20,6 +20,7 @@ import ListChannelsScreen from '../Screens/ListChannelsScreen';
 import ListRecentVideosScreen from '../Screens/ListRecentVideosScreen';
 import ListRecentVideoPlayerScreen from '../Screens/ListRecentVideoPlayerScreen';
 import AddVideoScreen from '../Screens/AddVideoScreen';
+import ProfileScreen from '../Screens/ProfileScreen';
 
 const Stack = createNativeStackNavigator();
 const HomeStack = (props) => {
@@ -192,6 +193,18 @@ const HomeStack = (props) => {
 
                    name="UploadVideo"
                    component={AddVideoScreen}
+                />
+
+                <Stack.Screen
+                  initialParams={props.route.params} 
+                  options={{
+                      headerShown: true,
+
+                      title:"Profile"
+                  }}
+
+                   name="ProfileScreen"
+                   component={ProfileScreen}
                 />
          
           

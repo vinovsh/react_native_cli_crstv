@@ -29,6 +29,7 @@ const initialLoginState={
    userName:'',
    userEmail:'',
    userCode:'',
+   referralCode:'',
    userStars:'',
    userToken:'',
    
@@ -46,6 +47,7 @@ const loginReducer=(prevState,action)=>{
         userName:action.name,
         userEmail:action.email,
         userCode:action.code,
+        referralCode:action.referral_code,
         userStars:action.stars,
         isLoading:false,
         isAuthenticated:true
@@ -58,6 +60,7 @@ const loginReducer=(prevState,action)=>{
         userName:action.name,
         userEmail:action.email,
         userCode:action.code,
+        referralCode:action.referral_code,
         userStars:action.stars,
         isLoading:false,
         isAuthenticated:true
@@ -69,6 +72,7 @@ const loginReducer=(prevState,action)=>{
         userName:action.name,
         userEmail:action.email,
         userCode:action.code,
+        referralCode:action.referral_code,
         userStars:action.stars,
         isLoading:false,
         isAuthenticated:true
@@ -81,6 +85,7 @@ const loginReducer=(prevState,action)=>{
         userName:'',
         userEmail:'',
         userCode:'',
+        referralCode:action.referral_code,
         userStars:'',
         isLoading:false,
         isAuthenticated:false
@@ -104,7 +109,8 @@ const [loginState,dispatch]=React.useReducer(loginReducer,initialLoginState);
         ...PaperDefaultTheme.colors,
         custom_text:"black",
         quiz_text:"#3D3E3E",
-        quiz_small_text:"#6E6F6F"
+        quiz_small_text:"#6E6F6F",
+        light:'#cccfd1'
       }
    }
 
@@ -117,7 +123,8 @@ const [loginState,dispatch]=React.useReducer(loginReducer,initialLoginState);
       ...PaperDarkTheme.colors,
       custom_text:"#fff",
       quiz_text:"#fff",
-      quiz_small_text:"#eceaea"
+      quiz_small_text:"#eceaea",
+      light:'#747475'
 
     }
  }
@@ -189,13 +196,13 @@ const [loginState,dispatch]=React.useReducer(loginReducer,initialLoginState);
 
   
 
-   SignInFormSubmit: async(token,name,email,code,stars) => {
+   SignInFormSubmit: async(token,name,email,code,referral_code,stars) => {
 
      
 
       try {
         await AsyncStorage.setItem('@user_token', token);
-        dispatch({type:'LOGIN',token:token,name:name,email:email,code:code,stars:stars});
+        dispatch({type:'LOGIN',token:token,name:name,email:email,code:code,referral_code:referral_code,stars:stars});
       } catch (e) {
         console.log(e);
       }
@@ -250,9 +257,10 @@ try {
                    var name=data.name;
                    var email=data.email;
                    var code=data.code;
+                   var referral_code=data.referral_code;
                    var stars=data.stars;
    
-                  dispatch({type:'AUTH_CHECK',token:token,name:name,email:email,code:code,stars:stars});
+                  dispatch({type:'AUTH_CHECK',token:token,name:name,email:email,code:code,referral_code:referral_code,stars:stars});
               
              }else{
                 

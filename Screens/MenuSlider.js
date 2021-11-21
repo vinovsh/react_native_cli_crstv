@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet,Modal } from 'react-native';
 import Colors from '../Components/ColorPalet';
+import ReferralModal from '../Components/Modal/ReferralModal';
 import {
     useTheme,
     Avatar,
@@ -19,26 +20,53 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { AuthContext } from '../Components/Context';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 const MenuSlider = (props) => {
 
-    
+    var token=props.globalData.userToken;
+
+     var referal_code=props.globalData.referralCode;
+     var show_referral_button=true;
+     if(referal_code){
+        show_referral_button=false;
+     }else{
+        show_referral_button=true;
+     }
 
     const paperTheme = useTheme();
     const {toggleTheme,SignOut } = React.useContext(AuthContext);
+    const[isShowModal,setIsShowModal]=React.useState(false);
+    const[isShowReferalButton,setIsShowReferalButton]=React.useState(show_referral_button);
 
     var name=props.globalData.userName;
     var email=props.globalData.userEmail;
     var code=props.globalData.userCode;
     var stars=props.globalData.userStars;
 
+    const modalControll=()=>{
+        setIsShowModal(!isShowModal);
+    }
+
+    const show_referral_button_Update=()=>{
+
+        setIsShowReferalButton(false);
+        
+    }
+
     return(
+
+        <>
+
+        <Modal transparent visible={isShowModal}>
+            <ReferralModal show_referral_button_Update={show_referral_button_Update} token={token} modalControll={modalControll} />
+        </Modal>
         <View style={{flex:1}}>
             <DrawerContentScrollView {...props}>
                 <View style={styles.drawerContent}>
                     <View style={styles.userInfoSection}>
-                        <View style={{flexDirection:'row',marginTop: 15,paddingBottom:15, borderBottomColor: '#f4f4f4', borderBottomWidth: 1}}>
+                        <View style={{flexDirection:'row',marginTop: 15,paddingBottom:15, borderBottomColor:paperTheme.colors.light, borderBottomWidth: 0.3}}>
                             <Avatar.Image 
                                 source={{
                                     uri: 'https://www.unigreet.com/wp-content/uploads/2020/04/Sweet-girl-dp.jpg'
@@ -68,11 +96,31 @@ const MenuSlider = (props) => {
 
                         <View style={[styles.button,{backgroundColor:'#15d212'}]}>
                           
-                               
+                            <TouchableOpacity activeOpacity={0.6}>   
                                 <Text style={{fontSize:15,color:'#ffff'}}>Rewards</Text>
-                              
+                             </TouchableOpacity>   
                         </View>
+                    </View>
+                    <Text style={{textAlign:'center',marginTop:10}}>Your code</Text>
+                    <View style={[styles.card,{borderColor:paperTheme.colors.light}]}>
+
+                        
+                        <Text style={{fontSize:25}}>{code}</Text>
+
+                    </View>
+                  {isShowReferalButton?
+                    <View style={{width:'100%',justifyContent:'center',alignItems:'center',marginTop:5}}>
+                      
+                        <View style={{width:'60%',height:40,backgroundColor:'green',borderRadius:50,justifyContent:'center',alignItems:'center'}}>
+                          <TouchableOpacity activeOpacity={0.6} onPress={()=>{modalControll()}}>
+                            <Text style={{fontSize:15,color:'#fff'}}>Add referral code</Text>
+                            </TouchableOpacity>
                         </View>
+                        
+
+                    </View>
+
+                    :<></>}
 
                     <Drawer.Section style={styles.drawerSection}>
                         <DrawerItem 
@@ -95,7 +143,7 @@ const MenuSlider = (props) => {
                                 />
                             )}
                             label={({color}) => <Text style={{color:color}}>Profile</Text>}
-                            onPress={() => {props.navigation.navigate('Main')}}
+                            onPress={() => {props.navigation.navigate('ProfileScreen')}}
                         />
                         <DrawerItem 
                             icon={({size,color}) => (
@@ -128,7 +176,7 @@ const MenuSlider = (props) => {
                                 color={color}
                                 />
                             )}
-                            label={({color}) => <Text style={{color:color}} >Share Us</Text>}
+                            label={({color}) => <Text style={{color:color}} >Share {'&'} Earn reward</Text>}
                             onPress={() => {props.navigation.navigate('Main')}}
                         />
                     </Drawer.Section>
@@ -144,7 +192,7 @@ const MenuSlider = (props) => {
                     </Drawer.Section>
                 </View>
             </DrawerContentScrollView>
-            <Drawer.Section style={styles.bottomDrawerSection}>
+            <Drawer.Section style={[styles.bottomDrawerSection,{color:paperTheme.colors.light}]}>
                 <DrawerItem 
                     icon={({size,color}) => (
                         <Icon 
@@ -159,6 +207,8 @@ const MenuSlider = (props) => {
                 />
             </Drawer.Section>
         </View>
+
+        </>
     );
 }
 export default MenuSlider;
@@ -200,8 +250,8 @@ const styles = StyleSheet.create({
     },
     bottomDrawerSection: {
         marginBottom: 15,
-        borderTopColor: '#f4f4f4',
-        borderTopWidth: 1
+       
+        borderTopWidth: 0.3
     },
     preference: {
       flexDirection: 'row',
@@ -217,5 +267,15 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'space-evenly',
         alignItems:"center",
-    }
+    },
+    card:{
+      
+        height:60,
+        borderWidth:0.2,
+        marginTop:10,
+        width:'100%',
+        justifyContent:'center',
+        alignItems:'center',
+       
+    },
   });
