@@ -7,7 +7,7 @@ const LoadingScreen =props=>{
     return (
         <View style={{
             
-            backgroundColor:props.color,
+          
             flex:1,
             position:"absolute",
            

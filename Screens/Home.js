@@ -170,6 +170,13 @@ const Home = (props,{navigation}) => {
                />
   
              )}
+             ListEmptyComponent={
+                       
+              <View style={{height:60,width:width, flexDirection:'row', justifyContent:"center",alignItems:'center',}}>
+                 <Text style={{textAlign:'center'}}>No Data</Text>
+              </View>
+            
+            }
              keyExtractor={(item) => item.id}
             
             />
@@ -191,8 +198,15 @@ const Home = (props,{navigation}) => {
 
                 <VideoCard title={item.title} id={4} navigate_to="ListRecentVideoPlayerScreen" item={item} source={{uri:item.thumpnail}} />
 
-           )}
-           keyExtractor={(item) => item.id}
+               )}
+               ListEmptyComponent={
+                       
+                <View style={{height:60,width:width, flexDirection:'row', justifyContent:"center",alignItems:'center',}}>
+                   <Text style={{textAlign:'center'}}>No Data</Text>
+                </View>
+              
+              }
+              keyExtractor={(item) => item.id}
             
             />
 
@@ -214,8 +228,16 @@ const Home = (props,{navigation}) => {
 
                 <VideoCard title={item.name} id={4} navigate_to="ListVideoScreen" item={item} video={item.image} source={{uri:item.image}} />
 
-           )}
-           keyExtractor={(item) => item.id}
+               )}
+
+               ListEmptyComponent={
+                       
+                <View style={{height:60,width:width, flexDirection:'row', justifyContent:"center",alignItems:'center',}}>
+                   <Text style={{textAlign:'center'}}>No Data</Text>
+                </View>
+              
+              }
+              keyExtractor={(item) => item.id}
                
             />
 
@@ -240,6 +262,14 @@ const Home = (props,{navigation}) => {
                   <RectangleCard source={{uri:item.image}} />
 
                 )}
+
+                ListEmptyComponent={
+                       
+                  <View style={{height:60,width:width, flexDirection:'row', justifyContent:"center",alignItems:'center',}}>
+                     <Text style={{textAlign:'center'}}>No Data</Text>
+                  </View>
+                
+                }
                 keyExtractor={(item) => item.id}
                
             />

@@ -1,16 +1,17 @@
-import React from 'react';
-import { View, StyleSheet,Image } from 'react-native';
+import React,{useState} from 'react';
+import { View, StyleSheet,Image,Alert,FlatList,TouchableOpacity,Dimensions} from 'react-native';
+import config from '../config/config';
+import axios from 'axios';
 import Colors from '../Components/ColorPalet';
 import {
     useTheme,
     Avatar,
     Title,
     Caption,
-    Paragraph,
+  
     Drawer,
     Text,
-    TouchableRipple,
-    Switch,
+  
  
   
 } from 'react-native-paper';
@@ -22,8 +23,15 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { AuthContext } from '../Components/Context';
 import { color } from 'react-native-reanimated';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import CategoryTitle from '../Components/CategoryTitle';
+import ProfileIcon from '../Components/profile/ProfileIcon';
+import EditReels from '../Components/Reals/EditReels';
+
+//loader
+import LoadingScreen from './LoadingScreen';
+
+const width=Dimensions.get('window').width;
 
 const ProfileScreen = (props) => {
 
@@ -32,12 +40,80 @@ const ProfileScreen = (props) => {
     const paperTheme = useTheme();
     const {toggleTheme,SignOut } = React.useContext(AuthContext);
 
+    const[apidata,setApidata]=useState();
+    const[loading,setLoading]=useState(true)
+
     var name=props.route.params.userName;
     var email=props.route.params.userEmail;
     var code=props.route.params.userCode;
     var stars=props.route.params.userStars;
+    var token=props.route.params.userToken;
+
+    const getdata=async ()=>{
+
+      try{
+              
+        await axios.post(config.BASE_URL+'referrals_sample_profile', {
+             token: token,
+            
+           })
+          
+           .then(function (response) {
+               var data=response.data;
+            
+               if(data.error==false){
+                 
+                
+                setApidata(data)
+                setLoading(false)
+                
+               }else{
+                  
+                Alert.alert('Error Message!', JSON.stringify(data.message), [
+                  {text: 'Okay'}
+                 ]);
+                 return;
+                }
+           })
+           .catch(function (error) {
+          
+                  Alert.alert('Error Message!', JSON.stringify(error.message), [
+                   {text: 'Okay'}
+                  ]);
+                  return;
+           });
+        
+     }catch(e){
+     
+         Alert.alert('Error Message!', JSON.stringify(e.message), [
+           {text: 'Okay'}
+         ]);
+         return;
+     }
+    }
+
+  React.useEffect(() => {
+
+ 
+    getdata();
+    
+  
+  
+  }, []);
+
 
     return(
+
+    
+      <>
+      {loading ?(
+      
+          <LoadingScreen color="#fff"/>
+
+        ):(
+
+      < >
+    
         <View style={{flex:1}}>
             <DrawerContentScrollView {...props}>
                 <View style={styles.drawerContent}>
@@ -106,25 +182,64 @@ const ProfileScreen = (props) => {
 
                   </View>
 
+                  <View>
+
+                     <CategoryTitle title="Referrals" navigate_to="ListRecentVideoScreen" api_fetch_key="recent_videos" display="flex"/>
+                    
+
+                     <FlatList 
+                        style={{borderBottomWidth:0.6,borderBottomColor:paperTheme.colors.light,}}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        showsVerticalScrollIndicator={false}
+                        data={apidata.profiles}
+
+                        renderItem={({item}) => (
+
+                          <ProfileIcon title={item.name} id={4} navigate_to="ListRecentVideoPlayerScreen" item={item} source={{uri:item.profile}} />
+
+                        )}
+                       keyExtractor={(item) => item.id}
+                       ListEmptyComponent={
+                       
+                        <View style={{height:60,width:width, flexDirection:'row', justifyContent:"center",alignItems:'center',}}>
+                           <Text style={{textAlign:'center'}}>No Data</Text>
+                        </View>
+                      
+                      }
+                     
+            
+                    />
+                  </View>
+
                    
                   
                 </View>
+
+                <View style={{width:'100%',flexDirection:'column'}}>
+
+                  <EditReels  />
+                  <EditReels  />
+                  <EditReels  />
+                  <EditReels  />
+                  <EditReels  />
+                  <EditReels  />
+                  <EditReels  />
+                  <EditReels  />
+                  <EditReels  />
+
+                </View>
             </DrawerContentScrollView>
-            <Drawer.Section style={styles.bottomDrawerSection}>
-                <DrawerItem 
-                    icon={({size,color}) => (
-                        <Icon 
-                        name="exit-to-app" 
-                     
-                        size={size}
-                        color={color}
-                        />
-                    )}
-                    label={({color}) => <Text style={{color:color}} >Sign Out</Text>}
-                    onPress={() => {SignOut()}}
-                />
-            </Drawer.Section>
+           
         </View>
+
+        </>
+        )}
+        </>
+
+        
+
+        
     );
 }
 export default ProfileScreen;

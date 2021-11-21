@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,Text,Button,SafeAreaView,StyleSheet,ActivityIndicator,StatusBar,ScrollView,Dimensions,TextInput,Image, TouchableOpacity,Alert} from "react-native";
+import {View,Text,Button,SafeAreaView,ToastAndroid,StyleSheet,ActivityIndicator,StatusBar,ScrollView,Dimensions,TextInput,Image, TouchableOpacity,Alert} from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'react-native-paper';
 import Colors from '../Components/ColorPalet';
@@ -7,13 +7,14 @@ import VideoPlayer from 'react-native-video-controls';
 import {launchImageLibrary} from 'react-native-image-picker';
 import config from '../config/config';
 import axios from 'axios';
+import Toast from 'react-native-toast-message';
 
 
 const width=Dimensions.get('window').width;
 const height=Dimensions.get('screen').height;
 const AddVideoScreen = (props) => {
   var token=props.route.params.userToken;
-    const { colors } = useTheme();
+  const { colors } = useTheme();
   
    const navigation = useNavigation();
 
@@ -46,6 +47,14 @@ const AddVideoScreen = (props) => {
      
   }
 
+  const showToast = () => {
+    Toast.show({
+      type: 'warning',
+      text1: 'Message',
+      text2: 'validation failed'
+    });
+  }
+
  
 
   const upload=async()=>{
@@ -74,7 +83,13 @@ const AddVideoScreen = (props) => {
           
            .then(function (response) {
                var data=response.data;
-               console.log(data);
+               if(data.error==false){
+                ToastAndroid.show('Successfully Updated', ToastAndroid.SHORT);
+                navigation.navigate('ProfileScreen')
+               }else{
+
+                showToast();
+               }
               
            })
            .catch(function (error) {
@@ -222,6 +237,8 @@ const AddVideoScreen = (props) => {
 
             
           </View> 
+
+          <Toast />
       
         </View>
     );
