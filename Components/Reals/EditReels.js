@@ -1,9 +1,10 @@
 import React  from "react";
 import {View,Text,StyleSheet,Image,Dimensions,TouchableOpacity} from 'react-native';
 import Colors from "../ColorPalet";
-import Icon from 'react-native-vector-icons/FontAwesome';
+
 import ProgressiveImage from "../ProgressiveImage";
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import { color } from "react-native-reanimated";
 import {useTheme} from 'react-native-paper';
@@ -13,6 +14,11 @@ const width=Dimensions.get("window").width;
 const EditReels =props=>{
     const navigation = useNavigation();
     const paperTheme = useTheme();
+
+    const modalControll=()=>{
+
+      props.modalControll();
+    }
   
     
     return (
@@ -36,26 +42,40 @@ const EditReels =props=>{
               </View>
               <View style={styles.lower}>
 
-                  <Feather 
-                       name="thumbs-up"
-                       color={paperTheme.colors.custom_text}
-                       size={20}
-                     />
-                     <Text style={{fontSize:20,color:paperTheme.colors.custom_text}}>{' '}30</Text>
                      <Feather 
-                       name="share-2"
-                       color={paperTheme.colors.custom_text}
+                       name="thumbs-up"
+                       color={'#15d212'}
+                       size={20}
+                     /> 
+                     <Text style={{fontSize:20,color:paperTheme.colors.custom_text}}>{' '}30</Text>
+                     <Icon
+                     
+                       name="share"
+                       color={Colors.primary}
                        style={{paddingLeft:5}}
                        size={20}
+                      
                      />
+                    
                      <Text style={{fontSize:20,color:paperTheme.colors.custom_text}}>{' '}30</Text>
+
+                     <Icon
+                     
+                     name="clock"
+                     color={'orange'}
+                     style={{paddingLeft:5}}
+                     size={20}
+                    
+                   />
+                  
+                   <Text style={{fontSize:15,color:'orange'}}>{' '}In review</Text>
                   </View>
                   
             </View>
-            <TouchableOpacity style={{position:'absolute',top:5,right:0}}>
-            <Feather 
+            <TouchableOpacity onPress={()=>{modalControll()}} style={{position:'absolute',top:5,right:0}}>
+            <Icon 
                   
-                  name="more-vertical"
+                  name="dots-vertical"
                   color={paperTheme.colors.custom_text}
                   size={30}
             />

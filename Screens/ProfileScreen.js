@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { View, StyleSheet,Image,Alert,FlatList,TouchableOpacity,Dimensions} from 'react-native';
+import { View, StyleSheet,Image,Alert,FlatList,TouchableOpacity,Dimensions,Modal} from 'react-native';
 import config from '../config/config';
 import axios from 'axios';
 import Colors from '../Components/ColorPalet';
@@ -27,6 +27,7 @@ import { color } from 'react-native-reanimated';
 import CategoryTitle from '../Components/CategoryTitle';
 import ProfileIcon from '../Components/profile/ProfileIcon';
 import EditReels from '../Components/Reals/EditReels';
+import VideoControllOptions from '../Components/Modal/VideoControllOptions';
 
 //loader
 import LoadingScreen from './LoadingScreen';
@@ -41,13 +42,41 @@ const ProfileScreen = (props) => {
     const {toggleTheme,SignOut } = React.useContext(AuthContext);
 
     const[apidata,setApidata]=useState();
-    const[loading,setLoading]=useState(true)
+    const[loading,setLoading]=useState(true);
+    const[isShowModal,setIsShowModal]=React.useState(false);
 
     var name=props.route.params.userName;
     var email=props.route.params.userEmail;
     var code=props.route.params.userCode;
     var stars=props.route.params.userStars;
     var token=props.route.params.userToken;
+
+
+    const modalControll=()=>{
+      setIsShowModal(!isShowModal);
+    }
+
+    const deleteVideo=()=>{
+
+      Alert.alert(
+        "Are your sure?",
+        "Are you sure you want to remove this beautiful box?",
+        [
+          // The "Yes" button
+          {
+            text: "Yes",
+            onPress: () => {
+              alert('deleted');
+            },
+          },
+          // The "No" button
+          // Does nothing but dismiss the dialog when tapped
+          {
+            text: "No",
+          },
+        ]
+      );
+    }
 
     const getdata=async ()=>{
 
@@ -106,6 +135,10 @@ const ProfileScreen = (props) => {
 
     
       <>
+
+        <Modal transparent visible={isShowModal}>
+            <VideoControllOptions deleteVideo={deleteVideo} modalControll={modalControll} />
+        </Modal>
       {loading ?(
       
           <LoadingScreen color="#fff"/>
@@ -218,15 +251,8 @@ const ProfileScreen = (props) => {
 
                 <View style={{width:'100%',flexDirection:'column'}}>
 
-                  <EditReels  />
-                  <EditReels  />
-                  <EditReels  />
-                  <EditReels  />
-                  <EditReels  />
-                  <EditReels  />
-                  <EditReels  />
-                  <EditReels  />
-                  <EditReels  />
+                  <EditReels  modalControll={modalControll} />
+                 
 
                 </View>
             </DrawerContentScrollView>
