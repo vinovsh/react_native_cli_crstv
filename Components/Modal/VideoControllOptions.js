@@ -48,8 +48,10 @@ const VideoControllOptions = (props) => {
        <View style={styles.optionHolder}>
 
            <View style={styles.card}>
+             <TouchableOpacity onPress={()=>{props.editVideo()}} activeOpacity={0.6} style={styles.card}>
              <Icon style={{marginLeft:10}}  name="circle-edit-outline"  size={25} color={colors.custom_text}/>
              <Text style={{marginLeft:25,fontSize:20,color:colors.custom_text}}>Edit</Text>
+             </TouchableOpacity>
            </View>
 
            <TouchableOpacity activeOpacity={0.6} onPress={()=>{props.deleteVideo()}} style={styles.card}>

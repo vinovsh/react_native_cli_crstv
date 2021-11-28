@@ -1,8 +1,9 @@
 import React,{useState} from 'react';
-import { View, StyleSheet,Image,Alert,FlatList,TouchableOpacity,Dimensions,Modal} from 'react-native';
+import { View, StyleSheet,Image,Alert,FlatList,TouchableOpacity,Dimensions,Modal,ActivityIndicator} from 'react-native';
 import config from '../config/config';
 import axios from 'axios';
 import Colors from '../Components/ColorPalet';
+import { useNavigation } from '@react-navigation/native';
 import {
     useTheme,
     Avatar,
@@ -26,24 +27,28 @@ import { color } from 'react-native-reanimated';
 
 import CategoryTitle from '../Components/CategoryTitle';
 import ProfileIcon from '../Components/profile/ProfileIcon';
-import EditReels from '../Components/Reals/EditReels';
+
 import VideoControllOptions from '../Components/Modal/VideoControllOptions';
 
 //loader
 import LoadingScreen from './LoadingScreen';
 
+
 const width=Dimensions.get('window').width;
 
 const ProfileScreen = (props) => {
 
-   
+    const navigation = useNavigation();
 
     const paperTheme = useTheme();
     const {toggleTheme,SignOut } = React.useContext(AuthContext);
 
     const[apidata,setApidata]=useState();
+    const[videoapidata,setVideoApidata]=useState();
     const[loading,setLoading]=useState(true);
     const[isShowModal,setIsShowModal]=React.useState(false);
+  
+ 
 
     var name=props.route.params.userName;
     var email=props.route.params.userEmail;
@@ -52,32 +57,12 @@ const ProfileScreen = (props) => {
     var token=props.route.params.userToken;
 
 
-    const modalControll=()=>{
-      setIsShowModal(!isShowModal);
-    }
+  
 
-    const deleteVideo=()=>{
 
-      Alert.alert(
-        "Are your sure?",
-        "Are you sure you want to remove this beautiful box?",
-        [
-          // The "Yes" button
-          {
-            text: "Yes",
-            onPress: () => {
-              alert('deleted');
-            },
-          },
-          // The "No" button
-          // Does nothing but dismiss the dialog when tapped
-          {
-            text: "No",
-          },
-        ]
-      );
-    }
 
+    
+   
     const getdata=async ()=>{
 
       try{
@@ -121,6 +106,8 @@ const ProfileScreen = (props) => {
      }
     }
 
+
+
   React.useEffect(() => {
 
  
@@ -136,9 +123,7 @@ const ProfileScreen = (props) => {
     
       <>
 
-        <Modal transparent visible={isShowModal}>
-            <VideoControllOptions deleteVideo={deleteVideo} modalControll={modalControll} />
-        </Modal>
+       
       {loading ?(
       
           <LoadingScreen color="#fff"/>
@@ -243,19 +228,34 @@ const ProfileScreen = (props) => {
                      
             
                     />
+
+
+
+                    
+                  </View>
+
+
+                  <View  style={{width:width, flexDirection:'column', justifyContent:"center",alignItems:'center',}}>
+                           <TouchableOpacity onPress={()=>{navigation.navigate('myVideosScreen')}} activeOpacity={0.6}>
+                           <View style={{width:200,height:35,backgroundColor:'orange',borderRadius:10,justifyContent:'center',alignItems:'center',marginTop:60}}>
+                              <Text style={{color:'#fff',fontSize:20,textAlign:'center'}}>My Videos</Text>
+                           </View>
+                           </TouchableOpacity>
                   </View>
 
                    
                   
                 </View>
 
-                <View style={{width:'100%',flexDirection:'column'}}>
+                
+            </DrawerContentScrollView>
 
-                  <EditReels  modalControll={modalControll} />
+    
+                  
+                
                  
 
-                </View>
-            </DrawerContentScrollView>
+               
            
         </View>
 

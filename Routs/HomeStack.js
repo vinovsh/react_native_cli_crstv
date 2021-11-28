@@ -21,6 +21,8 @@ import ListRecentVideosScreen from '../Screens/ListRecentVideosScreen';
 import ListRecentVideoPlayerScreen from '../Screens/ListRecentVideoPlayerScreen';
 import AddVideoScreen from '../Screens/AddVideoScreen';
 import ProfileScreen from '../Screens/ProfileScreen';
+import MyVideosScreen from '../Screens/MyVideosScreen';
+import EditReelsScreen from '../Screens/EditReelsScreen';
 
 const Stack = createNativeStackNavigator();
 const HomeStack = (props) => {
@@ -205,6 +207,30 @@ const HomeStack = (props) => {
 
                    name="ProfileScreen"
                    component={ProfileScreen}
+                />
+
+                <Stack.Screen
+                  initialParams={props.route.params} 
+                  options={{
+                      headerShown: true,
+
+                      title:"My Videos"
+                  }}
+
+                   name="myVideosScreen"
+                   component={MyVideosScreen}
+                />
+
+                <Stack.Screen
+                  initialParams={props.route.params} 
+                  options={{
+                      headerShown: true,
+
+                      title:"Edit"
+                  }}
+
+                   name="editVideosScreen"
+                   component={EditReelsScreen}
                 />
          
           

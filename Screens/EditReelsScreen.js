@@ -1,6 +1,6 @@
 import React from 'react';
 import {View,Text,Button,SafeAreaView,ToastAndroid,StyleSheet,ActivityIndicator,StatusBar,ScrollView,Dimensions,TextInput,Image, TouchableOpacity,Alert} from "react-native";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation,StackActions} from '@react-navigation/native';
 import { useTheme } from 'react-native-paper';
 import Colors from '../Components/ColorPalet';
 import VideoPlayer from 'react-native-video-controls';
@@ -10,20 +10,24 @@ import axios from 'axios';
 import Toast from 'react-native-toast-message';
 
 
+
 const width=Dimensions.get('window').width;
 const height=Dimensions.get('screen').height;
-const AddVideoScreen = (props) => {
+const EditReelsScreen = (props) => {
   var token=props.route.params.userToken;
   const { colors } = useTheme();
-  
+  let video_data=props.route.params.video;
    const navigation = useNavigation();
 
-   const [videoUrl,setVideoUrl]=React.useState(props.route.params.item.assets[0].uri)
+
+
+
+  
    const [imageUrl,setImageoUrl]=React.useState()
 
-   const [video,setVideo]=React.useState(props.route.params.item.assets[0]);
+  
    const [image,setImage]=React.useState();
-   const [title,setTitle]=React.useState();
+   const [title,setTitle]=React.useState(video_data.title);
    const [uploading,setUploading]=React.useState(false);
 
    const [progress,setProgress]=React.useState(0);
@@ -37,6 +41,8 @@ const AddVideoScreen = (props) => {
       setImage(e.assets[0]);
     }
   }
+
+ 
    const selectimage=()=>{
   
     launchImageLibrary({mediaType:'photo'}, callback);
@@ -60,20 +66,23 @@ const AddVideoScreen = (props) => {
 
   const upload=async()=>{
     setUploading(true);
-    if(video && title && image){
+    if(title){
       let formData = new FormData();
       
-      formData.append("video",  {type:video.type,uri:video.uri,name:video.fileName});
-      formData.append("image",  {type:image.type,uri:image.uri,name:image.fileName});
+      if(imageUrl){
+        formData.append("image",  {type:image.type,uri:image.uri,name:image.fileName});
+      }
+     
       formData.append("title",  title);
       formData.append("token",  token);
+      formData.append("id",  video_data.id);
 
       try{
 
 
    
                 
-        await axios.post(config.BASE_URL+'reels_upload', formData,{
+        await axios.post(config.BASE_URL+'edit_reels', formData,{
 
           onUploadProgress: function(progressEvent) {
             var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
@@ -86,7 +95,11 @@ const AddVideoScreen = (props) => {
                var data=response.data;
                if(data.error==false){
                 ToastAndroid.show('Successfully Updated', ToastAndroid.SHORT);
-                navigation.navigate('ProfileScreen')
+              
+                
+               //navigation.replace("myVideosScreen")
+               navigation.dispatch(StackActions.replace('myVideosScreen'));
+            // navigation.navigate('myVideosScreen')
                }else{
                 setUploading(false);
                 showToast();
@@ -136,7 +149,7 @@ const AddVideoScreen = (props) => {
                  }}
                   style={{width:'100%',height:width/1.8}}
                    source={{
-                     uri:videoUrl,
+                     uri:video_data.video,
                     
                    }}
                    repeat={true}
@@ -172,6 +185,7 @@ const AddVideoScreen = (props) => {
                  placeholderTextColor="#666666"
                     
                 autoCapitalize="none"
+                value={title}
 
                 onChangeText={(val) => handleTitleChange(val)}
                  
@@ -199,7 +213,7 @@ const AddVideoScreen = (props) => {
                 
                 <Image 
 
-                source={require('../assets/images/empty_image.png')}
+                source={{uri:video_data.image}}
                 style={{width:150,height:150}}
 
               />
@@ -272,7 +286,7 @@ const AddVideoScreen = (props) => {
     );
 }
 
-export default AddVideoScreen;
+export default EditReelsScreen;
 
 const styles = StyleSheet.create({
     container:{

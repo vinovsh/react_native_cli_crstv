@@ -17,7 +17,7 @@ const EditReels =props=>{
 
     const modalControll=()=>{
 
-      props.modalControll();
+      props.modalControll(props.item);
     }
   
     
@@ -29,7 +29,7 @@ const EditReels =props=>{
             <Image
               style={styles.image}
               
-              source={{uri:'https://lumiere-a.akamaihd.net/v1/images/p_blackwidow_21043_v2_6d1b73b8.jpeg'}}
+              source={{uri:props.item.image}}
             
             />
           </View>
@@ -37,7 +37,7 @@ const EditReels =props=>{
 
               <View style={styles.upper}>
                  
-                 <Text numberOfLines={3} style={{fontSize:16,fontFamily:"Montserrat-Medium",margin:5,color:paperTheme.colors.custom_text}}>I was able to achieve a result close to what I'm looking for by applying a scale transform to the</Text>
+                 <Text numberOfLines={3} style={{fontSize:16,fontFamily:"Montserrat-Medium",margin:5,color:paperTheme.colors.custom_text}}>{props.item.title}</Text>
 
               </View>
               <View style={styles.lower}>
@@ -47,7 +47,7 @@ const EditReels =props=>{
                        color={'#15d212'}
                        size={20}
                      /> 
-                     <Text style={{fontSize:20,color:paperTheme.colors.custom_text}}>{' '}30</Text>
+                     <Text style={{fontSize:20,color:paperTheme.colors.custom_text}}>{' '}{props.item.likes}</Text>
                      <Icon
                      
                        name="share"
@@ -57,7 +57,7 @@ const EditReels =props=>{
                       
                      />
                     
-                     <Text style={{fontSize:20,color:paperTheme.colors.custom_text}}>{' '}30</Text>
+                     <Text style={{fontSize:20,color:paperTheme.colors.custom_text}}>{' '}{props.item.shares}</Text>
 
                      <Icon
                      
@@ -67,8 +67,9 @@ const EditReels =props=>{
                      size={20}
                     
                    />
-                  
+                  {props.item.status==0?
                    <Text style={{fontSize:15,color:'orange'}}>{' '}In review</Text>
+                  :<></>}
                   </View>
                   
             </View>
