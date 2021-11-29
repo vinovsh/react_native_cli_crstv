@@ -97,9 +97,8 @@ const EditReelsScreen = (props) => {
                 ToastAndroid.show('Successfully Updated', ToastAndroid.SHORT);
               
                 
-               //navigation.replace("myVideosScreen")
-               navigation.dispatch(StackActions.replace('myVideosScreen'));
-            // navigation.navigate('myVideosScreen')
+             
+            navigation.navigate('myVideosScreen')
                }else{
                 setUploading(false);
                 showToast();

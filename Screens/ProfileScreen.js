@@ -202,7 +202,7 @@ const ProfileScreen = (props) => {
 
                   <View>
 
-                     <CategoryTitle title="Referrals" navigate_to="ListRecentVideoScreen" api_fetch_key="recent_videos" display="flex"/>
+                     <CategoryTitle title="Referrals" navigate_to="ReferredPeopleScreen"  display="flex"/>
                     
 
                      <FlatList 

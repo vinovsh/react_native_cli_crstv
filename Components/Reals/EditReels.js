@@ -19,10 +19,15 @@ const EditReels =props=>{
 
       props.modalControll(props.item);
     }
+
+    const playerView=()=>{
+
+       props.playerView(props.item);
+    }
   
     
     return (
-        
+        <TouchableOpacity onPress={()=>{playerView()}}  activeOpacity={0.9}>
         <View style={[styles.container,{borderColor:paperTheme.colors.light}]}>
 
           <View style={styles.image_card}>
@@ -48,16 +53,7 @@ const EditReels =props=>{
                        size={20}
                      /> 
                      <Text style={{fontSize:20,color:paperTheme.colors.custom_text}}>{' '}{props.item.likes}</Text>
-                     <Icon
-                     
-                       name="share"
-                       color={Colors.primary}
-                       style={{paddingLeft:5}}
-                       size={20}
-                      
-                     />
                     
-                     <Text style={{fontSize:20,color:paperTheme.colors.custom_text}}>{' '}{props.item.shares}</Text>
 
                      <Icon
                      
@@ -68,7 +64,7 @@ const EditReels =props=>{
                     
                    />
                   {props.item.status==0?
-                   <Text style={{fontSize:15,color:'orange'}}>{' '}In review</Text>
+                   <Text style={{fontSize:15,color:'orange'}}>{' '}Under review</Text>
                   :<></>}
                   </View>
                   
@@ -84,6 +80,7 @@ const EditReels =props=>{
 
 
         </View>
+        </TouchableOpacity>
        
       );
 

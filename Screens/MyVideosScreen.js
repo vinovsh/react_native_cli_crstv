@@ -5,6 +5,7 @@ import {View,Text,Button,FlatList, StyleSheet,Alert,Modal,ToastAndroid,BackHandl
 import EditReels from '../Components/Reals/EditReels';
 import VideoControllOptions from '../Components/Modal/VideoControllOptions';
 import { useNavigation } from '@react-navigation/native';
+import Orientation from 'react-native-orientation';
 
 //loader
 import LoadingScreen from './LoadingScreen';
@@ -13,6 +14,8 @@ import LoadmoreIndicator from '../Components/LoadmoreIndicator';
 const MyVideosScreen = (props,{route}) => {
 
     var token=props.route.params.userToken;
+    
+    Orientation.lockToPortrait();
 
     const navigation = useNavigation();
 
@@ -24,14 +27,7 @@ const MyVideosScreen = (props,{route}) => {
     const[currentObjectData,setCurrentObjectData]=useState(null);
     const[refresh,setRefresh]=useState(false);
 
-    const backAction=()=>{
-     //navigation.navigate('ProfileScreen');
-    }
-
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction
-    );
+    
 
     const modalControll=(data)=>{
 
@@ -48,8 +44,26 @@ const MyVideosScreen = (props,{route}) => {
 
     const editVideo=()=>{
       setIsShowModal(!isShowModal);
-      navigation.replace("myVideosScreen")
+    
       navigation.navigate('editVideosScreen',{video:currentObjectData});
+    }
+
+    const playerView=(data)=>{
+      
+      navigation.navigate('ReelPlayerScreen',{video:data});
+
+    }
+
+    const shareVideo=()=>{
+
+      setIsShowModal(!isShowModal);
+      if(currentObjectData.status==1){
+
+      }else{
+
+        ToastAndroid.show('Reel Under review', ToastAndroid.SHORT);
+      }
+
     }
 
     const deleteVideo=()=>{
@@ -203,7 +217,7 @@ const MyVideosScreen = (props,{route}) => {
       {currentObjectData?
       
         <Modal transparent visible={isShowModal}>
-          <VideoControllOptions editVideo={editVideo} deleteVideo={deleteVideo} modalControll={modalControll} />
+          <VideoControllOptions shareVideo={shareVideo} editVideo={editVideo} deleteVideo={deleteVideo} modalControll={modalControll} />
         </Modal>
 
         :
@@ -222,7 +236,7 @@ const MyVideosScreen = (props,{route}) => {
 
              style={styles.container}
              data={apidata.videos.data}
-             renderItem={({item})=><EditReels modalControll={modalControll} item={item} />} 
+             renderItem={({item})=><EditReels playerView={playerView} modalControll={modalControll} item={item} />} 
              keyExtractor={(item) => item.id}
              
              showsVerticalScrollIndicator={false}

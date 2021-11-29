@@ -20,6 +20,12 @@ const VideoControllOptions = (props) => {
     const modalControll=()=>{
         props.modalControll();
      }
+
+    const shareVideo=()=>{
+      
+      props.shareVideo();
+
+    } 
      
     
    
@@ -45,7 +51,7 @@ const VideoControllOptions = (props) => {
 
          </View>
 
-       <View style={styles.optionHolder}>
+       <View style={styles.optionHolder}> 
 
            <View style={styles.card}>
              <TouchableOpacity onPress={()=>{props.editVideo()}} activeOpacity={0.6} style={styles.card}>
@@ -58,11 +64,13 @@ const VideoControllOptions = (props) => {
              <Icon style={{marginLeft:10,color:colors.custom_text}}  name="delete"  size={25} color={colors.custom_text}/>
              <Text style={{marginLeft:25,fontSize:20,color:colors.custom_text}}>Delete</Text>
            </TouchableOpacity>
-
-           <View style={styles.card}>
-             <Icon style={{marginLeft:10,color:colors.custom_text}}  name="share"  size={25} color={colors.custom_text}/>
-             <Text style={{marginLeft:25,fontSize:20,color:colors.custom_text}}>Share</Text>
-           </View>
+               
+          
+             <TouchableOpacity activeOpacity={0.6} onPress={()=>{shareVideo()}} style={styles.card}>
+              <Icon style={{marginLeft:10,color:colors.custom_text}}  name="share"  size={25} color={colors.custom_text}/>
+              <Text style={{marginLeft:25,fontSize:20,color:colors.custom_text}}>Share</Text>
+             </TouchableOpacity>
+           
              
        </View>
            
