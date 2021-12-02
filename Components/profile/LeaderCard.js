@@ -7,15 +7,20 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 const width=Dimensions.get('window').width;
-const PeopleCard=(props)=>{
+const LeaderCard=(props)=>{
 
     const colors = useTheme().colors;
+  
 
     return(
 
    
         <Animatable.View  animation='fadeIn' style={[styles.card,{backgroundColor:colors.white}]}>
-          
+          <View style={{width:40,justifyContent:'center',alignItems:'center',borderColor:colors.light,borderWidth:0.5,borderRadius:10}}>
+             
+             <Text style={{fontSize:20,color:'#000'}}>{props.index+1}</Text>
+
+          </View>
           {props.item.profile ?
           
             <Image 
@@ -61,7 +66,7 @@ const PeopleCard=(props)=>{
 
 }
 
-export default PeopleCard;
+export default LeaderCard;
 
 const styles = StyleSheet.create({
 

@@ -3,6 +3,7 @@ import config from '../config/config';
 import axios from 'axios';
 import {View,Text,Button,FlatList, StyleSheet,Alert} from "react-native"
 import PeopleCard from '../Components/profile/PeopleCard';
+import NoData from '../Components/Nodata';
 
 //loader
 import LoadingScreen from './LoadingScreen';
@@ -99,6 +100,8 @@ const ReferredPeopleScreen = (props,{route,navigation}) => {
         ):(
 
       < >
+
+   
             <FlatList
 
              style={styles.container}
@@ -107,25 +110,7 @@ const ReferredPeopleScreen = (props,{route,navigation}) => {
             
             <>
               <PeopleCard item={item} />
-              <PeopleCard item={item} />
-              <PeopleCard item={item} />
-              <PeopleCard item={item} />
-              <PeopleCard item={item} />
-              <PeopleCard item={item} />
-              <PeopleCard item={item} />
-              <PeopleCard item={item} />
-              <PeopleCard item={item} />
-              <PeopleCard item={item} />
-              <PeopleCard item={item} />
-              <PeopleCard item={item} />
-              <PeopleCard item={item} />
-              <PeopleCard item={item} />
-              <PeopleCard item={item} />
-              <PeopleCard item={item} />
-              <PeopleCard item={item} />
-              <PeopleCard item={item} />
-              <PeopleCard item={item} />
-              <PeopleCard item={item} />
+             
             </>
             
             } 
@@ -138,6 +123,11 @@ const ReferredPeopleScreen = (props,{route,navigation}) => {
              //onEndReachedThreshold={0}
 
              ListFooterComponent={ moreloading ?(<LoadmoreIndicator /> ):(<></>)}
+             ListEmptyComponent={
+                       
+              <NoData />
+             
+             }
             />
  
       </>

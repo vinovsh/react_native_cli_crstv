@@ -27,8 +27,8 @@ import { color } from 'react-native-reanimated';
 
 import CategoryTitle from '../Components/CategoryTitle';
 import ProfileIcon from '../Components/profile/ProfileIcon';
+import EditProfile from '../Components/Modal/EditProfile';
 
-import VideoControllOptions from '../Components/Modal/VideoControllOptions';
 
 //loader
 import LoadingScreen from './LoadingScreen';
@@ -46,7 +46,7 @@ const ProfileScreen = (props) => {
     const[apidata,setApidata]=useState();
     const[videoapidata,setVideoApidata]=useState();
     const[loading,setLoading]=useState(true);
-    const[isShowModal,setIsShowModal]=React.useState(false);
+    const[isShowModal,setIsShowModal]=React.useState(true);
   
  
 
@@ -131,6 +131,11 @@ const ProfileScreen = (props) => {
         ):(
 
       < >
+
+       <Modal visible={isShowModal}>
+
+          <EditProfile />
+       </Modal>
     
         <View style={{flex:1}}>
             <DrawerContentScrollView {...props}>
@@ -188,7 +193,7 @@ const ProfileScreen = (props) => {
 
                     </View>
                     <View style={[styles.card,{borderColor:paperTheme.colors.light}]}>
-                    <TouchableOpacity activeOpacity={0.6} onPress={() => {}} >
+                    <TouchableOpacity onPress={()=>{navigation.navigate('LeaderBoard')}} activeOpacity={0.6}  >
                       <Image 
                         style={styles.leader}
                         source={require('../assets/images/leader.png')}

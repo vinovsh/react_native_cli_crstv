@@ -26,6 +26,8 @@ import EditReelsScreen from '../Screens/EditReelsScreen';
 import ReelPlayerScreen from '../Screens/ReelPlayerScreen';
 import ReferredPeopleScreen from '../Screens/ReferredPeoplesScreen';
 
+import LeaderBoard from '../Screens/LeaderBoard';
+
 const Stack = createNativeStackNavigator();
 const HomeStack = (props) => {
       
@@ -257,6 +259,18 @@ const HomeStack = (props) => {
 
                    name="ReferredPeopleScreen"
                    component={ReferredPeopleScreen}
+                />
+
+                <Stack.Screen
+                  initialParams={props.route.params} 
+                  options={{
+                      headerShown: false,
+
+                      title:"LeaderBoard"
+                  }}
+
+                   name="LeaderBoard"
+                   component={LeaderBoard}
                 />
          
           

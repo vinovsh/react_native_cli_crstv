@@ -4,7 +4,7 @@ import * as Animatable from 'react-native-animatable';
 import config from '../../config/config';
 import axios from 'axios';
 
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+
 
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
