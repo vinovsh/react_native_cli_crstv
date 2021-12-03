@@ -41,6 +41,7 @@ const MenuSlider = (props) => {
     const[isShowReferalButton,setIsShowReferalButton]=React.useState(show_referral_button);
 
     var name=props.globalData.userName;
+    var profile=props.globalData.userProfile;
     var email=props.globalData.userEmail;
     var code=props.globalData.userCode;
     var stars=props.globalData.userStars;
@@ -67,12 +68,23 @@ const MenuSlider = (props) => {
                 <View style={styles.drawerContent}>
                     <View style={styles.userInfoSection}>
                         <View style={{flexDirection:'row',marginTop: 15,paddingBottom:15, borderBottomColor:paperTheme.colors.light, borderBottomWidth: 0.3}}>
-                            <Avatar.Image 
-                                source={{
-                                    uri: 'https://www.unigreet.com/wp-content/uploads/2020/04/Sweet-girl-dp.jpg'
-                                }}
-                                size={50}
-                            />
+                            {profile ?
+
+                                <Avatar.Image 
+                                   source={{
+                                      uri: profile
+                                   }}
+                                   size={50}
+                                />
+
+                                :
+
+                                <Avatar.Image 
+                                   source={require('../assets/images/profile.png')}
+                                   size={50}
+                                />
+                            
+                             }
                             <View style={{marginLeft:15, flexDirection:'column'}}>
                                 <Title style={styles.title}>{name}</Title>
                                 <Caption style={styles.caption}>{email}</Caption>

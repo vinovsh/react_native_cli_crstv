@@ -28,6 +28,7 @@ const initialLoginState={
    isAuthenticated:false,
    userName:'',
    userEmail:'',
+   userProfile:'',
    userCode:'',
    referralCode:'',
    userStars:'',
@@ -45,6 +46,7 @@ const loginReducer=(prevState,action)=>{
         ...prevState,
         userToken:action.token,
         userName:action.name,
+        userProfile:action.profile,
         userEmail:action.email,
         userCode:action.code,
         referralCode:action.referral_code,
@@ -58,6 +60,7 @@ const loginReducer=(prevState,action)=>{
         ...prevState,
         userToken:action.token,
         userName:action.name,
+        userProfile:action.profile,
         userEmail:action.email,
         userCode:action.code,
         referralCode:action.referral_code,
@@ -70,6 +73,7 @@ const loginReducer=(prevState,action)=>{
         ...prevState,
         userToken:action.token,
         userName:action.name,
+        userProfile:action.profile,
         userEmail:action.email,
         userCode:action.code,
         referralCode:action.referral_code,
@@ -83,12 +87,22 @@ const loginReducer=(prevState,action)=>{
         ...prevState,
         userToken:'',
         userName:'',
+        userProfile:'',
         userEmail:'',
         userCode:'',
         referralCode:action.referral_code,
         userStars:'',
         isLoading:false,
         isAuthenticated:false
+      };
+
+      case 'UPDATE':
+      return{
+        ...prevState,
+    
+        userName:action.name,
+        userProfile:action.profile,
+       
       };
      
    }
@@ -199,20 +213,28 @@ const [loginState,dispatch]=React.useReducer(loginReducer,initialLoginState);
 
   
 
-   SignInFormSubmit: async(token,name,email,code,referral_code,stars) => {
+   SignInFormSubmit: async(token,name,profile,email,code,referral_code,stars) => {
 
      
 
       try {
         await AsyncStorage.setItem('@user_token', token);
-        dispatch({type:'LOGIN',token:token,name:name,email:email,code:code,referral_code:referral_code,stars:stars});
+        dispatch({type:'LOGIN',token:token,name:name,profile:profile,email:email,code:code,referral_code:referral_code,stars:stars});
       } catch (e) {
         console.log(e);
       }
        
   
 
- }
+ },
+
+ profileUpdate:async(name,profile)=>{
+
+   
+     dispatch({type:'UPDATE',name:name,profile:profile});
+ 
+  
+},
 
  }), []);
 
@@ -258,12 +280,13 @@ try {
                
                    var token=data.token;
                    var name=data.name;
+                   var profile=data.profile;
                    var email=data.email;
                    var code=data.code;
                    var referral_code=data.referral_code;
                    var stars=data.stars;
    
-                  dispatch({type:'AUTH_CHECK',token:token,name:name,email:email,code:code,referral_code:referral_code,stars:stars});
+                  dispatch({type:'AUTH_CHECK',token:token,name:name,profile:profile,email:email,code:code,referral_code:referral_code,stars:stars});
               
              }else{
                 

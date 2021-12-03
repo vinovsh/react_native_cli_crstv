@@ -183,11 +183,12 @@ const OtpScreen = ({route,navigation}) => {
                      
                          var token=data.token;
                          var name=data.name;
+                         var profile=data.profile;
                          var email=data.email;
                          var code=data.code;
                          var referral_code=data.referral_code;
                          var stars=data.stars;
-                        SignInFormSubmit(token,name,email,code,referral_code,stars);
+                        SignInFormSubmit(token,name,profile,email,code,referral_code,stars);
                     
                    }else{
                       setIsLoading(false);

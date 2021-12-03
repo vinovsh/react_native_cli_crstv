@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { View, StyleSheet,Image,Alert,FlatList,TouchableOpacity,Dimensions,Modal,ActivityIndicator} from 'react-native';
+import { View, StyleSheet,Image,Alert,FlatList,TouchableOpacity,Dimensions,Modal} from 'react-native';
 import config from '../config/config';
 import axios from 'axios';
 import Colors from '../Components/ColorPalet';
@@ -46,19 +46,37 @@ const ProfileScreen = (props) => {
     const[apidata,setApidata]=useState();
     const[videoapidata,setVideoApidata]=useState();
     const[loading,setLoading]=useState(true);
-    const[isShowModal,setIsShowModal]=React.useState(true);
+    const[isShowModal,setIsShowModal]=React.useState(false);
+  
+    const[name,setName]=useState(props.route.params.userName);
+    const[profile,setProfile]=useState(props.route.params.userProfile);
+
   
  
-
-    var name=props.route.params.userName;
     var email=props.route.params.userEmail;
     var code=props.route.params.userCode;
     var stars=props.route.params.userStars;
     var token=props.route.params.userToken;
 
 
-  
 
+
+  
+  const closeModal=()=>{
+
+    setIsShowModal(false);
+  }
+
+  const openModal=()=>{
+
+    setIsShowModal(true);
+  }
+
+  const updateProfile=(name,profile)=>{
+
+      setName(name);
+      setProfile(profile);
+  }
 
 
     
@@ -134,7 +152,7 @@ const ProfileScreen = (props) => {
 
        <Modal visible={isShowModal}>
 
-          <EditProfile />
+          <EditProfile updateProfile={updateProfile} token={props.route.params.userToken} closeModal={closeModal} name={name} profile={profile} />
        </Modal>
     
         <View style={{flex:1}}>
@@ -142,12 +160,22 @@ const ProfileScreen = (props) => {
                 <View style={styles.drawerContent}>
                     <View style={styles.userInfoSection}>
                         <View style={{flexDirection:'row',marginTop: 15,paddingBottom:15, }}>
-                            <Avatar.Image 
+                            {profile ?
+                            
+                              <Avatar.Image 
                                 source={{
-                                    uri: 'https://www.unigreet.com/wp-content/uploads/2020/04/Sweet-girl-dp.jpg'
+                                  uri: profile
                                 }}
                                 size={50}
+                              />
+
+                              :
+
+                              <Avatar.Image 
+                                source={require('../assets/images/profile.png')}
+                                size={50}
                             />
+                            }
                             <View style={{marginLeft:15, flexDirection:'column'}}>
                                 <Title style={styles.title}>{name}</Title>
                                 <Caption style={styles.caption}>{email}</Caption>
@@ -159,6 +187,7 @@ const ProfileScreen = (props) => {
                                 name="circle-edit-outline" 
                                 style={{color:paperTheme.colors.custom_text}}
                                 size={25}
+                                onPress={()=>{openModal()}}
                                 />
                         </View>
                       

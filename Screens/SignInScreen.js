@@ -144,11 +144,12 @@ const SignUpScreen = ({navigation}) => {
                         if(data.status==1){
                             var token=data.token;
                             var name=data.name;
+                            var profile=data.profile;
                             var email=data.email;
                             var code=data.code;
                             var referral_code=data.referral_code;
                             var stars=data.stars;
-                           SignInFormSubmit(token,name,email,code,referral_code,stars);
+                           SignInFormSubmit(token,name,profile,email,code,referral_code,stars);
                         }else{
 
                             navigation.navigate('OtpScreen',{ token:data.token });

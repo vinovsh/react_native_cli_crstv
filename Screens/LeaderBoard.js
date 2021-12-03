@@ -172,9 +172,7 @@ const LeaderBoard = (props) => {
                       <Image
  
                        style={styles.star} 
-                       source={{
-                          uri:'https://cdn-icons-png.flaticon.com/512/616/616490.png'
-                       }}
+                       source={require('../assets/images/star.png')}
  
                        
                      />

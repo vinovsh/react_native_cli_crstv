@@ -1,19 +1,127 @@
 import React from "react";
-import {View,Text,TouchableOpacity,StyleSheet,Image,TextInput,Dimensions} from 'react-native';
+import {View,Text,TouchableOpacity,StyleSheet,Image,TextInput,Dimensions,ActivityIndicator,Alert,ToastAndroid} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useTheme} from 'react-native-paper';
 import Colors from "../ColorPalet";
+import {launchImageLibrary} from 'react-native-image-picker';
+import config from "../../config/config";
+import axios from 'axios';
+import { AuthContext } from "../Context";
 
 const width=Dimensions.get('window').width;
 
-const EditProfile=()=>{
+const EditProfile=(props)=>{
+
+
+  const { profileUpdate } = React.useContext(AuthContext);
+   
+   var token=props.token
 
     const{colors}=useTheme();
+    const [imageUrl,setImageoUrl]=React.useState(props.profile)
+
+  
+   const [image,setImage]=React.useState();
     const [uploading,setUploading]=React.useState(false);
+    const [name,setName]=React.useState(props.name);
 
+    const handleTitleChange=(val)=>{
 
+      setName(val);
+    }
     const upload=async()=>{
 
+      setUploading(true);
+      if(name){
+        let formData = new FormData();
+      
+        if(image){
+          formData.append("profile",  {type:image.type,uri:image.uri,name:image.fileName});
+        }
+     
+        formData.append("name",  name);
+        formData.append("token",  token);
+    
+
+      try{
+
+
+   
+                
+        await axios.post(config.BASE_URL+'edit_profile', formData,{
+
+          onUploadProgress: function(progressEvent) {
+            var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+          
+           // setProgress(percentCompleted);
+          }
+        })
+          
+           .then(function (response) {
+               var data=response.data;
+               if(data.error==false){
+
+                profileUpdate(data.name,data.profile);
+                props.updateProfile(data.name,data.profile)
+                ToastAndroid.show('Successfully Updated', ToastAndroid.SHORT);
+              
+                
+             
+            props.closeModal();
+               }else{
+                setUploading(false);
+                showToast();
+               }
+              
+           })
+           .catch(function (error) {
+                  setUploading(false);
+                  Alert.alert('Error Message!', JSON.stringify(error.message), [
+                   {text: 'Okay'}
+                  ]);
+                  return;
+           });
+        
+     }catch(e){
+
+         setUploading(false);
+     
+         Alert.alert('Error Message!', JSON.stringify(e.message), [
+           {text: 'Okay'}
+         ]);
+         return;
+     }
+    
+
+    }else{
+
+      setUploading(false);
+
+      Alert.alert('Wrong Input!', 'Plz fill all details', [
+        {text: 'Okay'}
+    ]);
+    }
+
+    }
+
+
+
+
+    const callback=(e)=>{
+      if(e.didCancel==true){
+        
+      }else{
+    
+        setImageoUrl(e.assets[0].uri);
+        setImage(e.assets[0]);
+      }
+    }
+  
+   
+     const selectimage=()=>{
+    
+      launchImageLibrary({mediaType:'photo'}, callback);
+  
     }
 
     return(
@@ -22,7 +130,7 @@ const EditProfile=()=>{
 
           <View style={styles.header}>
 
-            <TouchableOpacity onPress={()=>{modalControll()}} activeOpacity={0.4}>
+            <TouchableOpacity onPress={()=>{props.closeModal()}} activeOpacity={0.4}>
               <Icon style={{margin:10}}  name="close"  size={30} color={colors.custom_text}/>  
             </TouchableOpacity> 
           </View>
@@ -31,13 +139,27 @@ const EditProfile=()=>{
                 
                <View style={styles.profileBox}>
 
-                   <Image 
+                   {imageUrl?
+                     
+                     <Image 
                       style={[styles.profile,{borderColor:colors.light}]}
                       source={{
-                          uri:'https://www.whatsappprofiledpimages.com/wp-content/uploads/2021/08/Profile-Photo-Wallpaper.jpg'
+                          uri:imageUrl
                       }}
                    
                    />
+
+                   :
+
+                   <Image 
+                   style={[styles.profile,{borderColor:colors.light}]}
+                   source={require('../../assets/images/profile.png')}
+                
+                />
+                  
+                   }
+
+                   <Icon style={{position:'absolute'}} onPress={()=>{selectimage()}}  name="circle-edit-outline"  size={50} color={'#fff'}/>  
 
               </View>
               <View style={styles.nameBox}>
@@ -50,9 +172,9 @@ const EditProfile=()=>{
                  placeholderTextColor="#666666"
                     
                 autoCapitalize="none"
-               // value={'title'}
+                value={name}
 
-               // onChangeText={(val) => handleTitleChange(val)}
+                onChangeText={(val) => handleTitleChange(val)}
                  
                 />
 
