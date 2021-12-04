@@ -130,7 +130,7 @@ const RewardPage = (props) => {
                       />
                   
                    
-                    <Text style={styles.heading}>Total Referral Earnings</Text>
+                    <Text style={styles.heading}>Total Referred Earnings</Text>
  
                </View>   
                <View style={styles.infobox}>
