@@ -208,8 +208,9 @@ const ProfileScreen = (props) => {
 
                         <View style={[styles.button,{backgroundColor:'#15d212'}]}>
                           
-                               
+                               <TouchableOpacity onPress={()=>{navigation.navigate('RewardPage')}} activeOpacity={0.6}>
                                 <Text style={{fontSize:15,color:'#ffff'}}>Rewards</Text>
+                                </TouchableOpacity>
                               
                         </View>
                     </View>

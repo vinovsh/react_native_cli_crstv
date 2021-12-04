@@ -25,6 +25,7 @@ import MyVideosScreen from '../Screens/MyVideosScreen';
 import EditReelsScreen from '../Screens/EditReelsScreen';
 import ReelPlayerScreen from '../Screens/ReelPlayerScreen';
 import ReferredPeopleScreen from '../Screens/ReferredPeoplesScreen';
+import RewardPage from '../Screens/RewardPage';
 
 import LeaderBoard from '../Screens/LeaderBoard';
 
@@ -271,6 +272,17 @@ const HomeStack = (props) => {
 
                    name="LeaderBoard"
                    component={LeaderBoard}
+                />
+                 <Stack.Screen
+                  initialParams={props.route.params} 
+                  options={{
+                      headerShown: false,
+
+                      title:"Reward"
+                  }}
+
+                   name="RewardPage"
+                   component={RewardPage}
                 />
          
           

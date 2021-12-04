@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 const width=Dimensions.get('window').width;
-const LeaderCard=(props)=>{
+const Reward=(props)=>{
 
     const colors = useTheme().colors;
   
@@ -18,26 +18,19 @@ const LeaderCard=(props)=>{
         <Animatable.View  animation='fadeIn' style={[styles.card,{backgroundColor:colors.white}]}>
           <View style={{width:40,justifyContent:'center',alignItems:'center',borderColor:colors.light,borderWidth:0.2,borderRadius:10}}>
              
-             <Text style={{fontSize:20,color:colors.custom_text}}>{props.index+1}</Text>
+          <Image 
+             
+             style={styles.image}
+             source={require('../../assets/images/dollar.png')}
+         
+           />
 
           </View>
-          {props.item.profile ?
-          
-            <Image 
-             
-              style={styles.image}
-              source={{uri:props.item.profile}}
-       
-            />:
+         
 
-            <Image 
-             
-              style={styles.image}
-              source={require('../../assets/images/profile.png')}
-          
-            />
+           
         
-          }
+       
           
 
           <View style={styles.textBox}>
@@ -66,7 +59,7 @@ const LeaderCard=(props)=>{
 
 }
 
-export default LeaderCard;
+export default Reward;
 
 const styles = StyleSheet.create({
 
