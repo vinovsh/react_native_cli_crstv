@@ -5,6 +5,7 @@ import {View,Text,Button,ScrollView,TouchableOpacity,Dimensions,StyleSheet,FlatL
 import Orientation from 'react-native-orientation';
 import Colors from '../Components/ColorPalet';
 import AutoScrolling from "react-native-auto-scrolling";
+import { useTheme } from 'react-native-paper';
 
 //components
 
@@ -33,6 +34,8 @@ const width=Dimensions.get('window').width;
 const Home = (props,{navigation}) => {
 
     var token=props.route.params.userToken;
+
+    const { colors } = useTheme();
     
     Orientation.lockToPortrait();
     function navHandler(){
@@ -132,7 +135,7 @@ const Home = (props,{navigation}) => {
 
               <AutoScrolling style={{margin:10}} duration={apidata.live_tv.speed}>
 
-                <Text>{apidata.live_tv.scrolling_text}</Text>
+                <Text style={{color:colors.custom_text}}>{apidata.live_tv.scrolling_text}</Text>
          
               </AutoScrolling>
             

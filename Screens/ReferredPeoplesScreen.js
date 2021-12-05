@@ -101,34 +101,44 @@ const ReferredPeopleScreen = (props,{route,navigation}) => {
 
       < >
 
-   
-            <FlatList
+       {apidata.users.data.length==0 ?
+         
+            <NoData />
 
-             style={styles.container}
-             data={apidata.users.data}
-             renderItem={({item})=>
-            
-            <>
-              <PeopleCard item={item} />
-             
-            </>
-            
-            } 
-             keyExtractor={(item) => item.id}
-             
-             showsVerticalScrollIndicator={false}
-             showsHorizontalScrollIndicator={false}
-            
-             onEndReached={()=>{onEnd()}}
-             //onEndReachedThreshold={0}
+        :
 
-             ListFooterComponent={ moreloading ?(<LoadmoreIndicator /> ):(<></>)}
-             ListEmptyComponent={
-                       
-              <NoData />
-             
-             }
-            />
+
+        <FlatList
+
+        style={styles.container}
+        data={apidata.users.data}
+        renderItem={({item})=>
+       
+       <>
+         <PeopleCard item={item} />
+        
+       </>
+       
+       } 
+        keyExtractor={(item) => item.id}
+        
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+       
+        onEndReached={()=>{onEnd()}}
+        //onEndReachedThreshold={0}
+
+        ListFooterComponent={ moreloading ?(<LoadmoreIndicator /> ):(<></>)}
+        ListEmptyComponent={
+                  
+         <NoData />
+        
+        }
+       />
+
+
+       }
+           
  
       </>
         )}

@@ -4,14 +4,49 @@ import * as Animatable from "react-native-animatable";
 import {useTheme} from 'react-native-paper';
 import Colors from "../ColorPalet";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Item } from "react-native-paper/lib/typescript/components/List/List";
 
 
 
 const width=Dimensions.get('window').width;
 const Reward=(props)=>{
 
-    const colors = useTheme().colors;
   
+
+    const colors = useTheme().colors;
+
+
+    var button_show;
+    var button_text;
+
+   
+   
+    var card_oppacity;
+    
+    if(props.item.status=='initial'){
+
+        if(props.totalReferral>=props.item.referrals){
+
+           button_show=true;
+           card_oppacity=1;
+           button_text="Claim";
+        }else{
+
+           button_show=false;
+         
+           button_text="Claim";
+        }
+    }else if(props.item.status=='processing'){
+
+           button_show=false;
+         
+           button_text="Processing";
+    }else{
+
+          button_show=false;
+      
+          button_text="Claimed";
+    }
 
     return(
 
@@ -22,7 +57,9 @@ const Reward=(props)=>{
           <Image 
              
              style={styles.image}
-             source={require('../../assets/images/dollar.png')}
+             source={{
+                 uri:props.item.icon
+             }}
          
            />
 
@@ -35,20 +72,31 @@ const Reward=(props)=>{
           
 
           <View style={styles.textBox}>
-              <Text numberOfLines={1} style={[styles.name,{color:colors.custom_text}]}>Earn {'₹100'}</Text>
+              <Text numberOfLines={1} style={[styles.name,{color:colors.custom_text}]}>{props.item.amount}</Text>
               <View style={{backgroundColor: Colors.primary,padding:5,marginLeft:15, alignSelf: 'flex-start',borderRadius:10 }}>
-                   <Text style={{color: '#ffffff',fontFamily:'Montserrat-Medium'}}>10/10</Text>
-</View>
+                   <Text style={{color: '#ffffff',fontFamily:'Montserrat-Medium',fontSize:15}}>{props.totalReferral}/{props.item.referrals}</Text>
+             </View>
           </View>
 
           <View style={styles.buttonCard}>
-              <TouchableOpacity activeOpacity={0.6}>
-                 <View style={[styles.button,{backgroundColor:Colors.success}]}>
-                          
-                    <Text style={{color:'#fff',fontSize:17}}>Claim</Text>
-                         
-                 </View>
-              </TouchableOpacity>
+
+              {button_show ?
+                     <TouchableOpacity onPress={()=>{props.modalControll(props.item)}}  activeOpacity={0.6}>
+                        <View style={[styles.button,{backgroundColor:Colors.success}]}>
+                              
+                            <Text style={{color:'#fff',fontSize:17}}>{button_text}</Text>
+                             
+                        </View>
+                  </TouchableOpacity>
+                :
+
+                <View style={[styles.button,{backgroundColor:'orange',opacity:0.6}]}>
+                              
+                   <Text style={{color:'#fff',fontSize:17}}>{button_text}</Text>
+                     
+                </View>
+              }
+             
           </View> 
 
        

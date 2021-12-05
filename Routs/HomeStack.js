@@ -26,7 +26,7 @@ import EditReelsScreen from '../Screens/EditReelsScreen';
 import ReelPlayerScreen from '../Screens/ReelPlayerScreen';
 import ReferredPeopleScreen from '../Screens/ReferredPeoplesScreen';
 import RewardPage from '../Screens/RewardPage';
-
+import ChannelPlayerScreen from '../Screens/ChannelPlayerScreen';
 import LeaderBoard from '../Screens/LeaderBoard';
 
 const Stack = createNativeStackNavigator();
@@ -283,6 +283,18 @@ const HomeStack = (props) => {
 
                    name="RewardPage"
                    component={RewardPage}
+                />
+
+                <Stack.Screen
+                  initialParams={props.route.params} 
+                  options={{
+                      headerShown: false,
+
+                      title:"Live"
+                  }}
+
+                   name="ChannelPlayerScreen"
+                   component={ChannelPlayerScreen}
                 />
          
           

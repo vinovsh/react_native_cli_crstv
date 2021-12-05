@@ -1,11 +1,12 @@
 import React,{useState} from 'react';
 import config from '../config/config';
 import axios from 'axios';
-import {View,Text,Button,FlatList, StyleSheet,Alert,Dimensions,StatusBar,Image} from "react-native"
+import {View,Text,Button,FlatList, StyleSheet,Alert,Dimensions,StatusBar,Image,Modal} from "react-native"
 import Feather from 'react-native-vector-icons/Feather';
 import Reward from '../Components/Reward/Reward';
 import NoData from '../Components/Nodata';
 import { useNavigation } from '@react-navigation/native';
+import RewardModal from '../Components/Modal/RewardModal';
 
 //loader
 import LoadingScreen from './LoadingScreen';
@@ -24,13 +25,43 @@ const RewardPage = (props) => {
     const[loading,setLoading]=useState(true);
     const[currentPage,setCurrentPage]=useState(1);
     const[moreloading,setMoreloading]=useState(false);
+    const[isShowModal,setIsShowModal]=React.useState(false);
+    const[currentObjectData,setCurrentObjectData]=useState(null);
+    const[refresh,setRefresh]=useState(false);
 
-    
+
+
+
+    const modalControll=(data)=>{
+
+      setRefresh(false);
+
+      if(data){
+
+        setCurrentObjectData(data);
+        setIsShowModal(true);
+      }else{
+
+        setIsShowModal(false);
+      }
+     
+      
+    }
+
+    const change_status=(id)=>{
+       var getApidata=apidata;
+       getApidata.rewards.data[0].status="processing";
+       setApidata(getApidata);
+
+       setRefresh(true);
+    }
+
+   
     const getdata=async ()=>{
 
         try{
                 
-          await axios.post(config.BASE_URL+'leader_board_list?page='+currentPage, {
+          await axios.post(config.BASE_URL+'rewards?page='+currentPage, {
                token: token,
               
              })
@@ -42,8 +73,8 @@ const RewardPage = (props) => {
                    
                   
                   if(apidata){
-                    var append_data=apidata.users.data.concat(data.users.data);
-                    data.users.data=append_data;
+                    var append_data=apidata.rewards.data.concat(data.rewards.data);
+                    data.rewards.data=append_data;
                     setApidata(data);
                   
                  }else{ 
@@ -82,8 +113,8 @@ const RewardPage = (props) => {
       
   
       onEnd=()=>{
-        var c_page=apidata.users.current_page;
-        var l_page=apidata.users.last_page;
+        var c_page=apidata.rewards.current_page;
+        var l_page=apidata.rewards.last_page;
        
        if(c_page<l_page){
          setMoreloading(true);
@@ -109,14 +140,20 @@ const RewardPage = (props) => {
 
         ):(
          <>
-
-         {apidata.users.data.length==0 ?
+         
+         {apidata.rewards.data.length==0 ?
          
             <NoData />
 
            :
 
            < >
+
+        <Modal transparent visible={isShowModal}>
+          <RewardModal token={token} currentObjectData={currentObjectData} change_status={change_status}  modalControll={modalControll} />
+        </Modal>
+
+
            <View style={styles.leader_card}>
  
                <View style={styles.header}>
@@ -140,7 +177,7 @@ const RewardPage = (props) => {
                           <Text style={{fontSize:30,color:'#fff'}}>₹</Text>
                       </View>
 
-                      <Text  style={{fontSize:30,color:'#fff',marginLeft:20}}>0</Text>
+                      <Text  style={{fontSize:30,color:'#fff',marginLeft:20}}>{apidata.total_earning}</Text>
                    
                     </View> 
  
@@ -156,11 +193,11 @@ const RewardPage = (props) => {
            <FlatList
  
              style={styles.container}
-             data={apidata.users.data}
+             data={apidata.rewards.data}
              renderItem={({item,index})=>
  
                 <>
-                 <Reward index={index} item={item} />
+                 <Reward modalControll={modalControll} index={index} totalReferral={apidata.referrals} item={item} />
               
                 </>
  

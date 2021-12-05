@@ -3,6 +3,8 @@ import config from '../config/config';
 import axios from 'axios';
 import {View,Text,Button,FlatList, StyleSheet,Alert} from "react-native"
 import ListRectangleCard from '../Components/Cards/ListRectangleCard';
+import Orientation from 'react-native-orientation';
+import NoData from '../Components/Nodata';
 
 //loader
 import LoadingScreen from './LoadingScreen';
@@ -16,6 +18,9 @@ const ListChannelsScreen = (props,{route,navigation}) => {
     const[loading,setLoading]=useState(true);
     const[currentPage,setCurrentPage]=useState(1);
     const[moreloading,setMoreloading]=useState(false);
+
+
+    Orientation.lockToPortrait();
 
     const getdata=async ()=>{
 
@@ -96,21 +101,37 @@ const ListChannelsScreen = (props,{route,navigation}) => {
         ):(
 
       < >
-            <FlatList
 
-             style={styles.container}
-             data={apidata.tv_channels.data}
-             renderItem={({item})=><ListRectangleCard  source={{uri:item.image}} item={item} />}
-             keyExtractor={(item) => item.id}
-             
-             showsVerticalScrollIndicator={false}
-             showsHorizontalScrollIndicator={false}
-            
-             onEndReached={()=>{onEnd()}}
-             //onEndReachedThreshold={0}
-             numColumns={2}
-             ListFooterComponent={ moreloading ?(<LoadmoreIndicator /> ):(<></>)}
-            />
+        {apidata.tv_channels.length==0 ?
+         
+              <NoData />
+
+        : 
+         
+        <FlatList
+
+        style={styles.container}
+        data={apidata.tv_channels.data}
+        renderItem={({item})=><ListRectangleCard  source={{uri:item.image}} item={item} />}
+        keyExtractor={(item) => item.id}
+        
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+       
+        onEndReached={()=>{onEnd()}}
+        //onEndReachedThreshold={0}
+        numColumns={2}
+        ListFooterComponent={ moreloading ?(<LoadmoreIndicator /> ):(<></>)}
+
+        ListEmptyComponent={
+                  
+         <NoData />
+        
+        }
+       />
+
+        }
+           
 
 
       </>

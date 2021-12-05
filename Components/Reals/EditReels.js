@@ -55,7 +55,12 @@ const EditReels =props=>{
                      <Text style={{fontSize:20,color:paperTheme.colors.custom_text}}>{' '}{props.item.likes}</Text>
                     
 
-                     <Icon
+                    
+                  {props.item.status==0?
+
+                   <>
+
+                    <Icon
                      
                      name="clock"
                      color={'orange'}
@@ -63,8 +68,8 @@ const EditReels =props=>{
                      size={20}
                     
                    />
-                  {props.item.status==0?
                    <Text style={{fontSize:15,color:'orange'}}>{' '}Under review</Text>
+                   </>
                   :<></>}
                   </View>
                   

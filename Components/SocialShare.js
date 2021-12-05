@@ -2,16 +2,17 @@ import React  from "react";
 import {View,Text,StyleSheet,Image,Dimensions,TouchableOpacity,Linking } from 'react-native';
 import Colors from "./ColorPalet";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useTheme } from 'react-native-paper';
 
 
  
 const width=Dimensions.get('window').width;
 const SocialShare =props=>{
 
-   
+    const { colors } = useTheme();
     return (
         <View style={{width:"100%"}}>
-           <Text style={styles.text}>Follow Us On</Text>
+           <Text style={[styles.text,{color:colors.custom_text}]}>Follow Us On</Text>
        
            <View style={styles.container}>
 
