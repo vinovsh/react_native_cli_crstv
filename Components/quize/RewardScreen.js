@@ -1,6 +1,6 @@
 import React from 'react';
 import {View,Text,Button,StyleSheet,ActivityIndicator,Image,Dimensions,TouchableOpacity} from "react-native";
-import Colors from '../Components/ColorPalet';
+import Colors from '../ColorPalet';
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
 
@@ -16,7 +16,7 @@ const RewardScreen =props=>{
         <View style={styles.container}>
             
            <View style={styles.upperPotion}>
-               <Image style={styles.img} source={require('../assets/images/reward_img.png')} />
+               <Image style={styles.img} source={require('../../assets/images/reward_img.png')} />
            </View>
 
            <Animatable.View animation="bounceIn" style={styles.bottomPotion}>

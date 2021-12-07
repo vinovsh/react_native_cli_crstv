@@ -104,6 +104,15 @@ const loginReducer=(prevState,action)=>{
         userProfile:action.profile,
        
       };
+
+      case 'STARS':
+      return{
+        ...prevState,
+    
+        userStars:action.stars,
+      
+       
+      };
      
    }
 
@@ -234,6 +243,14 @@ const [loginState,dispatch]=React.useReducer(loginReducer,initialLoginState);
      dispatch({type:'UPDATE',name:name,profile:profile});
  
   
+},
+
+starsUpdate:async(stars)=>{
+
+   
+  dispatch({type:'STARS',stars:stars});
+
+
 },
 
  }), []);
