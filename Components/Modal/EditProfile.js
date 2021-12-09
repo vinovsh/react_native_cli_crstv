@@ -126,7 +126,7 @@ const EditProfile=(props)=>{
 
     return(
 
-      <View style={styles.container}>
+      <View style={[styles.container,{ backgroundColor:colors.white}]}>
 
           <View style={styles.header}>
 
@@ -166,10 +166,11 @@ const EditProfile=(props)=>{
 
               <TextInput 
                   style={[styles.textInput, {
-                    color: colors.text
+                    color: colors.custom_text,
+                    borderBottomColor:colors.custom_text
                  }]}
                  placeholder="Enter Name"
-                 placeholderTextColor="#666666"
+                 placeholderTextColor={colors.dark}
                     
                 autoCapitalize="none"
                 value={name}
@@ -217,6 +218,7 @@ const styles = StyleSheet.create({
    container:{
 
      flex:1,
+    
      
   },
   header:{
@@ -251,7 +253,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     color: '#05375a',
     fontSize:20,
-    borderBottomColor:'#000',
+ 
     borderBottomWidth:2,
     width:width/2,
     textAlign:'center'

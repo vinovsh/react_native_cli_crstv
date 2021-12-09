@@ -43,7 +43,7 @@ class ReelsContainer extends Component {
 
   }
     return (
-       <View onChangeVisibleRows={()=>{alert('l')}} style={[styles.container,{width,height:height}]}>
+       <View  style={[styles.container,{width,height:height}]}>
     
          <VideoPlayer
                 
@@ -55,7 +55,7 @@ class ReelsContainer extends Component {
                       
                  }}
                  muted={false}
-                 resizeMode="cover"
+                 resizeMode="contain"
                  disablePlayPause
                  disableSeekbar
                  disableVolume
@@ -81,14 +81,14 @@ class ReelsContainer extends Component {
                        color={this.state.isLike?"#0BD175" :'white'}
                        size={30}
                      />
-                     <Text style={{color:"white"}}>{this.props.item.likesCount}</Text>
+                     <Text style={{color:"white"}}>{this.props.item.likes}</Text>
                   </TouchableOpacity>
               </View>
 
               <View style={styles.profileCard}>
-                 <Title style={styles.description}>{this.props.item.description}</Title>
+                 <Title style={styles.description}>{this.props.item.title}</Title>
                  <View style={styles.usercard}>
-                       <Image style={styles.pro_img} source={{uri:'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80'}}/>
+                       <Image style={styles.pro_img} source={{uri:this.props.item.profile}}/>
                        <Text numberOfLines={1}  style={styles.pname}>{this.props.item.name}</Text> 
                  </View>
               </View>
