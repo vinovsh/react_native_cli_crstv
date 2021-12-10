@@ -14,7 +14,7 @@ const DrawerNavigater = (props) => {
     return (
  
       
-         <Drawer.Navigator  initialRouteName="Main" drawerContent={(props) => <MenuSlider globalData={data.globalData} {...props} />}>
+         <Drawer.Navigator  /* initialRouteName="Main" */ drawerContent={(props) => <MenuSlider globalData={data.globalData} {...props} />}>
            <Drawer.Screen 
              
               options={{

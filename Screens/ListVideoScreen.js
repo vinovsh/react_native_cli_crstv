@@ -111,7 +111,7 @@ const ListVideoScreen = (props) => {
              
              showsVerticalScrollIndicator={false}
              showsHorizontalScrollIndicator={false}
-             onEndReached={()=>{onEnd()}}
+             onEndReached={()=>{onEnd()}} 
              //onEndReachedThreshold={0}
              numColumns={2}
              ListFooterComponent={ moreloading ?(<LoadmoreIndicator /> ):(<></>)}

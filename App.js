@@ -8,7 +8,7 @@ import {
    DefaultTheme as NavigationDefaultTheme,
    DarkTheme as NavigationDarkTheme
    } from '@react-navigation/native';
-import {StatusBar,Alert } from 'react-native';
+import {StatusBar,Alert,Linking } from 'react-native';
 import Colors from './Components/ColorPalet';
 import {
   Provider as PaperProvider,
@@ -19,10 +19,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from './Components/Context';
 import RootStack from './Routs/RootStack';
 import LoadingScreen from './Screens/LoadingScreen';
+import linking from './Routs/linking';
 
 
-const App = () => {
+
+const App = (props) => {
+
+
   const[isDarkTheme,setIsDarkTheme]=React.useState(false);
+
+
+
 const initialLoginState={
    isLoading:true,
    isAuthenticated:false,
@@ -343,9 +350,11 @@ try {
 
  
     getData();
-  
+    
   
 }, []);
+
+
 
 
   return (
@@ -353,7 +362,7 @@ try {
     <PaperProvider theme={theme}>
 
        <AuthContext.Provider value={authContext}>
-           <NavigationContainer theme={theme}>
+           <NavigationContainer linking={linking}  theme={theme}>
            
             {loginState.isLoading ? (
                <LoadingScreen color="#fff"/>
@@ -361,7 +370,8 @@ try {
                 <>
                <StatusBar translucent={true} hidden={false} style="black" backgroundColor="#00000040" />
 
-              <DrawerNavigater globalData={loginState}/>
+              <DrawerNavigater  globalData={loginState}/>
+              
               </>
 
                ):!loginState.isLoading ?(

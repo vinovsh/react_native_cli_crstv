@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {FlatList,View,Text,Button,SafeAreaView,StyleSheet,StatusBar,Alert} from "react-native";
+import {FlatList,View,Text,Button,SafeAreaView,StyleSheet,StatusBar,Alert,Linking} from "react-native";
 import ReelsContainer from '../Components/Reals/ReelsContainer';
 import config from '../config/config';
 import axios from 'axios';
@@ -12,10 +12,13 @@ const ReelsScreen = (props) => {
 
   var token=props.route.params.userToken;
 
-  const[apidata,setApidata]=useState();
+
+
+  const[apidata,setApidata]=useState(null);
   const[loading,setLoading]=useState(true);
   const[currentPage,setCurrentPage]=useState(1);
   const[moreloading,setMoreloading]=useState(false);
+  const[apiLoading,setApiLoading]=useState(true);
 
   const[viewableId,setViewableId]=React.useState(0);
 
@@ -27,6 +30,7 @@ const ReelsScreen = (props) => {
                 
           await axios.post(config.BASE_URL+'get_reels?page='+currentPage, {
                token: token,
+               reel_id:props.route.params.reel_id
               
               
              })
@@ -43,12 +47,31 @@ const ReelsScreen = (props) => {
                    
                   }else{ 
                    
-                    setApidata(data)
+                   // setApidata(data)
+                   if(data.selected_reel==null){
 
+                       setApidata(data)
+                       setLoading(false)
+                       setMoreloading(false);
+                   }else{
+
+                      let new_data=[];
+                      new_data[0]=data.selected_reel[0];
+                      for(i=1;i<=data.reels.data.length;i++){
+                        new_data[i]=data.reels.data[i-1];
+                      }
+
+                      data.reels.data=new_data;
+                      setApidata(data);
+
+                      setLoading(false)
+                      setMoreloading(false);
+
+                   }
+             
                 }  
                   
-                  setLoading(false)
-                  setMoreloading(false);
+                  
                   
                  }else{
                     
@@ -100,12 +123,36 @@ const ReelsScreen = (props) => {
       
     })
 
+
+ 
+
+    Linking.addEventListener('url', event =>{
+
+      if(event){
+
+         setLoading('true');
+         setApidata(null);
+         if(apiLoading==true){
+          setApiLoading(false)
+         }else{
+
+          setApiLoading(true)
+         }
+      }
+    } 
+     
+    
+   
+   );
+   
+   
+
     
     React.useEffect(() => {
-    
+     
       getdata();
     
-    }, [currentPage]);
+    }, [currentPage,apiLoading]);
 
 
     const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 })
@@ -123,7 +170,8 @@ const ReelsScreen = (props) => {
          <View style={styles.container}>
              <StatusBar translucent={true} backgroundColor="#ff000000" barStyle="light-content"/>
         <FlatList
-        
+          style={{ display: "flex",
+          flexGrow: 1,}}
           onEndReached={(val)=>{console.log("end")}}
           onViewableItemsChanged={onViewRef.current}
        //  onViewableItemsChanged={(val)=>{onViewableItem(val)}}

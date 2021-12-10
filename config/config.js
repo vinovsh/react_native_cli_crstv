@@ -1,6 +1,6 @@
 const config={
 
-    BASE_URL:"http://192.168.1.8/crstv/api/",
+    BASE_URL:"http://192.168.43.230/crstv/api/",
    
 }
 export default config;

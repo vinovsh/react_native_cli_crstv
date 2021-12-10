@@ -4,6 +4,7 @@ import { Title } from 'react-native-paper';
 import VideoPlayer from 'react-native-video-controls';
 import Colors from '../ColorPalet';
 import Feather from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 //import InViewPort from 'react-native-inviewport';
 
 const width=Dimensions.get('screen').width;
@@ -43,6 +44,8 @@ class ReelsContainer extends Component {
 
   }
     return (
+
+      <SafeAreaView >
        <View  style={[styles.container,{width,height:height}]}>
     
          <VideoPlayer
@@ -83,6 +86,15 @@ class ReelsContainer extends Component {
                      />
                      <Text style={{color:"white"}}>{this.props.item.likes}</Text>
                   </TouchableOpacity>
+                  <TouchableOpacity   style={{flexDirection:"column",alignItems:'center',marginTop:10}}>
+                     <Icon 
+                       name="share"
+                       color='white'
+                       size={30}
+                     />
+                    
+                  </TouchableOpacity>
+
               </View>
 
               <View style={styles.profileCard}>
@@ -93,6 +105,7 @@ class ReelsContainer extends Component {
                  </View>
               </View>
        </View>
+       </SafeAreaView>
     );
                 }
 }
