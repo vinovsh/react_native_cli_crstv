@@ -7,6 +7,7 @@ import VideoControllOptions from '../Components/Modal/VideoControllOptions';
 import { useNavigation } from '@react-navigation/native';
 import Orientation from 'react-native-orientation';
 import NoData from '../Components/Nodata';
+import BottomTabNavigater from '../Components/BottomTabNavigater';
 
 //loader
 import LoadingScreen from './LoadingScreen';
@@ -255,6 +256,8 @@ const MyVideosScreen = (props,{route}) => {
 
               ListFooterComponent={ moreloading ?(<LoadmoreIndicator /> ):(<></>)}
             />
+
+             <BottomTabNavigater active={''} />
            </>
        
         }

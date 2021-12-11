@@ -3,13 +3,13 @@ import {FlatList,View,Text,Button,SafeAreaView,StyleSheet,StatusBar,Alert,Linkin
 import ReelsContainer from '../Components/Reals/ReelsContainer';
 import config from '../config/config';
 import axios from 'axios';
-
+import { useNavigation } from '@react-navigation/native';
 
 import LoadmoreIndicator from '../Components/LoadmoreIndicator';
 import LoadingScreen from './LoadingScreen';
 const ReelsScreen = (props) => {
 
-
+  const navigation = useNavigation();
   var token=props.route.params.userToken;
 
 
@@ -115,6 +115,10 @@ const ReelsScreen = (props) => {
         
          
       }
+
+      const backToHome=()=>{
+        navigation.navigate('Home')
+      }
     
       const onViewRef = React.useRef((viewableItems)=> {
        // console.log(viewableItems)
@@ -176,7 +180,7 @@ const ReelsScreen = (props) => {
           onViewableItemsChanged={onViewRef.current}
        //  onViewableItemsChanged={(val)=>{onViewableItem(val)}}
           data={apidata.reels.data}
-          renderItem={({item,index})=><ReelsContainer index={index} active_id={viewableId}  item={item}/>}
+          renderItem={({item,index})=><ReelsContainer backToHome={backToHome} index={index} active_id={viewableId}  item={item}/>}
           keyExtractor={(item) => item.id}
           showsVerticalScrollIndicator={false}
          

@@ -19,7 +19,7 @@ const config = {
   };
   
   const linking = {
-    prefixes: ["crstv://"],
+    prefixes: ["http://crstv.in/"],
     config,
   };
   //https://www.youtube.com/watch?v=6OqrLe2B_UU

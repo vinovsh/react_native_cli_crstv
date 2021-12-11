@@ -21,6 +21,8 @@ import SocialShare from '../Components/SocialShare';
 import VideoCard from '../Components/Cards/ViedoCard';
 import UploadReels from '../Components/UploadReels';
 
+import BottomTabNavigater from '../Components/BottomTabNavigater';
+
 
 //loader
 import HomeLoader from '../Components/skeloton/HomeLoader';
@@ -283,6 +285,7 @@ const Home = (props,{navigation}) => {
 
  
          </ScrollView>
+         <BottomTabNavigater active={'home'} />
          </>
 
         )}

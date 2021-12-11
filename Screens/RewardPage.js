@@ -7,6 +7,7 @@ import Reward from '../Components/Reward/Reward';
 import NoData from '../Components/Nodata';
 import { useNavigation } from '@react-navigation/native';
 import RewardModal from '../Components/Modal/RewardModal';
+import BottomTabNavigater from '../Components/BottomTabNavigater';
 
 //loader
 import LoadingScreen from './LoadingScreen';
@@ -219,7 +220,7 @@ const RewardPage = (props) => {
             }
            />
        
-  
+       <BottomTabNavigater active={''} />
  
          </>
         }

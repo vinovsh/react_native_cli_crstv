@@ -4,6 +4,7 @@ import axios from 'axios';
 import {View,Text,Button,FlatList, StyleSheet,Alert} from "react-native"
 import PeopleCard from '../Components/profile/PeopleCard';
 import NoData from '../Components/Nodata';
+import BottomTabNavigater from '../Components/BottomTabNavigater';
 
 //loader
 import LoadingScreen from './LoadingScreen';
@@ -107,7 +108,7 @@ const ReferredPeopleScreen = (props,{route,navigation}) => {
 
         :
 
-
+        <>
         <FlatList
 
         style={styles.container}
@@ -118,7 +119,7 @@ const ReferredPeopleScreen = (props,{route,navigation}) => {
          <PeopleCard item={item} />
         
        </>
-       
+         
        } 
         keyExtractor={(item) => item.id}
         
@@ -136,6 +137,8 @@ const ReferredPeopleScreen = (props,{route,navigation}) => {
         }
        />
 
+        <BottomTabNavigater active={''} />
+        </>
 
        }
            

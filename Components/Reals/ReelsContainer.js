@@ -1,11 +1,14 @@
 import React,{useEffect,Component } from 'react';
-import {View,Text,SafeAreaView,StyleSheet,Image,Dimensions,TouchableOpacity,Share} from "react-native"
+import {View,Text,SafeAreaView,StyleSheet,Image,Dimensions,TouchableOpacity,StatusBar} from "react-native"
 import { Title } from 'react-native-paper';
 import VideoPlayer from 'react-native-video-controls';
 import Colors from '../ColorPalet';
 import Feather from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ImgToBase64 from 'react-native-image-base64';
+import Share from 'react-native-share';
+
+
 //import InViewPort from 'react-native-inviewport';
 
 const width=Dimensions.get('screen').width;
@@ -26,7 +29,7 @@ class ReelsContainer extends Component {
   render () {
  
 
-
+    console.log(this.props)
 
    const playVideo=()=>{ 
      alert("j")
@@ -45,22 +48,28 @@ class ReelsContainer extends Component {
 
   }
 
-const shareImageB64=(base64String)=>{
+  const shareImageB64=(base64String,title,id)=>{
 
-  const shareOptions={
-    message:"Crstv Reel",
-    url:"data:image/jpeg;base64,"+base64String
+    const shareOptions={
+      message:title+" "+"http://crstv.in/reels/"+id,
+      url:"data:image/jpeg;base64,"+base64String
+    }
+
+    Share.open(shareOptions)
+    .then((res) => {
+     // console.log(res);
+    })
+    .catch((err) => {
+     // err && console.log(err);
+    });
   }
-
-  Share.share(shareOptions)
-}
 
   const shareReel=(data)=>{
 
       ImgToBase64.getBase64String(data.image)
-      .then(base64String => shareImageB64(base64String))
+      .then(base64String => shareImageB64(base64String,data.title,data.id))
       .catch(err => doSomethingWith(err));
-      console.log('h')
+     
   
     
   }
@@ -97,7 +106,19 @@ const shareImageB64=(base64String)=>{
         
               /> 
             
+               <View style={styles.headerCard}>
 
+                      <Feather 
+                       name="arrow-left"
+                       color={this.state.isLike?"#0BD175" :'white'}
+                       size={30}
+                       onPress={()=>{
+                         this.props.backToHome();
+                       }}
+                     />
+                     <Text style={{fontSize:21,paddingLeft:10,color:'white'}}>Reels</Text>
+
+               </View>
               <View  style={styles.optionsCard}>
                   <TouchableOpacity onPress={()=>{likeButton()}}  style={{flexDirection:"column",alignItems:'center'}}>
                      <Feather 
@@ -183,5 +204,17 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignItems:"center",
        
+    },
+    headerCard:{
+      height:50,
+      position:'absolute',
+      top:0,
+      width:'100%',
+    
+      marginTop:StatusBar.currentHeight,
+      flexDirection:'row',
+      justifyContent:'flex-start',
+      alignItems:'center',
+      paddingLeft:15
     }
 })

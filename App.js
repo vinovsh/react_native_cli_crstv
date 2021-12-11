@@ -142,6 +142,7 @@ const [loginState,dispatch]=React.useReducer(loginReducer,initialLoginState);
         quiz_small_text:"#6E6F6F",
         light:'#cccfd1',
         white:'#fff',
+        tab_dark:'#5a5a5a',
         
       }
    }
@@ -157,7 +158,8 @@ const [loginState,dispatch]=React.useReducer(loginReducer,initialLoginState);
       quiz_text:"#fff",
       quiz_small_text:"#eceaea",
       light:'#747475',
-      white:'#000'
+      white:'#000',
+      tab_dark:'#e2e4e7',
 
     }
  }

@@ -6,6 +6,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import LeaderCard from '../Components/profile/LeaderCard';
 import NoData from '../Components/Nodata';
 import { useNavigation } from '@react-navigation/native';
+import BottomTabNavigater from '../Components/BottomTabNavigater';
 
 //loader
 import LoadingScreen from './LoadingScreen';
@@ -216,7 +217,7 @@ const LeaderBoard = (props) => {
             }
            />
        
-  
+             <BottomTabNavigater active={'leader_board'} />
  
          </>
         }

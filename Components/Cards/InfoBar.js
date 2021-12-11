@@ -15,7 +15,7 @@ const InfoBar =props=>{
           <TouchableOpacity  onPress={() => {navigation.navigate('QuizeScreen')}} activeOpacity={0.8} style={styles.card}>
 
               <Icon color={Colors.primary} style={styles.icon} name="receipt-outline"></Icon>
-              <Text style={styles.title}>Bible Quize</Text>
+              <Text style={styles.title}>Bible Quiz</Text>
               <View style={styles.button}>
                   <Icon color={Colors.theamColor} style={styles.arrowIcon} name="arrow-forward-outline"></Icon>
               </View>
