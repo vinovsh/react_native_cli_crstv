@@ -1,10 +1,11 @@
 import React,{useEffect,Component } from 'react';
-import {View,Text,Button,SafeAreaView,StyleSheet,FlatList,Image,Dimensions,TouchableOpacity,StatusBar} from "react-native"
+import {View,Text,SafeAreaView,StyleSheet,Image,Dimensions,TouchableOpacity,Share} from "react-native"
 import { Title } from 'react-native-paper';
 import VideoPlayer from 'react-native-video-controls';
 import Colors from '../ColorPalet';
 import Feather from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import ImgToBase64 from 'react-native-image-base64';
 //import InViewPort from 'react-native-inviewport';
 
 const width=Dimensions.get('screen').width;
@@ -42,6 +43,26 @@ class ReelsContainer extends Component {
     } 
   
 
+  }
+
+const shareImageB64=(base64String)=>{
+
+  const shareOptions={
+    message:"Crstv Reel",
+    url:"data:image/jpeg;base64,"+base64String
+  }
+
+  Share.share(shareOptions)
+}
+
+  const shareReel=(data)=>{
+
+      ImgToBase64.getBase64String(data.image)
+      .then(base64String => shareImageB64(base64String))
+      .catch(err => doSomethingWith(err));
+      console.log('h')
+  
+    
   }
     return (
 
@@ -91,6 +112,7 @@ class ReelsContainer extends Component {
                        name="share"
                        color='white'
                        size={30}
+                       onPress={()=>{shareReel(this.props.item)}}
                      />
                     
                   </TouchableOpacity>
