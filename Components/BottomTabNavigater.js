@@ -99,8 +99,8 @@ const styles = StyleSheet.create({
         height:60,
         paddingHorizontal:15,
         paddingVertical:5,
-        borderTopWidth:0.3,
-        borderBottomWidth:0.3
+        borderTopWidth:0.2,
+        borderBottomWidth:0.2
      
 
 

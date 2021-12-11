@@ -10,11 +10,7 @@ const Logo =props=>{
            
            <Image
         style={{ width:100,height:50 }}
-        source={{
-           
-          uri:
-            'http://crstv.in/img/logo.png',
-        }}
+        source={require('../../assets/images/logo.png')}
       />
        
         </View>
