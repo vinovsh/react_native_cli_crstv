@@ -110,7 +110,7 @@ class ReelsContainer extends Component {
 
                       <Feather 
                        name="arrow-left"
-                       color={this.state.isLike?"#0BD175" :'white'}
+                       color={'white'}
                        size={30}
                        onPress={()=>{
                          this.props.backToHome();

@@ -264,7 +264,7 @@ const Home = (props,{navigation}) => {
 
                 renderItem={({item}) => (
 
-                  <RectangleCard source={{uri:item.image}} />
+                  <RectangleCard item={item} source={{uri:item.image}} />
 
                 )}
 

@@ -1,4 +1,4 @@
-package com.crstv;
+package com.app.crstv;
 
 import com.facebook.react.ReactActivity;
 

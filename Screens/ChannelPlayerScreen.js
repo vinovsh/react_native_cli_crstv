@@ -40,6 +40,7 @@ function BackNavigation(){
 
 
 }
+console.log(props.route.params.item)
     return (
         <View style={styles.container}>
            <StatusBar hidden={true} style="black" backgroundColor="#00000040" />

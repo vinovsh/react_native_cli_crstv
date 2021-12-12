@@ -27,7 +27,7 @@ const RealsCard =props=>{
             <View style={styles.card}>
          
                 <TouchableOpacity onPress={()=>{reelsscreen()}} activeOpacity={0.6} style={styles.realCard}>
-                    <ProgressiveImage style={styles.image} resizeMode="cover" source={{uri:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIHWqDcE3IA-XEvkKPfeKeSmblyIGwTa8QBQ&usqp=CAU"}} />
+                    <ProgressiveImage style={styles.image} resizeMode="cover" source={{uri:"https://crstv.s3.ap-south-1.amazonaws.com/assets/reels.jpg"}} />
                     <View style={styles.overlay}>
 
                        <Text  style={styles.realsText}>Watch Reels </Text>
