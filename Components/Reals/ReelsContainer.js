@@ -1,5 +1,5 @@
 import React,{useEffect,Component } from 'react';
-import {View,Text,SafeAreaView,StyleSheet,Image,Dimensions,TouchableOpacity,StatusBar} from "react-native"
+import {View,Text,SafeAreaView,StyleSheet,Image,Dimensions,TouchableOpacity,StatusBar,ToastAndroid} from "react-native"
 import { Title } from 'react-native-paper';
 import VideoPlayer from 'react-native-video-controls';
 import Colors from '../ColorPalet';
@@ -7,6 +7,8 @@ import Feather from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ImgToBase64 from 'react-native-image-base64';
 import Share from 'react-native-share';
+import config from '../../config/config';
+import axios from 'axios';
 
 
 //import InViewPort from 'react-native-inviewport';
@@ -19,6 +21,7 @@ class ReelsContainer extends Component {
    
     this.state = {
       isLike: this.props.item.isLike,
+      totalLikes:this.props.item.likes
    
     };
 
@@ -29,13 +32,13 @@ class ReelsContainer extends Component {
   render () {
  
 
-    console.log(this.props)
+  
 
    const playVideo=()=>{ 
      alert("j")
    }
   const likeButton=()=>{
-    if(this.state.isLike==true){
+  /*   if(this.state.isLike==true){
       this.setState({ isLike:false })
       
     }else{
@@ -43,9 +46,47 @@ class ReelsContainer extends Component {
       this.setState({ isLike:true })
 
       
-    } 
+    }  */
+
+    getdata();
   
 
+  }
+  
+  const getdata=async ()=>{
+      var that=this;
+    try{
+            
+      await axios.post(config.BASE_URL+'likes_controll', {
+           token: this.props.token,
+           reel_id:this.props.item.id
+          
+          
+         })
+        
+         .then(function (response) {
+             var data=response.data;
+          
+             if(data.error==false){
+            
+              that.setState({ isLike:data.isLike });
+              that.setState({ totalLikes:data.total_likes });
+              
+              
+             }else{
+                
+              ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
+              }
+         })
+         .catch(function (error) {
+        
+          ToastAndroid.show('Network unavailable', ToastAndroid.SHORT);
+         
+         });
+      
+   }catch(e){
+      ToastAndroid.show('Network unavailable', ToastAndroid.SHORT);
+   }
   }
 
   const shareImageB64=(base64String,title,id)=>{
@@ -126,7 +167,7 @@ class ReelsContainer extends Component {
                        color={this.state.isLike?"#0BD175" :'white'}
                        size={30}
                      />
-                     <Text style={{color:"white"}}>{this.props.item.likes}</Text>
+                     <Text style={{color:"white"}}>{this.state.totalLikes}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity   style={{flexDirection:"column",alignItems:'center',marginTop:10}}>
                      <Icon 

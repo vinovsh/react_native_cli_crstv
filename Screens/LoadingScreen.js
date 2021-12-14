@@ -20,7 +20,7 @@ const LoadingScreen =props=>{
             
             }}>
             
-            <ActivityIndicator size="large" color={Colors.primary}/>
+            <ActivityIndicator size="large" color={Colors.purple}/>
           
         </View>
     );

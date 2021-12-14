@@ -12,6 +12,7 @@ const Colors={
 
     primaryTheam:"#FFFFFF",
     secondaryTheam:"#000000", 
+    purple:"#ED207A"
 
    /*  primaryTheam:"#000000",
     secondaryTheam:"#FFFFFF" */

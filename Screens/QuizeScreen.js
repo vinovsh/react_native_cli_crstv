@@ -9,7 +9,8 @@ import {
   Dimensions,
   ScrollView,
   TouchableOpacity,
-  Alert
+  Alert,
+  ToastAndroid
 } from "react-native";
 import Colors from "../Components/ColorPalet";
 import config from "../config/config";
@@ -25,17 +26,28 @@ import CommingSoon from "../Components/quize/CommingSoon";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as Animatable from 'react-native-animatable';
 
+//ads import
+import admob, { MaxAdContentRating } from '@react-native-firebase/admob';
+import { BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
+
 //loader
 
 import LoadingScreen from "./LoadingScreen";
 
 const height = Dimensions.get("screen").height;
 const width = Dimensions.get("screen").width;
+//const adUnitId = config.AD_STATUS=='test'? TestIds.REWARDED : config.REWARDEd_AD_ID;
+
+const adUnitId='ca-app-pub-3940256099942544/2934735716';
 
 const QuizeScreen = (props) => {
 
+
+
   const { starsUpdate } = React.useContext(AuthContext);
   const { colors } = useTheme();
+
+  const [adLoaded, setAdLoaded] = useState(false);
   
   const [isShowQuize,setIsShowQuize]=useState(null);
   const [totalStars,setTotalStars]=useState(props.route.params.userStars);
@@ -59,6 +71,12 @@ const QuizeScreen = (props) => {
   const nextquestion = () => {
     setShowReward(true);
   };
+
+  const displayAd=()=>{
+
+   // rewarded.show();
+   ToastAndroid.show('Coming Soon...', ToastAndroid.SHORT);
+  }
 
   const getdata = async () => {
     try {
@@ -106,16 +124,26 @@ const QuizeScreen = (props) => {
 
   React.useEffect(() => {
     getdata();
+    admob()
+  .setRequestConfiguration({
+    // Update all future requests suitable for parental guidance
+    maxAdContentRating: MaxAdContentRating.PG,
+
+    // Indicates that you want your content treated as child-directed for purposes of COPPA.
+    tagForChildDirectedTreatment: true,
+
+    // Indicates that you want the ad request to be handled in a
+    // manner suitable for users under the age of consent.
+    tagForUnderAgeOfConsent: true,
+  })
+  .then(() => {
+    // Request config successfully set!
+  });
+  
   }, []);
 
  const modalController=()=>{
-    console.log("/////")
-   console.log('selectedOption->'+selectedOption);
-   console.log('currentPos->'+currentPos);
-   console.log(totalQuestions-1);
-   console.log('taskStars->'+taskStars);
-   console.log("/////") 
- 
+   
 
   if(selectedOption!=null && selectedOption!=correctOption && currentPos==totalQuestions-1 && taskStars==0){
        
@@ -183,7 +211,7 @@ const QuizeScreen = (props) => {
         })
        
   }
-  const nextQuestion=()=>{
+  const nextQuestion=()=>{ 
      
      setCurrentPos(currentPos+1);
      setSelectedOption(null);
@@ -204,6 +232,7 @@ const QuizeScreen = (props) => {
    
           <SafeAreaView style={styles.container}>
             <StatusBar backgroundColor={"#fff"} barStyle="dark-content" />
+            
             {successFinishModal ? (
               <RewardScreen />
             ) :failedFinishModal?(
@@ -211,10 +240,13 @@ const QuizeScreen = (props) => {
               <ErrorScreen />
 
             ) :wrongInputModal?(
-              <ContinueScreen nextQuestion={nextQuestion}/>
+              <ContinueScreen token={props.route.params.userToken} totalStars={totalStars} displayAd={displayAd} nextQuestion={nextQuestion}/>
             ):(
               <>
+              
                 <View style={styles.header}>
+
+                
                   <Text
                     style={[
                       styles.smallText,
@@ -224,8 +256,22 @@ const QuizeScreen = (props) => {
                     {currentPos + 1} 0f {totalQuestions}
                    
                   </Text>
+                 
                 </View>
                 <ScrollView style={{ paddingBottom: 20 }}>
+
+                  
+                <BannerAd
+      unitId={adUnitId}
+      onAdFailedToLoad={(event)=>{console.log(event)}}
+      size={BannerAdSize.BANNER}
+      requestOptions={{
+        requestNonPersonalizedAdsOnly: true,
+      }}
+    />
+              
+
+               
                   <View style={styles.textBox}>
                     <Text
                       style={[styles.largeText, { color: colors.quiz_text }]}

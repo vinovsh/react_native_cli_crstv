@@ -1,10 +1,12 @@
 import React from 'react';
-import {View,Text,Button,StyleSheet,ActivityIndicator,Image,Dimensions,TouchableOpacity} from "react-native";
+import {View,Text,Button,StyleSheet,ActivityIndicator,ToastAndroid,Image,Dimensions,TouchableOpacity} from "react-native";
 import Colors from '../ColorPalet';
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
 import Feather from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import config from '../../config/config';
+import axios from 'axios';
 
 const width=Dimensions.get("screen").width;
 const ContinueScreen =props=>{
@@ -14,10 +16,52 @@ const ContinueScreen =props=>{
         navigation.navigate('Home')
     }
 
-    const nextQuestion=()=>{
+    const nextQuestion=()=>{ 
+      if(props.totalStars >=50){
+      //  props.nextQuestion();
+         getdata();
+      }else{
+         
+        ToastAndroid.show('Not enough stars..', ToastAndroid.SHORT);
 
-      props.nextQuestion();
+      }
+     
     }
+
+
+    const getdata=async ()=>{
+      var that=this;
+    try{
+            
+      await axios.post(config.BASE_URL+'spend_stars', {
+           token: props.token,
+         
+          
+         })
+        
+         .then(function (response) {
+             var data=response.data;
+          
+             if(data.error==false){
+            
+              
+                 props.nextQuestion()
+              
+             }else{
+                
+              ToastAndroid.show(data.message, ToastAndroid.SHORT);
+              }
+         })
+         .catch(function (error) {
+        
+          ToastAndroid.show('Network unavailable', ToastAndroid.SHORT);
+         
+         });
+      
+   }catch(e){
+      ToastAndroid.show('Network unavailable', ToastAndroid.SHORT);
+   }
+  }
   
     return (
         <View style={styles.container}>
@@ -28,7 +72,7 @@ const ContinueScreen =props=>{
           
                <Text style={styles.largeText}>Wrong Answer</Text>
                <View>
-                   <Text>Total Stars:<Text style={{fontWeight:"700"}}>10</Text></Text>  
+                   <Text>Total Stars:<Text style={{fontWeight:"700"}}>{props.totalStars}</Text></Text>  
                 </View> 
                
               
@@ -38,7 +82,7 @@ const ContinueScreen =props=>{
            </Animatable.View>
            <Text style={styles.largeText}>Continue?</Text>
 
-           <TouchableOpacity activeOpacity={0.8} onPress={(val) =>{alert('ads')}} style={styles.adButton}>
+           <TouchableOpacity activeOpacity={0.8} onPress={(val) =>{props.displayAd()}} style={styles.adButton}>
                  <Feather 
                         name="play"
                         color="#fff"
@@ -57,7 +101,7 @@ const ContinueScreen =props=>{
                   </Text>
                   </TouchableOpacity>
 
-           <TouchableOpacity activeOpacity={0.6} onPress={() =>{nextQuestion()}} style={styles.ContinueButton}>
+           <TouchableOpacity  activeOpacity={0.6} onPress={() =>{nextQuestion()}} style={styles.ContinueButton}>
                      <Text style={styles.continueText}>Spend 50</Text>
                      <Icon 
                         name="hexagram" 

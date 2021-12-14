@@ -176,17 +176,17 @@ const ReelsScreen = (props) => {
         <FlatList
           style={{ display: "flex",
           flexGrow: 1,}}
-          onEndReached={(val)=>{console.log("end")}}
+          onEndReached={()=>{onEnd()}}
           onViewableItemsChanged={onViewRef.current}
        //  onViewableItemsChanged={(val)=>{onViewableItem(val)}}
           data={apidata.reels.data}
-          renderItem={({item,index})=><ReelsContainer backToHome={backToHome} index={index} active_id={viewableId}  item={item}/>}
+          renderItem={({item,index})=><ReelsContainer token={token} backToHome={backToHome} index={index} active_id={viewableId}  item={item}/>}
           keyExtractor={(item) => item.id}
           showsVerticalScrollIndicator={false}
          
           pagingEnabled
           onEndReached={()=>{onEnd()}}
-          ListFooterComponent={ moreloading ?(<LoadmoreIndicator /> ):(<></>)}
+          ListFooterComponent={ moreloading ?(<LoadmoreIndicator color={'#000'} /> ):(<></>)}
         />
       </View>
       

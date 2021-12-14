@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "442849027155",
+    "project_id": "crs-tv-react-native",
+    "storage_bucket": "crs-tv-react-native.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:442849027155:android:ce8398f4b6544f871a92a6",
+        "android_client_info": {
+          "package_name": "com.app.crstv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "442849027155-0n7mru5eeculon0u3j3gjamkflihar87.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoUd4D2pKzBNaFyvBR8qAa2_bfuRAc6X8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "442849027155-0n7mru5eeculon0u3j3gjamkflihar87.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

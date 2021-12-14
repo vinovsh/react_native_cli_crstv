@@ -1,6 +1,7 @@
 import React from 'react';
 import {View,Text,Button,StyleSheet,ActivityIndicator} from "react-native";
 import Colors from '../Components/ColorPalet';
+
 const LoadmoreIndicator =props=>{
 
   
@@ -17,7 +18,7 @@ const LoadmoreIndicator =props=>{
             
             }}>
             
-            <ActivityIndicator size="small" color={Colors.primary}/>
+            <ActivityIndicator size="small" color={Colors.purple}/>
           
         </View>
     );
