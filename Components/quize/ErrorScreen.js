@@ -20,7 +20,7 @@ const ErrorScreen =props=>{
            <Animatable.View animation="bounceIn" style={styles.bottomPotion}>
            <Image style={styles.img} source={require('../../assets/images/sad.png')} />
                <View>
-                   <Text>Total Stars:<Text style={{fontWeight:"700"}}>10</Text></Text>  
+                   <Text>Total Stars:<Text style={{fontWeight:"700"}}>{props.totalStars}</Text></Text>  
                 </View> 
                <Text style={styles.largeText}>Ooops...</Text>
                <Text style={styles.smallText}>The next time you must be lucky</Text>
@@ -39,7 +39,7 @@ const ErrorScreen =props=>{
                
                >Whatch a short ad and get 5 Stars</Text>
 
-           <TouchableOpacity activeOpacity={0.8} onPress={(val) =>{alert('ads')}} style={styles.adButton}>
+           <TouchableOpacity activeOpacity={0.8} onPress={(val) =>{props.displayAd()}} style={styles.adButton}>
                  <Feather 
                         name="play"
                         color="#fff"

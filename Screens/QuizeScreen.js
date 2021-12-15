@@ -90,6 +90,7 @@ const QuizeScreen = (props) => {
 
           if (data.error == false) {
             setApidata(data);
+            setTotalStars(data.quize_status.total_stars);
             if(data.quize.length!=0){
                 setIsShowQuize(data.isShowQuize);
                 setCurrentPos(data.quize_status.position);
@@ -237,7 +238,7 @@ const QuizeScreen = (props) => {
               <RewardScreen />
             ) :failedFinishModal?(
                 
-              <ErrorScreen />
+              <ErrorScreen displayAd={displayAd} totalStars={totalStars} />
 
             ) :wrongInputModal?(
               <ContinueScreen token={props.route.params.userToken} totalStars={totalStars} displayAd={displayAd} nextQuestion={nextQuestion}/>

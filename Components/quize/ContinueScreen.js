@@ -7,9 +7,12 @@ import Feather from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import config from '../../config/config';
 import axios from 'axios';
+import { AuthContext } from '../Context';
 
 const width=Dimensions.get("screen").width;
 const ContinueScreen =props=>{
+
+    const { starsUpdate } = React.useContext(AuthContext);
     
     const navigation = useNavigation();
     const backToHome=()=>{
@@ -44,7 +47,7 @@ const ContinueScreen =props=>{
           
              if(data.error==false){
             
-              
+                 starsUpdate(data.total_stars);
                  props.nextQuestion()
               
              }else{
