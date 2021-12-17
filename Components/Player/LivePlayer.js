@@ -27,7 +27,7 @@ const LivePlayer = (props) => {
               style={styles.player}
               source={{
                 uri: props.video,
-               // type: 'm3u8'
+               type: 'm3u8'
               // overrideFileExtensionAndroid: 'm3u8' 
               }}
               repeat={false}
@@ -38,6 +38,7 @@ const LivePlayer = (props) => {
               onExitFullscreen={onFullscreenExit}
               disableBack
               paused={false}
+            
               
             
             />
@@ -62,6 +63,7 @@ const styles = StyleSheet.create({
         width:"100%",
         height:"100%",
         flex:1,
+     
         
     }
 

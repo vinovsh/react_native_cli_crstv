@@ -25,7 +25,7 @@ const UploadReels = (props) => {
        }else{
      
         
-          if(e.assets[0].duration>600){
+          if(e.assets[0].duration>300){
             setErrorMessage('Video too large');
           }else{
             
@@ -66,7 +66,7 @@ const UploadReels = (props) => {
                     <Text style={{textAlign:"center",textAlignVertical:'center',fontSize:20,color:"#fff"}}>Select Video</Text>
                 </View>
             </TouchableOpacity>
-            <Text style={{textAlign:'center',marginTop:10}}>Max video length 10 minutes</Text>
+            <Text style={{textAlign:'center',marginTop:10,color:colors.custom_text}}>Max video length 5 minutes</Text>
         </Animatable.View>
         </Modal>
     );

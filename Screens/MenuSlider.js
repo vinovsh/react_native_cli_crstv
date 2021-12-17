@@ -1,7 +1,11 @@
 import React from 'react';
-import { View, StyleSheet,Modal } from 'react-native';
+import { View, StyleSheet,Modal,Linking } from 'react-native';
 import Colors from '../Components/ColorPalet';
 import ReferralModal from '../Components/Modal/ReferralModal';
+import Share from 'react-native-share';
+import ImgToBase64 from 'react-native-image-base64';
+
+
 import {
     useTheme,
     Avatar,
@@ -54,6 +58,32 @@ const MenuSlider = (props) => {
 
         setIsShowReferalButton(false);
         
+    }
+
+
+    const shareImageB64=(base64String)=>{
+
+        const shareOptions={
+          message:"I’m inviting you to watch Christian live tv for free please download it from Google Play Store. Here’s my Referral Code:( "+code+" ) just enter it your app .if you reached 10 referrals you will earn a reward!  \n\nhttps://play.google.com/store/apps/details?id=com.app.crstv",
+         // url:"data:image/jpeg;base64,"+base64String
+        }
+    
+        Share.open(shareOptions)
+        .then((res) => {
+         // console.log(res);
+        })
+        .catch((err) => {
+         // err && console.log(err);
+        });
+      }
+    
+
+    const shareApp=()=>{
+
+       
+    ImgToBase64.getBase64String('https://crstv.s3.ap-south-1.amazonaws.com/assets/share_app/share.png')
+    .then(base64String => shareImageB64(base64String))
+    .catch(err => doSomethingWith(err));
     }
 
     return(
@@ -177,7 +207,7 @@ const MenuSlider = (props) => {
                                 />
                             )}
                             label={({color}) => <Text style={{color:color}}>Rate Us</Text>}
-                            onPress={() => {props.navigation.navigate('Main')}}
+                            onPress={() => {Linking.openURL('https://play.google.com/store/apps/details?id=com.app.crstv')}}
                         />
                         <DrawerItem 
                             icon={({size,color}) => (
@@ -189,7 +219,7 @@ const MenuSlider = (props) => {
                                 />
                             )}
                             label={({color}) => <Text style={{color:color}} >Share {'&'} Earn reward</Text>}
-                            onPress={() => {props.navigation.navigate('Main')}}
+                            onPress={() => {shareApp()}}
                         />
                     </Drawer.Section>
                     <Drawer.Section title="Preferences">

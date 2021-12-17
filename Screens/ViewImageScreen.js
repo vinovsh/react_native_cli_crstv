@@ -132,7 +132,7 @@ const ViewImageScreen = ({route,navigation}) => {
               
               >
                 <ProgressiveImage
-                   defaultImageSource={require('../assets/images/loadImage.png')}
+                   defaultImageSource={require('../assets/images/loaderAnimation.gif')}
                    source={route.params.img_url}
                    style={{ width:"100%",flex:1,transform:[{scale:scale}]}}
               
