@@ -57,7 +57,7 @@ const UploadReels = (props) => {
           >
          <View style={{position:'absolute',top:10,right:15}}>
             <TouchableOpacity onPress={()=>{upload_reels_box()}} activeOpacity={0.4}>
-              <Icon  name="close"  size={30} color={'#000'}/>  
+              <Icon  name="close"  size={30} color={colors.custom_text}/>  
             </TouchableOpacity>
          </View>     
            <Text style={{textAlign:'center',margin:10,color:"red"}}>{errorMessage}</Text>

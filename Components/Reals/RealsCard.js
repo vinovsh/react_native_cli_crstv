@@ -5,10 +5,12 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import ProgressiveImage from "../ProgressiveImage";
 import { useNavigation } from '@react-navigation/native';
 import ReelsScreen from "../../Screens/ReelsScreen";
+import {useTheme} from 'react-native-paper';
 
 const width=Dimensions.get("window").width;
 const RealsCard =props=>{
     const navigation = useNavigation();
+    const{colors}=useTheme();
 
     const reelsscreen=()=>{
 
@@ -24,7 +26,7 @@ const RealsCard =props=>{
         
         <View style={styles.container}>
          
-            <View style={styles.card}>
+            <View style={[styles.card,{borderColor:colors.light,backgroundColor:colors.custom_color}]}>
          
                 <TouchableOpacity onPress={()=>{reelsscreen()}} activeOpacity={0.6} style={styles.realCard}>
                     <ProgressiveImage style={styles.image} resizeMode="cover" source={{uri:"https://crstv.s3.ap-south-1.amazonaws.com/assets/reels.jpg"}} />
@@ -61,14 +63,15 @@ const styles = StyleSheet.create({
 
         width:width/1.09,
         height:width/3.5,
-        backgroundColor:Colors.theamColor,
+       // backgroundColor:Colors.theamColor,
         borderRadius:10,
-        shadowColor:Colors.shadow,
-        elevation:5,
+       // shadowColor:Colors.shadow,
+       // elevation:5,
         padding:16,
         flexDirection:"row",
        justifyContent:"flex-start",
        alignItems:"center",
+       borderWidth:0.5
     },
     realCard:{
 

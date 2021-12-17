@@ -4,7 +4,7 @@ import {View,Text,StyleSheet,Image} from 'react-native';
 
 const Logo =props=>{
 
-    
+  
     return (
         <View >
            

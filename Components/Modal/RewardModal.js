@@ -105,7 +105,7 @@ const RewardModal = (props) => {
           >
          <View style={{position:'absolute',top:10,right:15}}>
             <TouchableOpacity  onPress={()=>{modalControll()}} activeOpacity={0.4}>
-              <Icon  name="close"  size={30} color={'#000'}/>  
+              <Icon  name="close"  size={30} color={colors.custom_text}/>  
             </TouchableOpacity>
          </View>     
            

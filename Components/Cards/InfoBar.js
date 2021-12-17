@@ -3,19 +3,21 @@ import {View,Text,StyleSheet,Image,Dimensions,TouchableOpacity,na} from 'react-n
 import Colors from "../ColorPalet";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
+import {useTheme} from 'react-native-paper';
 
 const width=Dimensions.get('window').width;
 const InfoBar =props=>{
     const navigation = useNavigation();
+    const{colors}=useTheme();
     
     return (
        
        
        <View style={styles.container}>
-          <TouchableOpacity  onPress={() => {navigation.navigate('QuizeScreen')}} activeOpacity={0.8} style={styles.card}>
+          <TouchableOpacity  onPress={() => {navigation.navigate('QuizeScreen')}} activeOpacity={0.8} style={[styles.card,{backgroundColor:colors.custom_color,borderColor:colors.light}]}>
 
               <Icon color={Colors.primary} style={styles.icon} name="receipt-outline"></Icon>
-              <Text style={styles.title}>Bible Quiz</Text>
+              <Text style={[styles.title,{color:colors.custom_text}]}>Bible Quiz</Text>
               <View style={styles.button}>
                   <Icon color={Colors.theamColor} style={styles.arrowIcon} name="arrow-forward-outline"></Icon>
               </View>
@@ -48,9 +50,11 @@ const styles = StyleSheet.create({
         justifyContent:"flex-start",
         height:70,
         borderRadius:width,
-        backgroundColor:Colors.theamColor,
+       
         marginVertical:30,
-        width:width/1.08
+        width:width/1.08,
+        borderWidth:0.5,
+     
       
     },
     icon:{

@@ -37,7 +37,7 @@ const LivePlayer = (props) => {
               onEnterFullscreen={onFullscreenEnter}
               onExitFullscreen={onFullscreenExit}
               disableBack
-              paused={true}
+              paused={false}
               
             
             />

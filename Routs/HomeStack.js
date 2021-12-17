@@ -28,9 +28,13 @@ import ReferredPeopleScreen from '../Screens/ReferredPeoplesScreen';
 import RewardPage from '../Screens/RewardPage';
 import ChannelPlayerScreen from '../Screens/ChannelPlayerScreen';
 import LeaderBoard from '../Screens/LeaderBoard';
+import {useTheme} from 'react-native-paper';
+
 
 const Stack = createNativeStackNavigator();
 const HomeStack = (props) => {
+
+   const{colors}=useTheme();
       
     return (
      
@@ -47,7 +51,7 @@ const HomeStack = (props) => {
               headerTitle: () => <Logo />,
 
               headerStyle: {
-                backgroundColor:Colors.theamColor,
+                backgroundColor:colors.dark,
                 
               },
             headerTitleAlign: 'center',

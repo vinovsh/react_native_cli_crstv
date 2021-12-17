@@ -108,7 +108,7 @@ const MenuSlider = (props) => {
 
                         <View style={[styles.button,{backgroundColor:'#15d212'}]}>
                           
-                            <TouchableOpacity activeOpacity={0.6}>   
+                            <TouchableOpacity onPress={()=>{props.navigation.navigate('RewardPage')}} activeOpacity={0.6}>   
                                 <Text style={{fontSize:15,color:'#ffff'}}>Rewards</Text>
                              </TouchableOpacity>   
                         </View>
@@ -144,7 +144,7 @@ const MenuSlider = (props) => {
                                 />
                             )}
                             label={({color}) => <Text style={{color:color}}>Home</Text>}
-                            onPress={() => {props.navigation.navigate('Main')}}
+                            onPress={() => {props.navigation.navigate('Home')}}
                         />
                         <DrawerItem 
                             icon={({size,color}) => (
