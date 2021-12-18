@@ -3,6 +3,7 @@ import config from '../config/config';
 import axios from 'axios';
 import {View,Text,Button,FlatList, StyleSheet,Alert} from "react-native"
 import CardWithTitle from '../Components/Cards/CardWithTitle';
+import NoData from '../Components/Nodata';
 
 //loader
 import LoadingScreen from './LoadingScreen';
@@ -115,6 +116,12 @@ const ListVideoScreen = (props) => {
              //onEndReachedThreshold={0}
              numColumns={2}
              ListFooterComponent={ moreloading ?(<LoadmoreIndicator /> ):(<></>)}
+
+             ListEmptyComponent={
+                  
+              <NoData />
+             
+             }
              
             />
 

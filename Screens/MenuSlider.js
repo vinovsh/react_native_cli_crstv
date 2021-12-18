@@ -4,6 +4,7 @@ import Colors from '../Components/ColorPalet';
 import ReferralModal from '../Components/Modal/ReferralModal';
 import Share from 'react-native-share';
 import ImgToBase64 from 'react-native-image-base64';
+import config from '../config/config';
 
 
 import {
@@ -196,7 +197,7 @@ const MenuSlider = (props) => {
                                 />
                             )}
                             label={({color}) => <Text style={{color:color}}>Privacy Policy</Text>}
-                            onPress={() => {props.navigation.navigate('Main')}}
+                            onPress={() => {Linking.openURL(config.BASE_URL_WEB+"privacy-policy")}}
                         />
                         <DrawerItem 
                             icon={({size,color}) => (

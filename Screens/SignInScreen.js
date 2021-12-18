@@ -293,7 +293,7 @@ const SignUpScreen = ({navigation}) => {
             </Animatable.View>
             }
             
-             <Text onPress={()=>{alert(1)}} style={{marginTop:10}}>Forgot Your Password?</Text>
+             <Text onPress={()=>{Linking.openURL(config.BASE_URL_WEB+"user-forgot-password")}} style={{marginTop:10}}>Forgot Your Password?</Text>
            
             <View style={styles.button}>
                 <TouchableOpacity

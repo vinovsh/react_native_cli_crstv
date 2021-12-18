@@ -255,6 +255,11 @@ const MyVideosScreen = (props,{route}) => {
               //onEndReachedThreshold={0}
 
               ListFooterComponent={ moreloading ?(<LoadmoreIndicator /> ):(<></>)}
+              ListEmptyComponent={
+                  
+                <NoData />
+               
+               }
             />
 
              <BottomTabNavigater active={''} />

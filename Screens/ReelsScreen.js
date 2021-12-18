@@ -4,6 +4,7 @@ import ReelsContainer from '../Components/Reals/ReelsContainer';
 import config from '../config/config';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import NoData from '../Components/Nodata';
 
 import LoadmoreIndicator from '../Components/LoadmoreIndicator';
 import LoadingScreen from './LoadingScreen';
@@ -187,6 +188,11 @@ const ReelsScreen = (props) => {
           pagingEnabled
           onEndReached={()=>{onEnd()}}
           ListFooterComponent={ moreloading ?(<LoadmoreIndicator color={'#000'} /> ):(<></>)}
+          ListEmptyComponent={
+                  
+            <NoData />
+           
+           }
         />
       </View>
       
