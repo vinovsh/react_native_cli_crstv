@@ -1,7 +1,7 @@
 const config={
 
-    BASE_URL:"http://192.168.1.3/crstv/api/",
-    BASE_URL_WEB:"http://192.168.1.3/crstv/",
+    BASE_URL:"https://crstv.in/admin_v1/api/",
+    BASE_URL_WEB:"https://crstv.in/admin_v1/",
 
 
     //ads unit Id

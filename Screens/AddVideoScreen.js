@@ -159,6 +159,21 @@ const AddVideoScreen = (props) => {
                /> 
 
               </View>
+              {uploading?
+
+<View style={{width:width,flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
+
+    <View style={{width:'80%',height:10,borderRadius:50,backgroundColor:'#d9dadb',marginTop:20}}>
+
+         <View style={{width:progress+'%',height:'100%',backgroundColor:'#0fef4a',borderRadius:50}}></View>
+    </View>
+   <Text style={{fontSize:20,color:colors.text}}>{progress}%</Text>
+</View>
+
+:<></>
+
+
+}
 
               <Text style={[styles.title, {
                 color: colors.text
@@ -217,21 +232,7 @@ const AddVideoScreen = (props) => {
               
                 </View>
 
-                {uploading?
-
-                   <View style={{width:width,flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
-
-                       <View style={{width:'80%',height:10,borderRadius:50,backgroundColor:'#d9dadb',marginTop:20}}>
-
-                            <View style={{width:progress+'%',height:'100%',backgroundColor:'#0fef4a',borderRadius:50}}></View>
-                       </View>
-                      <Text style={{fontSize:20,color:colors.text}}>{progress}%</Text>
-                   </View>
-
-                   :<></>
-                
-              
-                }
+               
 
                
 
