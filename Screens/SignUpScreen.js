@@ -247,7 +247,7 @@ const SignUpScreen = ({navigation}) => {
                     }]}
                     autoCapitalize="none"
                     onChangeText={(val) => nameInputChange(val)}
-                    onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
+                  //  onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
                 />
                 {data.check_nameInputChange ? 
                 <Animatable.View
@@ -285,7 +285,7 @@ const SignUpScreen = ({navigation}) => {
                     }]}
                     autoCapitalize="none"
                     onChangeText={(val) => emailInputChange(val)}
-                    onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
+                   // onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
                 />
                 {data.check_emailInputChange ? 
                 <Animatable.View
