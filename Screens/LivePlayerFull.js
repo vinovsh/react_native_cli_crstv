@@ -4,10 +4,10 @@ import VideoPlayer from 'react-native-video-controls';
 import Colors from '../Components/ColorPalet';
 import Orientation from 'react-native-orientation';
 
-const width = Dimensions.get("screen").width;
-const height = Dimensions.get('screen').height;
 
-const LivePlayerFull = ({navigation}) => {
+
+const LivePlayerFull = (props) => {
+
     useEffect(() => {
         Orientation.lockToLandscape();
         BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
@@ -22,18 +22,18 @@ const LivePlayerFull = ({navigation}) => {
 
 function onFullscreenEnter(){
 
-    navigation.navigate("Home", { body: 'hi' })
+    props.navigation.navigate("Home")
 }
 
 function onFullscreenExit(){
-    navigation.navigate("Home", { body: 'hi' })
+    props.navigation.navigate("Home")
 
 }
 
 function BackNavigation(){
 
   handleBackButtonClick();
-  navigation.navigate("Home", { body: 'hi' })
+  props.navigation.navigate("Home")
 
 
 }
@@ -43,7 +43,7 @@ function BackNavigation(){
         <VideoPlayer
           style={styles.player}
           source={{
-            uri: 'http://bmlive.net:8000/crstv/crstv/bms.m3u8',
+            uri: props.route.params.video,
            type: 'm3u8'
           // overrideFileExtensionAndroid: 'm3u8' 
           }}

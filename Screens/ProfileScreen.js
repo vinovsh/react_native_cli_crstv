@@ -218,7 +218,7 @@ const ProfileScreen = (props) => {
                    <View style={{flexDirection:'row'}}>
 
                      <View style={[styles.card,{borderColor:paperTheme.colors.light}]}>
-                       <Text style={[styles.title,{margin:10,fontSize:20}]}>50</Text>
+                       <Text style={[styles.title,{margin:10,fontSize:20}]}>{apidata.total_referals}</Text>
                        <Text style={styles.caption}>Referral</Text>
 
                     </View>

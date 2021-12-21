@@ -75,7 +75,7 @@ const QuizeScreen = (props) => {
   const displayAd=()=>{
 
    // rewarded.show();
-   ToastAndroid.show('Coming Soon...', ToastAndroid.SHORT);
+   ToastAndroid.show('Ads not available...', ToastAndroid.SHORT);
   }
 
   const getdata = async () => {

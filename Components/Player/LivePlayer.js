@@ -11,11 +11,11 @@ const LivePlayer = (props) => {
     const navigation = useNavigation();
     function onFullscreenEnter(){
 
-        navigation.navigate("Live", { body: 'hi' })
+        navigation.navigate("Live", { video:props.video })
     }
     
     function onFullscreenExit(){
-        navigation.navigate("Live", { body: 'hi' })
+        navigation.navigate("Live", { video:props.video })
     
     }
 

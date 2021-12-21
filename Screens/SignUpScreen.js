@@ -35,6 +35,7 @@ const SignUpScreen = ({navigation}) => {
         name:'',
         email: '',
         password: '',
+        check_nameInputChange:false,
         check_passwordInputChange: false,
         warning_passwordInputChange: false,
         isValidName: true,
@@ -45,35 +46,7 @@ const SignUpScreen = ({navigation}) => {
 
     const { colors } = useTheme();
 
-    const { SignUpFormSubmit } = React.useContext(AuthContext); 
-
-
-    const nameInputChange = (val) => {
-        
     
-        
-        if( val.length !==0 ) {
-
-
-          
-                setData({
-                    ...data,
-                    name: val,
-                    check_nameInputChange: true,
-                    isValidName: true
-                });
-           
-           
-           
-        } else {
-            setData({
-                ...data,
-                name: val,
-                check_nameInputChange: false,
-                isValidName: false
-            });
-        }
-    }
 
     const emailInputChange = (val) => {
         
@@ -107,6 +80,33 @@ const SignUpScreen = ({navigation}) => {
                 isValidEmail: false
             });
         }
+    }
+
+    const nameInputChange = (val) => {
+
+    
+        
+        if( val.length !==0 ) {
+          
+
+          
+                setData({
+                    ...data,
+                    name: val,
+                    check_nameInputChange: true,
+                    isValidName: true
+                });
+           
+           
+           
+        } else {
+            setData({
+                ...data,
+                name: val,
+                check_nameInputChange: false,
+                isValidName: false
+            });
+        } 
     }
 
     const handlePasswordChange = (val) => {
@@ -239,27 +239,18 @@ const SignUpScreen = ({navigation}) => {
                     color={colors.text}
                     size={20}
                 />
-                <TextInput 
+               <TextInput 
                     placeholder="Your Name"
                     placeholderTextColor="#666666"
                     style={[styles.textInput, {
                         color: colors.text
                     }]}
-                   
+                    autoCapitalize="none"
                     onChangeText={(val) => nameInputChange(val)}
-                  //  onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
-                />
 
-<TextInput 
-                    placeholder="Your Name"
-                    placeholderTextColor="#666666"
-                    style={[styles.textInput, {
-                        color: colors.text
-                    }]}
-                   
-                    onChangeText={(val) => nameInputChange(val)}
-                  //  onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
-                />
+                    />
+
+                
                 {data.check_nameInputChange ? 
                 <Animatable.View
                     animation="bounceIn"
