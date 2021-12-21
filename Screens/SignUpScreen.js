@@ -50,9 +50,9 @@ const SignUpScreen = ({navigation}) => {
 
     const nameInputChange = (val) => {
         
-      
+    
         
-        if( val.length !=0 ) {
+        if( val.length !==0 ) {
 
 
           
@@ -196,7 +196,7 @@ const SignUpScreen = ({navigation}) => {
 
         //SignUpFormSubmit(name,email,password);
       }else{
-
+        setIsLoading(false);
         Alert.alert('Wrong Input!', 'Fields cannot be empty.', [
             {text: 'Okay'}
         ]);
@@ -245,7 +245,18 @@ const SignUpScreen = ({navigation}) => {
                     style={[styles.textInput, {
                         color: colors.text
                     }]}
-                    autoCapitalize="none"
+                   
+                    onChangeText={(val) => nameInputChange(val)}
+                  //  onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
+                />
+
+<TextInput 
+                    placeholder="Your Name"
+                    placeholderTextColor="#666666"
+                    style={[styles.textInput, {
+                        color: colors.text
+                    }]}
+                   
                     onChangeText={(val) => nameInputChange(val)}
                   //  onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
                 />
