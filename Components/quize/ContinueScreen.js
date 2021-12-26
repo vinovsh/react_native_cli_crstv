@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import {View,Text,Button,StyleSheet,ActivityIndicator,ToastAndroid,Image,Dimensions,TouchableOpacity} from "react-native";
 import Colors from '../ColorPalet';
 import * as Animatable from 'react-native-animatable';
@@ -9,8 +9,23 @@ import config from '../../config/config';
 import axios from 'axios';
 import { AuthContext } from '../Context';
 
+import { RewardedAd, RewardedAdEventType, TestIds } from '@react-native-firebase/admob';
+
 const width=Dimensions.get("screen").width;
+
+const adUnitId = config.AD_STATUS=='test'? TestIds.REWARDED : config.REWARDEd_AD_ID;
+
+
+const rewarded = RewardedAd.createForAdRequest(adUnitId, {
+  requestNonPersonalizedAdsOnly: true,
+  keywords: ['fashion', 'clothing'],
+});
+
 const ContinueScreen =props=>{
+
+    const [isAdLoaded, setIsAdLoaded] = useState(false);
+    const [isNextQuestion, setIsNextQuestion] = useState(false);
+    const [isAdLoadedAgain, setIsAdLoadedAgain] = useState(false);
 
     const { starsUpdate } = React.useContext(AuthContext);
     
@@ -65,6 +80,43 @@ const ContinueScreen =props=>{
       ToastAndroid.show('Network unavailable', ToastAndroid.SHORT);
    }
   }
+
+  useEffect(() => {
+    const eventListener = rewarded.onAdEvent((type, error, reward) => {
+     
+      if (type === RewardedAdEventType.LOADED) {
+        setIsAdLoaded(true);
+      }
+
+      if (type === RewardedAdEventType.EARNED_REWARD) {
+        setIsNextQuestion(true);
+      }
+
+      if(type==="closed"){
+
+        setIsAdLoadedAgain(!isAdLoadedAgain);
+        setIsAdLoaded(false);
+
+        
+          
+          console.log('next question')
+           props.nextQuestion();
+        
+      }
+    });
+
+    // Start loading the rewarded ad straight away
+    rewarded.load();
+
+    // Unsubscribe from events on unmount
+    return () => {
+      eventListener();
+    };
+  }, [isAdLoadedAgain]);
+
+  if (!isAdLoaded) {
+    return null;
+  }
   
     return (
         <View style={styles.container}>
@@ -85,7 +137,22 @@ const ContinueScreen =props=>{
            </Animatable.View>
            <Text style={styles.largeText}>Continue?</Text>
 
-           <TouchableOpacity activeOpacity={0.8} onPress={(val) =>{props.displayAd()}} style={styles.adButton}>
+           <TouchableOpacity activeOpacity={0.8} onPress={(val) =>{
+
+              if(isAdLoaded==true){
+
+                rewarded.show();
+              }else{
+
+                props.displayAd_error();
+
+              }
+
+              
+             
+           
+             
+             }} style={[styles.adButton,{backgroundColor: isAdLoaded?'#F59137': '#f9c596'}]}>
                  <Feather 
                         name="play"
                         color="#fff"
@@ -222,7 +289,7 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignItems:"center",
         marginVertical:10,
-        backgroundColor:"#F59137"
+       // backgroundColor:"#F59137"
     },
     continueText:{
        // padding:10,

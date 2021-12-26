@@ -20,7 +20,7 @@ import { useTheme } from "react-native-paper";
 import { AuthContext } from '../Components/Context';
 import RewardScreen from "../Components/quize/RewardScreen";
 import ErrorScreen from "../Components/quize/ErrorScreen";
-import GetStars from "../Components/quize/GetStars";
+
 import ContinueScreen from "../Components/quize/ContinueScreen";
 import CommingSoon from "../Components/quize/CommingSoon";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -36,9 +36,9 @@ import LoadingScreen from "./LoadingScreen";
 
 const height = Dimensions.get("screen").height;
 const width = Dimensions.get("screen").width;
-//const adUnitId = config.AD_STATUS=='test'? TestIds.REWARDED : config.REWARDEd_AD_ID;
+const adUnitId = config.AD_STATUS=='test'? TestIds.BANNER : config.BANNER_AD_ID;
 
-const adUnitId='ca-app-pub-3940256099942544/2934735716';
+
 
 const QuizeScreen = (props) => {
 
@@ -72,7 +72,7 @@ const QuizeScreen = (props) => {
     setShowReward(true);
   };
 
-  const displayAd=()=>{
+  const displayAd_error=()=>{
 
    // rewarded.show();
    ToastAndroid.show('Ads not available...', ToastAndroid.SHORT);
@@ -125,21 +125,7 @@ const QuizeScreen = (props) => {
 
   React.useEffect(() => {
     getdata();
-    admob()
-  .setRequestConfiguration({
-    // Update all future requests suitable for parental guidance
-    maxAdContentRating: MaxAdContentRating.PG,
-
-    // Indicates that you want your content treated as child-directed for purposes of COPPA.
-    tagForChildDirectedTreatment: true,
-
-    // Indicates that you want the ad request to be handled in a
-    // manner suitable for users under the age of consent.
-    tagForUnderAgeOfConsent: true,
-  })
-  .then(() => {
-    // Request config successfully set!
-  });
+   
   
   }, []);
 
@@ -157,6 +143,7 @@ const QuizeScreen = (props) => {
     setFailedFinishModal(false);
     setWrongInputModal(true);
     setSuccessFinishModal(false);
+   
   }else if(selectedOption!=null &&  currentPos==totalQuestions-1 &&taskStars!=0){
 
     setFailedFinishModal(false);
@@ -224,7 +211,7 @@ const QuizeScreen = (props) => {
     <>
       {loading ? (
         <LoadingScreen />
-      ) :isShowQuize==false?(
+      ) :isShowQuize==false?( 
         <CommingSoon />
       ): (
 
@@ -238,10 +225,10 @@ const QuizeScreen = (props) => {
               <RewardScreen />
             ) :failedFinishModal?(
                 
-              <ErrorScreen displayAd={displayAd} totalStars={totalStars} />
+              <ErrorScreen token={props.route.params.userToken} displayAd_error={displayAd_error} totalStars={totalStars} />
 
             ) :wrongInputModal?(
-              <ContinueScreen token={props.route.params.userToken} totalStars={totalStars} displayAd={displayAd} nextQuestion={nextQuestion}/>
+              <ContinueScreen token={props.route.params.userToken} totalStars={totalStars} displayAd_error={displayAd_error} nextQuestion={nextQuestion}/>
             ):(
               <>
               
@@ -259,17 +246,10 @@ const QuizeScreen = (props) => {
                   </Text>
                  
                 </View>
-                <ScrollView style={{ paddingBottom: 20 }}>
+                <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false} style={{ paddingBottom: 20 }}>
 
                   
-                <BannerAd
-      unitId={adUnitId}
-      onAdFailedToLoad={(event)=>{console.log(event)}}
-      size={BannerAdSize.BANNER}
-      requestOptions={{
-        requestNonPersonalizedAdsOnly: true,
-      }}
-    />
+                
               
 
                
@@ -321,21 +301,18 @@ const QuizeScreen = (props) => {
 
                     
                   </View>
+                  <BannerAd
+                     unitId={adUnitId}
+    
+                    // onAdFailedToLoad={(event)=>{console.log(event)}}
+                     size={BannerAdSize.FULL_BANNER}
+                     requestOptions={{
+                        requestNonPersonalizedAdsOnly: true,
+                     }}
+                  />
                 </ScrollView>
 
-               {/* {selectedOption!=null && selectedOption==correctOption?
-                  <View style={styles.ContinueButtonCard}>
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    onPress={(val) => nextquestion()}
-                    style={styles.ContinueButton}
-                  >
-                    <Text style={styles.continueText}>CONTINUE</Text>
-                  </TouchableOpacity>
-                </View>
-                :
-                <></>
-              } */}
+               
               </>
             )}
           </SafeAreaView>
