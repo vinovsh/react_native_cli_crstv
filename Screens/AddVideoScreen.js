@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,Text,Button,SafeAreaView,ToastAndroid,StyleSheet,ActivityIndicator,StatusBar,ScrollView,Dimensions,TextInput,Image, TouchableOpacity,Alert} from "react-native";
+import {View,Text,Button,SafeAreaView,ToastAndroid,StyleSheet,ActivityIndicator,StatusBar,ScrollView,Dimensions,TextInput,Image, TouchableOpacity,Alert,Modal} from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'react-native-paper';
 import Colors from '../Components/ColorPalet';
@@ -8,6 +8,10 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import config from '../config/config';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
+
+import { Video  as cVideo  } from 'react-native-compressor';
+import {RNFS,stat} from 'react-native-fs';
+import getPath from '@flyerhq/react-native-android-uri-path'
 
 
 const width=Dimensions.get('window').width;
@@ -25,6 +29,9 @@ const AddVideoScreen = (props) => {
    const [image,setImage]=React.useState();
    const [title,setTitle]=React.useState();
    const [uploading,setUploading]=React.useState(false);
+   const [progressPersentage ,setProgressPersentage]=React.useState(0);
+   const [progressModal,setProgressModal]=React.useState(false);
+   const [compressedVideo,setCompressedVideo]=React.useState(null);
 
    const [progress,setProgress]=React.useState(0);
     
@@ -32,8 +39,8 @@ const AddVideoScreen = (props) => {
     if(e.didCancel==true){
       
     }else{
-  
-      setImageoUrl(e.assets[0].uri);
+     
+      setImageoUrl(decodeURIComponent(e.assets[0].uri));
       setImage(e.assets[0]);
     }
   }
@@ -56,14 +63,82 @@ const AddVideoScreen = (props) => {
     });
   }
 
+ const compress1=async()=>{
+
+  if(video && title && image){
+    try{
+       setProgressModal(true);
+       const path = getPath(videoUrl)
+
+       let video_path='file://'+path;
+       const result = await cVideo.compress(
+        video_path,
+        {
+           compressionMethod: 'auto',
+           //minimumFileSizeForCompress:2
+        },
+        (progress) => {
+    
+         var progressPersentage= parseInt((progress/0.01));
+         setProgressPersentage(progressPersentage);
+   
+        } 
+      ); 
+
+  
+       setCompressedVideo(result);
+
+     
+
+      if(result !==null){
+         setProgressModal(false);
+         upload(result);
+      }
  
 
-  const upload=async()=>{
+     }catch(e){
+  
+
+          ToastAndroid.show('Try again!', ToastAndroid.SHORT);
+  
+
+     }
+
+    }else{
+       
+      setUploading(false);
+
+        Alert.alert('Wrong Input!', 'Plz fill all details', [
+           {text: 'Okay'}
+        ]);
+
+    }
+
+
+
+ }
+
+ 
+
+  const upload=async(recived_video)=>{
     setUploading(true);
     if(video && title && image){
       let formData = new FormData();
+
+      let reday_upload_video;
+
+      if (recived_video.includes('file:///')) { 
+        // Found world
+       reday_upload_video=recived_video;
+      }else{
+        let Video_filtred=recived_video.replace('file://', '');
+         reday_upload_video='file:///'+Video_filtred;
+
+      }
+
       
-      formData.append("video",  {type:video.type,uri:video.uri,name:video.fileName});
+      
+      formData.append("video",  {type:video.type,uri:reday_upload_video,name:video.fileName});
       formData.append("image",  {type:image.type,uri:image.uri,name:image.fileName});
       formData.append("title",  title);
       formData.append("token",  token);
@@ -124,6 +199,16 @@ const AddVideoScreen = (props) => {
     return (
         <View style={styles.container}>
 
+          <Modal visible={progressModal}>
+
+            <View style={{flex:1,height:'100%',width:'100%',justifyContent:'center',alignItems:'center'}}>
+
+                  <Text style={{fontSize:30,color:'green'}}>{progressPersentage}%</Text>
+                  <Text style={{fontSize:18,color:'#000',margin:10}}>Compressing...</Text>
+            </View>
+
+          </Modal>
+
           <ScrollView
              showsHorizontalScrollIndicator={false}
              showsVerticalScrollIndicator={false}
@@ -145,12 +230,13 @@ const AddVideoScreen = (props) => {
                    resizeMode="contain"
                    controls={false}
                    disablePlayPause
-                 disableSeekbar
-                 disableVolume
-                 disableTimer
-                 disableBack
-                 disableFullscreen
-                 controls={false}
+                   
+                   disableSeekbar 
+                   disableVolume
+                   disableTimer
+                   disableBack
+                   disableFullscreen
+                   controls={false} 
                  
         
                 
@@ -243,7 +329,7 @@ const AddVideoScreen = (props) => {
 
             {uploading?
 
-                <TouchableOpacity onPress={()=>{upload()}}>
+                <TouchableOpacity >
             
                   <Text style={{textAlign:'center',fontSize:20,color:"#fff"}}><ActivityIndicator size="small" color="#fff" /> Uploading..</Text>
                 </TouchableOpacity>
@@ -251,7 +337,7 @@ const AddVideoScreen = (props) => {
               :
 
               
-              <TouchableOpacity onPress={()=>{upload()}}>
+              <TouchableOpacity onPress={()=>{compress1()}}>
             
                 <Text style={{textAlign:'center',fontSize:20,color:"#fff"}}>Upload</Text>
              </TouchableOpacity>

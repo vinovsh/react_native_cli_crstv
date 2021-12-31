@@ -20,12 +20,14 @@ const UploadReels = (props) => {
 
 
     const callback=(e)=>{
+
+     
        if(e.didCancel==true){
           console.log('cancel');
        }else{
      
         
-          if(e.assets[0].duration>300){
+          if(e.assets[0].duration>120){
             setErrorMessage('Video too large');
           }else{
             
@@ -37,9 +39,23 @@ const UploadReels = (props) => {
        }
      }
 
+     const options = 
+     {
+       mediaType: 'video',
+       videoQuality: 'low',
+       durationLimit: 10,
+       takePhotoButtonTitle: null, //'Take video...', //bug at taking video with camera so far 27/10/2018
+       title: 'Select Video',
+       //noData,maxWidth and maxHeight shorten time for ImportPhoto to return image
+       noData: true,
+       maxWidth: 1000, //speeds up compressImage to almost no time
+       maxHeight: 1000, //speeds up compressImage to almost no time
+      
+     }
+
     const selectVideo=()=>{
   
-        launchImageLibrary({mediaType:'video',durationLimit:15}, callback);
+        launchImageLibrary(options, callback);
 
     }
    
@@ -66,7 +82,7 @@ const UploadReels = (props) => {
                     <Text style={{textAlign:"center",textAlignVertical:'center',fontSize:20,color:"#fff"}}>Select Video</Text>
                 </View>
             </TouchableOpacity>
-            <Text style={{textAlign:'center',marginTop:10,color:colors.custom_text}}>Max video length 5 minutes</Text>
+            <Text style={{textAlign:'center',marginTop:10,color:colors.custom_text}}>Max video length 2 minutes</Text>
         </Animatable.View>
         </Modal>
     );

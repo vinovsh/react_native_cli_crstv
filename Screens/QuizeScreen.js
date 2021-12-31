@@ -27,7 +27,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as Animatable from 'react-native-animatable';
 
 //ads import
-import admob, { MaxAdContentRating } from '@react-native-firebase/admob';
+
 import { BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
 
 //loader

@@ -41,7 +41,7 @@ const LeaderCard=(props)=>{
           
 
           <View style={styles.textBox}>
-              <Text numberOfLines={1} style={[styles.name,{color:colors.custom_text}]}>{props.item.name}</Text>
+              <Text numberOfLines={2} style={[styles.name,{color:colors.custom_text}]}>{props.item.name}</Text>
           </View>
 
           <View style={styles.buttonCard}>

@@ -26,6 +26,10 @@ target 'crstv' do
 
   pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
 
+  pod 'react-native-compressor', :path => '../node_modules/react-native-compressor'
+
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
+
   target 'crstvTests' do
     inherit! :complete
     # Pods for testing

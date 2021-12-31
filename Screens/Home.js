@@ -23,15 +23,29 @@ import UploadReels from '../Components/UploadReels';
 
 import BottomTabNavigater from '../Components/BottomTabNavigater';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+
 
 //loader
 import HomeLoader from '../Components/skeloton/HomeLoader';
 import { Item } from 'react-native-paper/lib/typescript/components/List/List';
+import {RewardedAd, RewardedAdEventType, BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
+
 
 
 
 const width=Dimensions.get('window').width;
+const adUnitId = config.AD_STATUS=='test'? TestIds.BANNER : config.BANNER_AD_ID;
 
+const adUnitIdReward = config.AD_STATUS=='test'? TestIds.REWARDED : config.REWARDEd_AD_ID;
+
+
+const rewarded = RewardedAd.createForAdRequest(adUnitIdReward, {
+  requestNonPersonalizedAdsOnly: true,
+  keywords: ['fashion', 'clothing'],
+});
 
 const Home = (props,{navigation}) => {
 
@@ -47,6 +61,15 @@ const Home = (props,{navigation}) => {
     const[apidata,setApidata]=useState();
     const[loading,setLoading]=useState(true);
     const[uploading,setUploading]=useState(false);
+
+    const[showBannerAd,setShowBannerAd]=useState(false);
+
+    const [isLoadApi, setIsLoadApi] = useState(true);
+
+    const [isAdLoaded, setIsAdLoaded] = useState(false);
+    const [isAdLoadedAgain, setIsAdLoadedAgain] = useState(false);
+
+    const [canILoadAdd, setCanILoadAdd] = useState(false);
 
     const upload_reels_box=()=>{
 
@@ -104,16 +127,114 @@ const Home = (props,{navigation}) => {
      }
     }
 
+    const checkTime = async () => {
+
+      try {
+        var time=await AsyncStorage.getItem('@adLoadTime');
+      
+       if(time !== null) {
+
+          time_int=parseInt(time);
+
+          var currentTimeInSeconds=Math.floor(Date.now()/1000);
+
+          if(currentTimeInSeconds >=time_int){
+            
+            setCanILoadAdd(true);
+
+          }else{
+            
+            setCanILoadAdd(false);
+
+          }
+         
+       } 
+        
+        
+      } catch (e) {
+        console.log(e);
+      } 
+
+    }
+
+
+   const updateTime=async()=>{
+
+      try {
+        var currentTimeInSeconds=Math.floor(Date.now()/1000); //unix timestamp in seconds
+        await AsyncStorage.setItem('@adLoadTime', JSON.stringify(currentTimeInSeconds+1800) );
+      
+      } catch (e) {
+        console.log(e);
+      }
+
+   } 
+
   React.useEffect(() => {
 
- 
-    getdata();
+   /* if(isLoadApi==true){
+      setIsLoadApi(false); */
+      getdata();
+
+  /*  } */
+
+    checkTime();
+
+   const eventListener = rewarded.onAdEvent((type, error, reward) => {
+     
+    if (type === RewardedAdEventType.LOADED) {
+      setIsAdLoaded(true);
+    }
+
+    if(type==="closed"){
+
+      setIsAdLoadedAgain(!isAdLoadedAgain);
+      setIsAdLoaded(false);
+
+  
+        
+     
+      
+    }
+
+   
+
+    
+  });
+
+  // Start loading the rewarded ad straight away
+  rewarded.load();
+
+  // Unsubscribe from events on unmount
+  return () => {
+    eventListener();
+  };
     
   
+
+ 
+   
+  
+   
   
   }, []);
 
+  if(isAdLoaded===true){
+    if(canILoadAdd==true){
+      setTimeout(() => {
 
+        setIsAdLoaded(false);
+        updateTime();
+        rewarded.show();
+
+
+      }, 5000);
+
+     
+
+    }
+   
+  }
  
     return (
         <>
@@ -216,8 +337,7 @@ const Home = (props,{navigation}) => {
             />
 
                   
-                 
-
+            
 
 
             <CategoryTitle title="Our Shows" navigate_to="ListCategoryScreen"  display="flex">
@@ -282,6 +402,29 @@ const Home = (props,{navigation}) => {
                 
 
             <SocialShare social={apidata.social_media} />
+
+
+            <View style={{height:showBannerAd? 'auto':0}}>  
+                   <BannerAd
+                       visible={false}
+                     unitId={adUnitId}
+    
+                    onAdFailedToLoad={(event)=>{
+                      setShowBannerAd(false);
+                    
+                    }}
+
+                    onAdLoaded={() => { 
+                      setShowBannerAd(true);
+                    
+                    }}
+                     size={BannerAdSize.SMART_BANNER}
+                     requestOptions={{
+                        requestNonPersonalizedAdsOnly: true,
+                     }}
+                  />
+
+              </View>
 
  
          </ScrollView>

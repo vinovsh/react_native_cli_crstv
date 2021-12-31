@@ -167,6 +167,7 @@ class ReelsContainer extends Component {
                        color={this.state.isLike?"#0BD175" :'white'}
                        size={30}
                      />
+                    
                      <Text style={{color:"white"}}>{this.state.totalLikes}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity   style={{flexDirection:"column",alignItems:'center',marginTop:10}}>
@@ -184,7 +185,16 @@ class ReelsContainer extends Component {
               <View style={styles.profileCard}>
                  <Title style={styles.description}>{this.props.item.title}</Title>
                  <View style={styles.usercard}>
-                       <Image style={styles.pro_img} source={{uri:this.props.item.profile}}/>
+
+                 
+                      {this.props.item.profile===null?
+                      <Image style={styles.pro_img} source={require('../../assets/images/profile.png')}/>
+                   
+                   :
+                      <Image style={styles.pro_img} source={{uri:this.props.item.profile}}/>
+                    
+                    }
+                      
                        <Text numberOfLines={1}  style={styles.pname}>{this.props.item.name}</Text> 
                  </View>
               </View>
