@@ -26,14 +26,14 @@ const UploadReels = props => {
 
   const callback = e => {
     if (e.didCancel == true) {
-      console.log('cancel');
+      // console.log('cancel');
     } else {
       console.log(e.assets[0]);
       if (e.assets[0].fileSize > 30000000) {
         setErrorMessage('Video too large');
       } else {
         upload_reels_box();
-        //  navigation.navigate('UploadVideo',{item:e});
+        navigation.navigate('UploadVideo', {item: e});
       }
     }
   };

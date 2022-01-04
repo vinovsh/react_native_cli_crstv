@@ -322,7 +322,7 @@ const AddVideoScreen = props => {
           ) : (
             <>
               <Image
-                source={require('../assets/images/empty_image.png')}
+                source={require('../assets/images/empty_image.jpg')}
                 style={{width: 150, height: 150}}
               />
             </>
