@@ -1,11 +1,11 @@
 import React,{useState} from 'react';
 import config from '../config/config';
 import axios from 'axios';
-import {View,Text,Button,ScrollView,TouchableOpacity,Dimensions,StyleSheet,FlatList,Alert} from "react-native";
+import {View,Text,Button,ScrollView,TouchableOpacity,Dimensions,StyleSheet,FlatList,Alert,Modal,Linking} from "react-native";
 import Orientation from 'react-native-orientation';
 import Colors from '../Components/ColorPalet';
 import AutoScrolling from "react-native-auto-scrolling";
-import { useTheme } from 'react-native-paper';
+import {useTheme } from 'react-native-paper';
 
 //components
 
@@ -25,6 +25,8 @@ import BottomTabNavigater from '../Components/BottomTabNavigater';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 
 
 
@@ -36,18 +38,25 @@ import {RewardedAd, RewardedAdEventType, BannerAd, BannerAdSize, TestIds } from 
 
 
 
-const width=Dimensions.get('window').width;
-const adUnitId = config.AD_STATUS=='test'? TestIds.BANNER : config.BANNER_AD_ID;
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
-const adUnitIdReward = config.AD_STATUS=='test'? TestIds.REWARDED : config.REWARDEd_AD_ID;
+ const adUnitId = config.AD_STATUS=='test'? TestIds.BANNER : config.BANNER_AD_ID;
+
+ const adUnitIdReward = config.AD_STATUS=='test'? TestIds.REWARDED :config.REWARDEd_AD_ID;
 
 
-const rewarded = RewardedAd.createForAdRequest(adUnitIdReward, {
-  requestNonPersonalizedAdsOnly: true,
-  keywords: ['fashion', 'clothing'],
-});
+  const rewarded = RewardedAd.createForAdRequest(adUnitIdReward, {
+        requestNonPersonalizedAdsOnly: true,
+        keywords: ['fashion', 'clothing'],
+  });
 
-const Home = (props,{navigation}) => {
+
+
+const Home = (props, { navigation }) => {
+
+
+
 
     var token=props.route.params.userToken;
 
@@ -70,6 +79,8 @@ const Home = (props,{navigation}) => {
     const [isAdLoadedAgain, setIsAdLoadedAgain] = useState(false);
 
     const [canILoadAdd, setCanILoadAdd] = useState(false);
+  
+    const [showUpdatePopup, setShowUpdatePopup] = useState(true);
 
     const upload_reels_box=()=>{
 
@@ -148,6 +159,9 @@ const Home = (props,{navigation}) => {
 
           }
          
+       } else {
+         
+         setCanILoadAdd(true);
        } 
         
         
@@ -219,13 +233,18 @@ const Home = (props,{navigation}) => {
   
   }, []);
 
+ 
+
   if(isAdLoaded===true){
     if(canILoadAdd==true){
       setTimeout(() => {
-
-        setIsAdLoaded(false);
-        updateTime();
-        rewarded.show();
+        if (isAdLoaded === true) {
+          setIsAdLoaded(false);
+          setCanILoadAdd(false);
+          updateTime();
+          rewarded.show();
+         
+        }
 
 
       }, 5000);
@@ -243,7 +262,66 @@ const Home = (props,{navigation}) => {
            <HomeLoader />
 
          ):(
-           <>
+            <>
+             
+              {apidata.show_update_popup === 1 && showUpdatePopup===true && apidata.version !== config.VERSION ?
+                <Modal transparent={true} >
+                  
+                  <View style={{height:300,width:width-20,backgroundColor:"#fff",marginTop:(height-300)/2,borderRadius:20,margin:10,justifyContent:"center",alignItems:'center'}}>
+                   
+                     <Icon 
+                        name="close" 
+                        color='#000'
+                        size={40}
+                        style={{
+                           position: 'absolute',
+                           top: 10,
+                           right:10
+                      }}
+                      
+                      onPress={() => {
+                        
+                        setShowUpdatePopup(false);
+
+                      }}
+                      />
+                   
+                    
+                    <TouchableOpacity
+                      
+                      activeOpacity={0.8}
+                      onPress={() => {
+                        
+                        Linking.openURL('https://play.google.com/store/apps/details?id=com.app.crstv');
+                      }}
+                    
+                    
+                    >
+                    <View
+                      
+                      style={{
+                        height: 60,
+                        width: width - 70,
+                        backgroundColor: Colors.pink,
+                        borderRadius: 20,
+                        justifyContent:'center'
+                      }}
+                    
+                    >
+                      <Text style={{textAlign:'center',alignItems:'center',fontSize:20,color:'#fff'}}>Update</Text>
+                      
+                      </View>
+                      
+                      </TouchableOpacity>
+                  </View>
+
+                </Modal>
+
+                :
+
+                <></>
+           
+              }
 
            {uploading ?(
         

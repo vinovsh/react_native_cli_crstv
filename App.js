@@ -39,7 +39,9 @@ const initialLoginState={
    userCode:'',
    referralCode:'',
    userStars:'',
-   userToken:'',
+   userToken: '',
+   banner_ad_id:'',
+   reward_ad_id:''
    
 
 }
@@ -59,7 +61,9 @@ const loginReducer=(prevState,action)=>{
         referralCode:action.referral_code,
         userStars:action.stars,
         isLoading:false,
-        isAuthenticated:true
+        isAuthenticated: true,
+        banner_ad_id: action.banner_ad_id,
+        reward_ad_id:action.reward_ad_id
       };
     
     case 'OTP_VERIFY':
@@ -73,7 +77,9 @@ const loginReducer=(prevState,action)=>{
         referralCode:action.referral_code,
         userStars:action.stars,
         isLoading:false,
-        isAuthenticated:true
+        isAuthenticated: true,
+        banner_ad_id: action.banner_ad_id,
+        reward_ad_id:action.reward_ad_id
       };
     case 'AUTH_CHECK':
       return{
@@ -86,7 +92,9 @@ const loginReducer=(prevState,action)=>{
         referralCode:action.referral_code,
         userStars:action.stars,
         isLoading:false,
-        isAuthenticated:true
+        isAuthenticated: true,
+        banner_ad_id: action.banner_ad_id,
+        reward_ad_id:action.reward_ad_id
       };
 
     case 'LOGOUT':
@@ -100,7 +108,9 @@ const loginReducer=(prevState,action)=>{
         referralCode:action.referral_code,
         userStars:'',
         isLoading:false,
-        isAuthenticated:false
+        isAuthenticated: false,
+        banner_ad_id:'',
+        reward_ad_id:''
       };
 
       case 'UPDATE':
@@ -231,13 +241,13 @@ const [loginState,dispatch]=React.useReducer(loginReducer,initialLoginState);
 
   
 
-   SignInFormSubmit: async(token,name,profile,email,code,referral_code,stars) => {
+   SignInFormSubmit: async(token,name,profile,email,code,referral_code,stars,banner_ad_id,reward_ad_id) => {
 
      
 
       try {
         await AsyncStorage.setItem('@user_token', token);
-        dispatch({type:'LOGIN',token:token,name:name,profile:profile,email:email,code:code,referral_code:referral_code,stars:stars});
+        dispatch({type:'LOGIN',token:token,name:name,profile:profile,email:email,code:code,referral_code:referral_code,stars:stars,banner_ad_id:banner_ad_id,reward_ad_id:reward_ad_id});
       } catch (e) {
         console.log(e);
       }
@@ -310,9 +320,11 @@ try {
                    var email=data.email;
                    var code=data.code;
                    var referral_code=data.referral_code;
-                   var stars=data.stars;
+                   var stars = data.stars;
+                   var banner_ad_id= data.banner_ad_id;
+                   var reward_ad_id = data.reward_ad_id;
    
-                  dispatch({type:'AUTH_CHECK',token:token,name:name,profile:profile,email:email,code:code,referral_code:referral_code,stars:stars});
+                  dispatch({type:'AUTH_CHECK',token:token,name:name,profile:profile,email:email,code:code,referral_code:referral_code,stars:stars,banner_ad_id:banner_ad_id,reward_ad_id:reward_ad_id});
               
              }else{
                 

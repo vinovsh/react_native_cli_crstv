@@ -36,13 +36,20 @@ import LoadingScreen from "./LoadingScreen";
 
 const height = Dimensions.get("screen").height;
 const width = Dimensions.get("screen").width;
-const adUnitId = config.AD_STATUS=='test'? TestIds.BANNER : config.BANNER_AD_ID;
 
 
+
+
+
+
+ const adUnitId = config.AD_STATUS=='test'? TestIds.BANNER : config.BANNER_AD_ID;
 
 const QuizeScreen = (props) => {
+  
 
+ 
 
+  
 
   const { starsUpdate } = React.useContext(AuthContext);
   const { colors } = useTheme();
@@ -208,7 +215,10 @@ const QuizeScreen = (props) => {
   }
 
   return (
+
+    
     <>
+    
       {loading ? (
         <LoadingScreen />
       ) :isShowQuize==false?( 
@@ -222,10 +232,11 @@ const QuizeScreen = (props) => {
             <StatusBar backgroundColor={"#fff"} barStyle="dark-content" />
             
             {successFinishModal ? (
-              <RewardScreen />
-            ) :failedFinishModal?(
+              <RewardScreen  />
+                ) : failedFinishModal ? (
+                    
                 
-              <ErrorScreen token={props.route.params.userToken} displayAd_error={displayAd_error} totalStars={totalStars} />
+              <ErrorScreen  token={props.route.params.userToken} displayAd_error={displayAd_error} totalStars={totalStars} />
 
             ) :wrongInputModal?(
               <ContinueScreen token={props.route.params.userToken} totalStars={totalStars} displayAd_error={displayAd_error} nextQuestion={nextQuestion}/>

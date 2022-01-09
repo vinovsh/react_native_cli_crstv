@@ -13,15 +13,22 @@ import { RewardedAd, RewardedAdEventType, TestIds } from '@react-native-firebase
 
 const width=Dimensions.get("screen").width;
 
-const adUnitId = config.AD_STATUS=='test'? TestIds.REWARDED : config.REWARDEd_AD_ID;
 
 
-const rewarded = RewardedAd.createForAdRequest(adUnitId, {
-  requestNonPersonalizedAdsOnly: true,
-  keywords: ['fashion', 'clothing'],
-});
+ const adUnitId = config.AD_STATUS=='test'? TestIds.REWARDED : config.REWARDEd_AD_ID;
 
-const ContinueScreen =props=>{
+
+   const rewarded = RewardedAd.createForAdRequest(adUnitId, {
+        requestNonPersonalizedAdsOnly: true,
+        keywords: ['fashion', 'clothing'],
+   });
+
+const ContinueScreen = props => {
+
+
+  
+  
+   
 
     const [isAdLoaded, setIsAdLoaded] = useState(false);
     const [isNextQuestion, setIsNextQuestion] = useState(false);
@@ -114,12 +121,12 @@ const ContinueScreen =props=>{
     };
   }, [isAdLoadedAgain]);
 
-  if (!isAdLoaded) {
-    return null;
-  }
+  
   
     return (
-        <View style={styles.container}>
+      <View style={styles.container}>
+        
+       
       
 
            <Animatable.View animation="bounceIn" style={styles.bottomPotion}>

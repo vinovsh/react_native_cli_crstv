@@ -13,15 +13,20 @@ import { AuthContext } from '../Context';
 
 const width=Dimensions.get("screen").width;
 
+
 const adUnitId = config.AD_STATUS=='test'? TestIds.REWARDED : config.REWARDEd_AD_ID;
 
 const rewarded = RewardedAd.createForAdRequest(adUnitId, {
-  requestNonPersonalizedAdsOnly: true,
-  keywords: ['fashion', 'clothing'],
+    requestNonPersonalizedAdsOnly: true,
+    keywords: ['fashion', 'clothing'],
 });
 
+const ErrorScreen = props => {
+  
 
-const ErrorScreen =props=>{
+    
+
+   
 
     const { starsUpdate } = React.useContext(AuthContext);
 

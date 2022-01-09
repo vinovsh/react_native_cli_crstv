@@ -148,8 +148,10 @@ const SignUpScreen = ({navigation}) => {
                             var email=data.email;
                             var code=data.code;
                             var referral_code=data.referral_code;
-                            var stars=data.stars;
-                           SignInFormSubmit(token,name,profile,email,code,referral_code,stars);
+                            var stars = data.stars;
+                            var banner_ad_id= data.banner_ad_id;
+                            var reward_ad_id = data.reward_ad_id;
+                           SignInFormSubmit(token,name,profile,email,code,referral_code,stars,banner_ad_id,reward_ad_id);
                         }else{
 
                             navigation.navigate('OtpScreen',{ token:data.token });
