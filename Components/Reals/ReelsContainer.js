@@ -1,7 +1,7 @@
 import React,{useEffect,Component } from 'react';
-import {View,Text,SafeAreaView,StyleSheet,Image,Dimensions,TouchableOpacity,StatusBar,ToastAndroid} from "react-native"
+import {View,Text,SafeAreaView,StyleSheet,Image,Dimensions,TouchableOpacity,StatusBar,ToastAndroid,ActivityIndicator} from "react-native"
 import { Title } from 'react-native-paper';
-import VideoPlayer from 'react-native-video-controls';
+import Video from 'react-native-video';
 import Colors from '../ColorPalet';
 import Feather from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -21,7 +21,8 @@ class ReelsContainer extends Component {
    
     this.state = {
       isLike: this.props.item.isLike,
-      totalLikes:this.props.item.likes
+      totalLikes: this.props.item.likes,
+      isBuffer:true,
    
     };
 
@@ -113,39 +114,38 @@ class ReelsContainer extends Component {
      
   
     
-  }
+    }
+    
+ 
     return (
 
-      <SafeAreaView >
+   
        <View  style={[styles.container,{width,height:height}]}>
     
-         <VideoPlayer
+         <Video 
                 
                 
-                 height={height}
-            
-                 source={{
-                    uri: this.props.item.video,
-                      
-                 }}
-                 muted={false}
-                 resizeMode="contain"
-                 disablePlayPause
-                 disableSeekbar
-                 disableVolume
-                 disableTimer
-                 disableBack
-                 disableFullscreen
-                 controls={false}
-                 posterResizeMode="contain"
-                 repeat={true}
-                 showOnStart={false}
-                 controlTimeout={1}
-                 paused={this.props.active_id==this.props.item.id || this.props.index==0 ? false : true}
+            style={styles.player}
+          
+            source={{uri: this.props.item.video}} 
+            muted={false}
+            resizeMode='contain'
+                
+            paused={this.props.active_id==this.props.item.id || this.props.index==0 ? false : true}
                  
+             onLoadStart={(e) => {
+            
+               this.setState({ isBuffer:true });
+
+            }}
+          
+            onLoad={(e) => {
+               this.setState({ isBuffer:false });
+          }}
+          
+          repeat={true}
         
-        
-              /> 
+        /> 
             
                <View style={styles.headerCard}>
 
@@ -180,7 +180,13 @@ class ReelsContainer extends Component {
                     
                   </TouchableOpacity>
 
-              </View>
+        </View>
+        
+         {this.state.isBuffer &&
+          
+           <ActivityIndicator style={styles.loader} size={"large"} color={Colors.purple} />
+        
+        }
 
               <View style={styles.profileCard}>
                  <Title style={styles.description}>{this.props.item.title}</Title>
@@ -199,7 +205,7 @@ class ReelsContainer extends Component {
                  </View>
               </View>
        </View>
-       </SafeAreaView>
+     
     );
                 }
 }
@@ -208,12 +214,20 @@ export default ReelsContainer;
 
 const styles = StyleSheet.create({
     container:{
-      flex:1,
+     // flex:1,
       justifyContent:"center",
       alignItems:"center",
       backgroundColor:"#000",
     
-    },
+  },
+   player:{
+
+        width:"100%",
+        height:"100%",
+        flex:1,
+     
+        
+  },
     profileCard:{
         width:width/1.2,
       
@@ -257,8 +271,9 @@ const styles = StyleSheet.create({
        
     },
     headerCard:{
-      height:50,
-      position:'absolute',
+     
+      position: 'absolute',
+     //  height:50,
       top:0,
       width:'100%',
     
@@ -267,5 +282,14 @@ const styles = StyleSheet.create({
       justifyContent:'flex-start',
       alignItems:'center',
       paddingLeft:15
-    }
+  },
+    loader: {
+    position: "absolute",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
+    alignSelf: "center",
+    top:(height)/2
+    
+  }
 })

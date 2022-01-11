@@ -173,7 +173,7 @@ const ReelsScreen = (props) => {
       < >
          
          <View style={styles.container}>
-             <StatusBar translucent={true} backgroundColor="#ff000000" barStyle="light-content"/>
+             <StatusBar translucent={true} hidden={true} backgroundColor="#ff000000" barStyle="light-content"/>
         <FlatList
           style={{ display: "flex",
           flexGrow: 1,}}

@@ -1,10 +1,11 @@
-import React from 'react';
-import {View,Text,Button, StyleSheet,Dimensions,Animated, Image,TouchableOpacity,PermissionsAndroid,Platform} from "react-native";
+import React,{useState} from 'react';
+import {View,Text,Button, StyleSheet,Dimensions,Animated, Image,TouchableOpacity,PermissionsAndroid,Platform,ActivityIndicator} from "react-native";
 import ProgressiveImage from '../Components/ProgressiveImage';
 
 import Feather from 'react-native-vector-icons/Feather';
 import RNFetchBlob from 'rn-fetch-blob';
-import VideoPlayer from 'react-native-video-controls';
+import Video from 'react-native-video';
+import Colors from '../Components/ColorPalet';
 
 
 
@@ -12,7 +13,7 @@ const width=Dimensions.get("window").width;
 const height=Dimensions.get('window').height;
 const StatusVideoScreen = ({route,navigation}) => {
 
-
+const [isBuffer, setIsbuffer] = useState(true);
 
  
  React.useEffect(() => {
@@ -100,7 +101,7 @@ const StatusVideoScreen = ({route,navigation}) => {
         <View style={styles.container}>
           
             <View style={styles.image_box}>
-            <VideoPlayer
+            <Video
                  style={styles.player}
                 
                 
@@ -110,21 +111,19 @@ const StatusVideoScreen = ({route,navigation}) => {
                       
                  }}
                  muted={false}
-                 resizeMode="contain"
-                 disablePlayPause
-                 disableSeekbar
-                 disableVolume
-                 disableTimer
-                 disableBack
-                 disableFullscreen
-                 controls={false}
-                 posterResizeMode="contain"
-                 repeat={true}
-                 showOnStart={false}
-                 controlTimeout={1}
-                 paused={false}
-                 
-        
+                resizeMode="contain"
+            
+                onLoadStart={(e) => {
+            
+                  setIsbuffer(true);
+
+                }}
+          
+                onLoad={(e) => {
+                  setIsbuffer(false);
+            }}
+            repeat={true}
+                
         
               />  
             </View>
@@ -140,7 +139,13 @@ const StatusVideoScreen = ({route,navigation}) => {
                   </TouchableOpacity>
               </View>
              
-          </View> 
+        </View> 
+        
+        {isBuffer &&
+          
+           <ActivityIndicator style={styles.loader} size={"large"} color={Colors.purple} />
+        
+        }
            
           
         </View>
@@ -159,11 +164,9 @@ const styles = StyleSheet.create({
   
    backgroundColor:"black",
  
-   
-    
-    
-    
-    
+  },
+  player:{
+    flex:1
   },
   
   image_box:{
@@ -188,6 +191,15 @@ const styles = StyleSheet.create({
      alignItems:"flex-end",
      marginRight:"10%"
      
-  }
+  },
+  loader: {
+    position: "absolute",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
+    alignSelf: "center",
+    top:(height/2.3)
+    
+  },
 
 })

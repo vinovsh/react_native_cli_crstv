@@ -10,7 +10,8 @@ import {
     StyleSheet ,
     StatusBar,
     Alert,
-    Dimensions
+    Dimensions,
+    Linking
 } from 'react-native';
 import Colors from '../Components/ColorPalet';
 import * as Animatable from 'react-native-animatable';
