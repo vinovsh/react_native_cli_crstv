@@ -237,7 +237,7 @@ const AddVideoScreen = props => {
             disableTimer
             disableBack
             disableFullscreen
-            controls={false}
+        
           />
         </View>
         {uploading ? (

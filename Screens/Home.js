@@ -48,7 +48,7 @@ const height = Dimensions.get('window').height;
 
   const rewarded = RewardedAd.createForAdRequest(adUnitIdReward, {
         requestNonPersonalizedAdsOnly: true,
-        keywords: ['fashion', 'clothing'],
+        keywords: ['game', 'clothing', 'flight', 'hotel', 'travel', 'location','job','education','christian'],
   });
 
 

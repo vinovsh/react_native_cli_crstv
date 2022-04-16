@@ -18,7 +18,7 @@ const adUnitId = config.AD_STATUS=='test'? TestIds.REWARDED : config.REWARDEd_AD
 
 const rewarded = RewardedAd.createForAdRequest(adUnitId, {
     requestNonPersonalizedAdsOnly: true,
-    keywords: ['fashion', 'clothing'],
+     keywords: ['game', 'clothing', 'flight', 'hotel', 'travel', 'location','job','education','christian'],
 });
 
 const ErrorScreen = props => {

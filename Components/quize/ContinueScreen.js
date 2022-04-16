@@ -19,8 +19,8 @@ const width=Dimensions.get("screen").width;
 
 
    const rewarded = RewardedAd.createForAdRequest(adUnitId, {
-        requestNonPersonalizedAdsOnly: true,
-        keywords: ['fashion', 'clothing'],
+     requestNonPersonalizedAdsOnly: true,
+     keywords: ['game', 'clothing', 'flight', 'hotel', 'travel', 'location','job','education','christian'],
    });
 
 const ContinueScreen = props => {
@@ -42,7 +42,7 @@ const ContinueScreen = props => {
     }
 
     const nextQuestion=()=>{ 
-      if(props.totalStars >=50){
+      if(props.totalStars >=5){
       //  props.nextQuestion();
          getdata();
       }else{
@@ -179,7 +179,7 @@ const ContinueScreen = props => {
                   </TouchableOpacity>
 
            <TouchableOpacity  activeOpacity={0.6} onPress={() =>{nextQuestion()}} style={styles.ContinueButton}>
-                     <Text style={styles.continueText}>Spend 50</Text>
+                     <Text style={styles.continueText}>Spend 5</Text>
                      <Icon 
                         name="hexagram" 
                         color='yellow'
