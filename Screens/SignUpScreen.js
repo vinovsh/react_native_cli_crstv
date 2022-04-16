@@ -21,7 +21,7 @@ import Feather from 'react-native-vector-icons/Feather';
 
 import { useTheme } from 'react-native-paper';
 
-import {AuthContext } from '../Components/Context';
+import { AuthContext } from '../Components/Context';
 import LoadingScreen from './LoadingScreen';
 
 
@@ -45,6 +45,7 @@ const SignUpScreen = ({navigation}) => {
     });
 
     const { colors } = useTheme();
+    const {SignInFormSubmit} = React.useContext(AuthContext);
 
     
 
@@ -165,10 +166,25 @@ const SignUpScreen = ({navigation}) => {
                    setIsLoading(false);
                    if(data.error==false){
                     setIsLoading(false);
-                         var token=data.token;
+                        /*  var token=data.token; */
                       
 
-                         navigation.navigate('OtpScreen',{ token:token });
+                        // navigation.navigate('OtpScreen',{ token:token });
+                       
+                       /* aditional changes */
+
+                          var token=data.token;
+                         var name=data.name;
+                         var profile=data.profile;
+                         var email=data.email;
+                         var code=data.code;
+                         var referral_code=data.referral_code;
+                         var stars = data.stars;
+                         var banner_ad_id= data.banner_ad_id;
+                         var reward_ad_id = data.reward_ad_id;
+                        SignInFormSubmit(token,name,profile,email,code,referral_code,stars,banner_ad_id,reward_ad_id);
+
+                       /* aditional changes end */
                    
                    }else{
                       setIsLoading(false);

@@ -1,38 +1,39 @@
 {
   "project_info": {
-    "project_number": "442849027155",
-    "project_id": "crs-tv-react-native",
-    "storage_bucket": "crs-tv-react-native.appspot.com"
+    "project_number": "343439650754",
+    "project_id": "crstv-439c6",
+    "storage_bucket": "crstv-439c6.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:442849027155:android:ce8398f4b6544f871a92a6",
+        "mobilesdk_app_id": "1:343439650754:android:e4ede0261836451d2af05b",
         "android_client_info": {
           "package_name": "com.app.crstv"
         }
       },
       "oauth_client": [
         {
-          "client_id": "442849027155-0n7mru5eeculon0u3j3gjamkflihar87.apps.googleusercontent.com",
+          "client_id": "343439650754-cd2md2anc7s1vc0oo0qrc3o1ibq5ff4d.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBoUd4D2pKzBNaFyvBR8qAa2_bfuRAc6X8"
+          "current_key": "AIzaSyBgW23EMEkDhEQoAEnAzO8j6cHvBoazGhA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "442849027155-0n7mru5eeculon0u3j3gjamkflihar87.apps.googleusercontent.com",
+              "client_id": "343439650754-cd2md2anc7s1vc0oo0qrc3o1ibq5ff4d.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
         }
-      }
+      },
+      "admob_app_id": "ca-app-pub-7322799667178779~3051550420"
     }
   ],
   "configuration_version": "1"
