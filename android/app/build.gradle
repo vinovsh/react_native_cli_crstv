@@ -131,8 +131,8 @@ android {
         applicationId "com.app.crstv"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 15
-        versionName "1.6"
+        versionCode 16
+        versionName "1.7"
          ndk {
            debugSymbolLevel 'FULL'
          }
